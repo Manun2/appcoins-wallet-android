@@ -50,7 +50,8 @@ class IabPresenter(
     }
     if (savedInstanceState == null) {
       handlePurchaseStartAnalytics(transaction)
-      view.showPaymentMethodsView()
+      view.showPaymentMethodsView()  //TODO revert
+//      view.showPaypalTestView()
     }
   }
 

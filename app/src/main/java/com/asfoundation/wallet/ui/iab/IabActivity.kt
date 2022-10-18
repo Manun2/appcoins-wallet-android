@@ -372,6 +372,27 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
       .commit()
   }
 
+  override fun showPaypalTestView() {
+    val isDonation =
+      TransactionData.TransactionType.DONATION.name.equals(transaction?.type, ignoreCase = true)
+    val isSubscription =
+      TransactionData.TransactionType.INAPP_SUBSCRIPTION.name.equals(
+        transaction?.type,
+        ignoreCase = true
+      )
+    layout_error.visibility = View.GONE
+    fragment_container.visibility = View.VISIBLE
+
+    supportFragmentManager.beginTransaction()
+      .replace(
+        R.id.fragment_container,
+        PayPalTestFragment(
+
+        )
+      )
+      .commit()
+  }
+
   override fun showBillingAddress(
     value: BigDecimal,
     currency: String,

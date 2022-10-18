@@ -102,6 +102,7 @@ android {
       buildConfigField 'String', 'SENTRY_DSN_KEY', project.SENTRY_DSN_KEY
       buildConfigField 'String', 'SUBS_BASE_HOST', project.BASE_HOST_PROD
       buildConfigField 'String', 'INDICATIVE_API_KEY', project.INDICATIVE_API_KEY
+       buildConfigField 'String', 'PAYPAL_CLIENT_ID', project.PAYPAL_CLIENT_ID
       manifestPlaceholders.legacyPaymentHost = "${project.MANIFEST_LEGACY_PAYMENT_HOST}"
       manifestPlaceholders.paymentHost = "${project.MANIFEST_PAYMENT_HOST}"
     }
@@ -128,6 +129,7 @@ android {
       buildConfigField 'String', 'ADYEN_PUBLIC_KEY', project.ADYEN_PUBLIC_KEY_DEV
       buildConfigField 'String', 'SENTRY_DSN_KEY', project.SENTRY_DSN_KEY_DEV
       buildConfigField 'String', 'INDICATIVE_API_KEY', project.INDICATIVE_API_KEY_DEV
+      buildConfigField 'String', 'PAYPAL_CLIENT_ID', project.PAYPAL_CLIENT_ID_DEV
       manifestPlaceholders.legacyPaymentHost = "${project.MANIFEST_LEGACY_PAYMENT_HOST_DEV}"
       manifestPlaceholders.paymentHost = "${project.MANIFEST_PAYMENT_HOST_DEV}"
       applicationVariants.all { variant -> renameArtifact(defaultConfig)
@@ -208,6 +210,8 @@ dependencies {
   implementation "com.google.android.gms:play-services-vision:$project.play_services_vision_version"
   implementation "com.google.zxing:core:$project.zxing_version"
   implementation "com.journeyapps:zxing-android-embedded:$project.zxing_android_version"
+
+  implementation "com.paypal.checkout:android-sdk:0.8.4"
 
   implementation "com.google.dagger:hilt-android:$project.hilt_version"
   kapt "com.google.dagger:hilt-compiler:$project.hilt_version"

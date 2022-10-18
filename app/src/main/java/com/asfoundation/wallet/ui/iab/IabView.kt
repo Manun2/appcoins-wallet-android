@@ -88,6 +88,8 @@ interface IabView {
 
   fun showPaymentMethodsView()
 
+  fun showPaypalTestView()
+
   fun showShareLinkPayment(
     domain: String,
     skuId: String?,

@@ -1,9 +1,11 @@
 package com.asfoundation.wallet
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.RequiresApi
 import androidx.multidex.MultiDexApplication
 import cm.aptoide.analytics.AnalyticsManager
 import com.appcoins.wallet.appcoins.rewards.AppcoinsRewards
@@ -32,6 +34,12 @@ import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import com.flurry.android.FlurryAgent
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.paypal.checkout.PayPalCheckout
+import com.paypal.checkout.config.CheckoutConfig
+import com.paypal.checkout.config.Environment
+import com.paypal.checkout.config.SettingsConfig
+import com.paypal.checkout.createorder.CurrencyCode
+import com.paypal.checkout.createorder.UserAction
 import dagger.hilt.android.HiltAndroidApp
 import io.intercom.android.sdk.Intercom
 import io.reactivex.exceptions.UndeliverableException
@@ -110,8 +118,28 @@ class App : MultiDexApplication(), BillingDependenciesProvider {
     private val TAG = App::class.java.name
   }
 
+  @RequiresApi(Build.VERSION_CODES.M)
+  private fun configurePayPal() {
+    val config = CheckoutConfig(
+      application = this,
+      clientId = BuildConfig.PAYPAL_CLIENT_ID,
+      environment = Environment.SANDBOX,
+//      returnUrl = "${BuildConfig.APPLICATION_ID}://paypalpay",
+      currencyCode = CurrencyCode.USD,
+      userAction = UserAction.PAY_NOW,
+      settingsConfig = SettingsConfig(
+        loggingEnabled = true
+      )
+    )
+    PayPalCheckout.setConfig(config)
+  }
+
+  @RequiresApi(Build.VERSION_CODES.M)
   override fun onCreate() {
     super.onCreate()
+
+    configurePayPal()
+
     setupRxJava()
     val gpsAvailable = checkGooglePlayServices()
     if (gpsAvailable.not()) setupSupportNotificationAlarm()
