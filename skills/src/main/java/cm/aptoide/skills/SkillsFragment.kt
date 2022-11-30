@@ -162,82 +162,92 @@ class SkillsFragment : Fragment(), PaymentView {
   private fun setupPurchaseTicketButtons(
     eSkillsPaymentData: EskillsPaymentData
   ) {
-    if (viewModel.getVerification() == EskillsVerification.VERIFIED){
-      binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
-        getString(R.string.buy_button)
-      binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
-        val queueId = binding.payTicketLayout.payTicketRoomDetails.roomId.text.toString()
-        if (queueId.isNotBlank()) {
-          eSkillsPaymentData.queueId = QueueIdentifier(queueId.trim(), true)
-        }
-        binding.payTicketLayout.root.visibility = View.GONE
-        createAndPayTicket(eSkillsPaymentData)
+    when {
+      !hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
+      viewModel.getVerification() == EskillsVerification.VERIFIED -> handleWalletIsVerified(
+        eSkillsPaymentData
+      )
+      RootUtil.isDeviceRooted() -> showRootError()
+      else -> handleTopUpFlow(eSkillsPaymentData)
+    }
+  }
+
+  private fun hasEnoughBalance(eSkillsPaymentData: EskillsPaymentData): Boolean {
+    disposable.add(Single.zip(
+      viewModel.getCreditsBalance(),
+      viewModel.getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!)
+    ) { balance, appcAmount -> Pair(balance, appcAmount) }
+      .observeOn(AndroidSchedulers.mainThread())
+      .map {
+        balancePair = it
+      }
+      .subscribe())
+    return balancePair.first < balancePair.second.amount
+  }
+
+  private fun handleQueueId() {
+    binding.payTicketLayout.payTicketRoomDetails.copyButton.setOnClickListener {
+      val queueId = binding.payTicketLayout.payTicketRoomDetails.roomId.text.toString()
+      if (queueId.isNotEmpty()) {
+        viewModel.saveQueueIdToClipboard(queueId.trim())
+        val tooltip = binding.payTicketLayout.payTicketRoomDetails.tooltipClipboard
+        tooltip.visibility = View.VISIBLE
+        view?.postDelayed({ tooltip.visibility = View.GONE }, CLIPBOARD_TOOLTIP_DELAY_SECONDS)
       }
     }
-    else if (RootUtil.isDeviceRooted()) {
-      showRootError()
-    } else {
-      binding.payTicketLayout.payTicketRoomDetails.copyButton.setOnClickListener {
-        val queueId = binding.payTicketLayout.payTicketRoomDetails.roomId.text.toString()
-        if (queueId.isNotEmpty()) {
-          viewModel.saveQueueIdToClipboard(queueId.trim())
-          val tooltip = binding.payTicketLayout.payTicketRoomDetails.tooltipClipboard
-          tooltip.visibility = View.VISIBLE
-          view?.postDelayed({ tooltip.visibility = View.GONE }, CLIPBOARD_TOOLTIP_DELAY_SECONDS)
-        }
-      }
-      disposable.add(Single.zip(
-        viewModel.getCreditsBalance(),
-        viewModel.getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!),
-        { balance, appcAmount -> Pair(balance, appcAmount) })
-        .observeOn(AndroidSchedulers.mainThread())
-        .map {
-          if (it.first < it.second.amount) { // Not enough funds
-            showNeedsTopUpWarning()
-            binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
-              getString(R.string.topup_button)
-            binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
-              sendUserToTopUpFlow()
-            }
-          } else  {
-            when(getTopUpListStatus()){
-              Status.AVAILABLE -> {
-                binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
-                  getString(R.string.buy_button)
-                binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
-                  val queueId = binding.payTicketLayout.payTicketRoomDetails.roomId.text.toString()
-                  if (queueId.isNotBlank()) {
-                    eSkillsPaymentData.queueId = QueueIdentifier(queueId.trim(), true)
-                  }
-                  binding.payTicketLayout.root.visibility = View.GONE
-                  createAndPayTicket(eSkillsPaymentData)
-                }
-              }
-              Status.NO_TOPUP -> {
-                showNoFundsWarning()
-                binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
-                  getString(R.string.topup_button)
-                binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener{
-                  sendUserToTopUpFlow()
-                }
-              }
-              Status.PAYMENT_METHOD_NOT_SUPPORTED -> {
-                showPaymentMethodNotSupported()
-                binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.visibility = View.GONE
-              }
-            }
+  }
+
+  private fun handleTopUpFlow(eSkillsPaymentData: EskillsPaymentData) {
+    when (viewModel.getTopUpListStatus()) {
+      Status.AVAILABLE -> {
+        binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
+          getString(R.string.buy_button)
+        binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
+          val queueId = binding.payTicketLayout.payTicketRoomDetails.roomId.text.toString()
+          if (queueId.isNotBlank()) {
+            eSkillsPaymentData.queueId = QueueIdentifier(queueId.trim(), true)
           }
+          binding.payTicketLayout.root.visibility = View.GONE
+          createAndPayTicket(eSkillsPaymentData)
         }
-        .subscribe())
+        handleQueueId()
+      }
+      Status.NO_TOPUP -> {
+        showNeedsTopUpWarning()
+        binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
+          getString(R.string.topup_button)
+        binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
+          viewModel.sendUserToTopUpFlow(requireContext())
+        }
+      }
+      Status.PAYMENT_METHOD_NOT_SUPPORTED -> {
+        showPaymentMethodNotSupported()
+        binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.visibility = View.GONE
+      }
     }
   }
 
-  private fun getTopUpListStatus(): Status {
-    return viewModel.getTopUpListStatus()
+  private fun handleNotEnoughFunds() {
+    showNoFundsWarning()
+    binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
+      getString(R.string.topup_button)
+    binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
+      viewModel.sendUserToTopUpFlow(requireContext())
+    }
   }
 
-  private fun sendUserToTopUpFlow() {
-    viewModel.sendUserToTopUpFlow(requireContext())
+  private fun handleWalletIsVerified(eSkillsPaymentData: EskillsPaymentData) {
+    binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.text =
+      getString(R.string.buy_button)
+    binding.payTicketLayout.dialogBuyButtonsPaymentMethods.buyButton.setOnClickListener {
+      val queueId = binding.payTicketLayout.payTicketRoomDetails.roomId.text.toString()
+      if (queueId.isNotBlank()) {
+        eSkillsPaymentData.queueId = QueueIdentifier(queueId.trim(), true)
+      }
+      binding.payTicketLayout.root.visibility = View.GONE
+      createAndPayTicket(eSkillsPaymentData)
+    }
+    handleQueueId()
   }
 
   private fun setupAppNameAndIcon(packageName: String) {
@@ -524,7 +534,8 @@ class SkillsFragment : Fragment(), PaymentView {
   }
 
   override fun showPaymentMethodNotSupported() {
-    binding.errorLayout.errorMessage.text = getString(R.string.error_message_local_payment_method_body)
+    binding.errorLayout.errorMessage.text =
+      getString(R.string.error_message_local_payment_method_body)
     binding.loadingTicketLayout.root.visibility = View.GONE
     binding.refundTicketLayout.root.visibility = View.GONE
     binding.geofencingLayout.root.visibility = View.GONE

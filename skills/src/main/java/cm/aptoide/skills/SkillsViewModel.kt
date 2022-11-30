@@ -42,7 +42,7 @@ class SkillsViewModel @Inject constructor(
   private val getTopUpListStatus: GetTopUpListUseCase,
   private val getVerificationUseCase: GetVerificationUseCase,
   private val buildUpdateIntentUseCase: BuildUpdateIntentUseCase,
-  ) : ViewModel() {
+) : ViewModel() {
   lateinit var ticketId: String
   private val closeView: PublishSubject<Pair<Int, UserData>> = PublishSubject.create()
 
@@ -225,7 +225,7 @@ class SkillsViewModel @Inject constructor(
     return getTopUpListStatus(TransactionType.TOPUP, TopUpStatus.COMPLETED).blockingGet()
   }
 
-  fun getVerification(): EskillsVerification{
+  fun getVerification(): EskillsVerification {
     return getVerificationUseCase().blockingGet()
   }
 
@@ -245,5 +245,14 @@ class SkillsViewModel @Inject constructor(
             }
         }
       }
+  }
+
+  fun checkBalance(eSkillsPaymentData: EskillsPaymentData): Single<Pair<BigDecimal, Price>> {
+    return Single.zip(
+      getCreditsBalance(),
+      getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!)
+    ) { balance, appcAmount -> Pair(balance, appcAmount) }
+      .observeOn(AndroidSchedulers.mainThread())
+      .map { it }
   }
 }
