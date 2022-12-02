@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
@@ -225,8 +226,8 @@ class SkillsViewModel @Inject constructor(
     return getTopUpListStatus(TransactionType.TOPUP, TopUpStatus.COMPLETED).blockingGet()
   }
 
-  fun getVerification(): EskillsVerification {
-    return getVerificationUseCase().blockingGet()
+  fun isEskillsVerified(): Boolean {
+    return getVerificationUseCase().blockingGet() == EskillsVerification.VERIFIED
   }
 
   fun buildUpdateIntent(): Intent {
@@ -247,12 +248,12 @@ class SkillsViewModel @Inject constructor(
       }
   }
 
-  fun checkBalance(eSkillsPaymentData: EskillsPaymentData): Single<Pair<BigDecimal, Price>> {
+  fun hasEnoughBalance(eSkillsPaymentData: EskillsPaymentData): Boolean {
     return Single.zip(
       getCreditsBalance(),
       getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!)
     ) { balance, appcAmount -> Pair(balance, appcAmount) }
-      .observeOn(AndroidSchedulers.mainThread())
-      .map { it }
+      .observeOn(Schedulers.io())
+      .map { it.first < it.second.amount }.blockingGet()
   }
 }

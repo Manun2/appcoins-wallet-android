@@ -163,26 +163,11 @@ class SkillsFragment : Fragment(), PaymentView {
     eSkillsPaymentData: EskillsPaymentData
   ) {
     when {
-      !hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
-      viewModel.getVerification() == EskillsVerification.VERIFIED -> handleWalletIsVerified(
-        eSkillsPaymentData
-      )
+      !viewModel.hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
+      viewModel.isEskillsVerified() -> handleWalletIsVerified(eSkillsPaymentData)
       RootUtil.isDeviceRooted() -> showRootError()
       else -> handleTopUpFlow(eSkillsPaymentData)
     }
-  }
-
-  private fun hasEnoughBalance(eSkillsPaymentData: EskillsPaymentData): Boolean {
-    disposable.add(Single.zip(
-      viewModel.getCreditsBalance(),
-      viewModel.getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!)
-    ) { balance, appcAmount -> Pair(balance, appcAmount) }
-      .observeOn(AndroidSchedulers.mainThread())
-      .map {
-        balancePair = it
-      }
-      .subscribe())
-    return balancePair.first < balancePair.second.amount
   }
 
   private fun handleQueueId() {
