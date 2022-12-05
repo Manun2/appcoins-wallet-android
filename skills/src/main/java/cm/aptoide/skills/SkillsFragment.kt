@@ -171,11 +171,11 @@ class SkillsFragment : Fragment(), PaymentView {
   private fun hasEnoughBalance(
     eSkillsPaymentData: EskillsPaymentData
   ): Boolean {
-    var hasEnoughBalance = false
-    disposable.add(viewModel.hasEnoughBalance(eSkillsPaymentData).map {
-      hasEnoughBalance = it
-    }.subscribe())
-    return hasEnoughBalance
+    return disposable.add(viewModel.hasEnoughBalance(eSkillsPaymentData)
+      .map {
+        return@map it
+      }.subscribe()
+    )
   }
 
   private fun handleQueueId() {

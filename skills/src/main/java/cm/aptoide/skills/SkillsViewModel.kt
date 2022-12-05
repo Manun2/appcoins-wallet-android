@@ -254,6 +254,6 @@ class SkillsViewModel @Inject constructor(
       getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!)
     ) { balance, appcAmount -> Pair(balance, appcAmount) }
       .observeOn(Schedulers.io())
-      .map { it.first < it.second.amount }
+      .map { it.first > it.second.amount }
   }
 }
