@@ -161,7 +161,7 @@ class SkillsFragment : Fragment(), PaymentView {
     eSkillsPaymentData: EskillsPaymentData
   ) {
     when {
-      hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
+      !hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
       viewModel.isEskillsVerified() -> handleWalletIsVerified(eSkillsPaymentData)
       RootUtil.isDeviceRooted() -> showRootError()
       else -> handleTopUpFlow(eSkillsPaymentData)
