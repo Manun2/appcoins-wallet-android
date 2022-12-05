@@ -76,8 +76,6 @@ class SkillsFragment : Fragment(), PaymentView {
     disposable.add(viewModel.closeView()
       .subscribe { postbackUserData(it.first, it.second) })
 
-    showPurchaseTicketLayout()
-
     binding.payTicketLayout.dialogBuyButtonsPaymentMethods.cancelButton.setOnClickListener {
       viewModel.cancelPayment()
     }
@@ -163,11 +161,21 @@ class SkillsFragment : Fragment(), PaymentView {
     eSkillsPaymentData: EskillsPaymentData
   ) {
     when {
-      !viewModel.hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
+      hasEnoughBalance(eSkillsPaymentData) -> handleNotEnoughFunds()
       viewModel.isEskillsVerified() -> handleWalletIsVerified(eSkillsPaymentData)
       RootUtil.isDeviceRooted() -> showRootError()
       else -> handleTopUpFlow(eSkillsPaymentData)
     }
+  }
+
+  private fun hasEnoughBalance(
+    eSkillsPaymentData: EskillsPaymentData
+  ): Boolean {
+    var hasEnoughBalance = false
+    disposable.add(viewModel.hasEnoughBalance(eSkillsPaymentData).map {
+      hasEnoughBalance = it
+    }.subscribe())
+    return hasEnoughBalance
   }
 
   private fun handleQueueId() {

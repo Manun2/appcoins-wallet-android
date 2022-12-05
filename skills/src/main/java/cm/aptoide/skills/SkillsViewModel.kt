@@ -248,12 +248,12 @@ class SkillsViewModel @Inject constructor(
       }
   }
 
-  fun hasEnoughBalance(eSkillsPaymentData: EskillsPaymentData): Boolean {
+  fun hasEnoughBalance(eSkillsPaymentData: EskillsPaymentData): Single<Boolean> {
     return Single.zip(
       getCreditsBalance(),
       getFiatToAppcAmount(eSkillsPaymentData.price!!, eSkillsPaymentData.currency!!)
     ) { balance, appcAmount -> Pair(balance, appcAmount) }
       .observeOn(Schedulers.io())
-      .map { it.first < it.second.amount }.blockingGet()
+      .map { it.first < it.second.amount }
   }
 }
