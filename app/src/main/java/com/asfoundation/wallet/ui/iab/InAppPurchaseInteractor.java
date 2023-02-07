@@ -216,10 +216,8 @@ public class InAppPurchaseInteractor {
   //}
 
   private Single<List<Gateway.Name>> getFilteredGateways(TransactionBuilder transactionBuilder) {
-    return getRewardsBalance()
-        .map( creditsBalance ->
-            getNewPaymentGateways(creditsBalance, false, transactionBuilder.amount())
-        );
+    return getRewardsBalance().map(creditsBalance -> getNewPaymentGateways(creditsBalance, false,
+        transactionBuilder.amount()));
   }
 
   //public Single<Boolean> hasAppcoinsFunds(TransactionBuilder transaction) {
@@ -303,7 +301,7 @@ public class InAppPurchaseInteractor {
     paymentMethods.set(appcCreditPaymentIndex,
         new PaymentMethod(appcPaymentMethod.getId(), appcPaymentMethod.getLabel(),
             appcPaymentMethod.getIconUrl(), appcPaymentMethod.getAsync(),
-            appcPaymentMethod.getFee(), appcPaymentMethod.isEnabled(),
+            appcPaymentMethod.getFee(), appcPaymentMethod.isEnabled(), null,
             appcPaymentMethod.getDisabledReason(), true));
     return paymentMethods;
   }
@@ -505,18 +503,23 @@ public class InAppPurchaseInteractor {
 
   private PaymentMethod mapPaymentMethods(PaymentMethodEntity paymentMethod,
       List<PaymentMethodEntity> availablePaymentMethods) {
+    PaymentSpecificPrice specificPrice = null;
+    if (paymentMethod.getPrice() != null) {
+      specificPrice = new PaymentSpecificPrice(paymentMethod.getPrice());
+    }
     for (PaymentMethodEntity availablePaymentMethod : availablePaymentMethods) {
       if (paymentMethod.getId()
           .equals(availablePaymentMethod.getId())) {
         PaymentMethodFee paymentMethodFee = mapPaymentMethodFee(availablePaymentMethod.getFee());
         return new PaymentMethod(paymentMethod.getId(), paymentMethod.getLabel(),
-            paymentMethod.getIconUrl(), paymentMethod.getAsync(), paymentMethodFee, true, null,
-            false);
+            paymentMethod.getIconUrl(), paymentMethod.getAsync(), paymentMethodFee, true,
+            specificPrice, null, false);
       }
     }
     PaymentMethodFee paymentMethodFee = mapPaymentMethodFee(paymentMethod.getFee());
     return new PaymentMethod(paymentMethod.getId(), paymentMethod.getLabel(),
-        paymentMethod.getIconUrl(), paymentMethod.getAsync(), paymentMethodFee, false, null, false);
+        paymentMethod.getIconUrl(), paymentMethod.getAsync(), paymentMethodFee, false,
+        specificPrice, null, false);
   }
 
   private PaymentMethodFee mapPaymentMethodFee(FeeEntity feeEntity) {

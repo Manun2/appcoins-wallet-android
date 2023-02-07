@@ -9,7 +9,9 @@ data class PaymentMethodEntity(@SerializedName("name") val id: String, val label
                                val availability: String,
                                val gateway: Gateway,
                                val async: Boolean,
-                               val fee: FeeEntity?) {
+                               val fee: FeeEntity?,
+                               val price: MethodSpecificPrice?
+) {
 
   fun isAvailable(): Boolean = this.availability != "UNAVAILABLE"
 }
@@ -21,3 +23,5 @@ enum class FeeType {
 }
 
 data class FeeCost(val value: BigDecimal, val currency: String)
+
+data class MethodSpecificPrice(val value: BigDecimal, val currency: String)

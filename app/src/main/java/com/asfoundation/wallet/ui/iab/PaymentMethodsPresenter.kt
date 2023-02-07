@@ -621,6 +621,7 @@ class PaymentMethodsPresenter(
           it.async,
           it.fee,
           it.isEnabled,
+          it.specificPrice,
           it.disabledReason,
           paymentMethods.size == 1
         )
@@ -1000,6 +1001,14 @@ class PaymentMethodsPresenter(
           ),
           setTransactionAppcValue(transaction)
         ) { fiatValue, _ -> fiatValue })
+  }
+
+  private fun selectedMethodFiatValue(selectedMethodSpecificPrice: PaymentSpecificPrice): FiatValue {
+    return FiatValue(
+      BigDecimal(selectedMethodSpecificPrice.amount.toString()),  //see comment on previous method
+      selectedMethodSpecificPrice.currency ?: "",
+      "$"                                            //TODO get from service
+    )
   }
 
   private fun getOriginalValue(): BigDecimal =

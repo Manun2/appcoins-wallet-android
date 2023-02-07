@@ -61,14 +61,15 @@ class GetPaypalAndCCMethodsUseCase @Inject constructor(private val bdsRepository
         return PaymentMethod(
           paymentMethod.id, paymentMethod.label,
           paymentMethod.iconUrl, paymentMethod.async, paymentMethodFee, true, null,
-          false
+          null,false
         )
       }
     }
     val paymentMethodFee = mapPaymentMethodFee(paymentMethod.fee)
     return PaymentMethod(
       paymentMethod.id, paymentMethod.label,
-      paymentMethod.iconUrl, paymentMethod.async, paymentMethodFee, false, null, false
+      paymentMethod.iconUrl, paymentMethod.async, paymentMethodFee, false, null,
+      null, false
     )
   }
 
