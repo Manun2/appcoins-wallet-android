@@ -404,6 +404,11 @@ class TopUpFragmentPresenter(
         paymentType = paymentMethod.paymentType,
         data = mapTopUpPaymentData(topUpData, gamificationLevel)
       )
+    } else if (paymentMethod.paymentType == PaymentType.AMAZON_PAY) {
+      activity?.navigateToAmazonPay(
+        paymentType = paymentMethod.paymentType,
+        data = mapTopUpPaymentData(topUpData, gamificationLevel)
+      )
     }
   }
 

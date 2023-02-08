@@ -21,6 +21,8 @@ interface TopUpActivityView {
                                fiatCurrency: String, targetFragment: Fragment,
                                shouldStoreCard: Boolean, preSelected: Boolean)
 
+  fun navigateToAmazonPay(paymentType: PaymentType, data: TopUpPaymentData)
+
   fun finish(data: Bundle)
 
   fun finishActivity(data: Bundle)

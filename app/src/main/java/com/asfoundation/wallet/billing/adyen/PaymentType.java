@@ -9,7 +9,8 @@ public enum PaymentType {
   PAYPAL(Collections.singletonList("paypal")),
   PAYPALV2(Collections.singletonList("paypal_v2")),
   LOCAL_PAYMENTS(Collections.singletonList("localPayments")),
-  CARRIER_BILLING(Collections.singletonList("carrier_billing"));
+  CARRIER_BILLING(Collections.singletonList("carrier_billing")),
+  AMAZON_PAY(Collections.singletonList("amazonpay"));
 
   private final List<String> subTypes;
 

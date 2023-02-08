@@ -161,6 +161,12 @@ class PaymentMethodsPresenter(
                 cachedGamificationLevel
               )
               CARRIER_BILLING -> view.showCarrierBilling(cachedFiatValue!!, false)
+              AMAZON_PAY -> view.showAmazonPay(
+                cachedGamificationLevel,
+                cachedFiatValue!!,
+                paymentMethodsData.frequency,
+                paymentMethodsData.subscription
+              )
               else -> return@doOnNext
             }
           }
@@ -284,6 +290,12 @@ class PaymentMethodsPresenter(
       CARRIER_BILLING -> view.showCarrierBilling(
         cachedFiatValue!!,
         paymentNavigationData.isPreselected
+      )
+      AMAZON_PAY -> view.showAmazonPay(
+        cachedGamificationLevel,
+        cachedFiatValue!!,
+        paymentMethodsData.frequency,
+        paymentMethodsData.subscription
       )
 
       else -> {
@@ -1036,6 +1048,7 @@ class PaymentMethodsPresenter(
       PaymentMethodId.MERGED_APPC.id -> PaymentMethodsAnalytics.PAYMENT_METHOD_APPC
       PaymentMethodId.CREDIT_CARD.id -> PaymentMethodsAnalytics.PAYMENT_METHOD_CC
       PaymentMethodId.CARRIER_BILLING.id -> PaymentMethodsAnalytics.PAYMENT_METHOD_LOCAL
+      PaymentMethodId.AMAZON_PAY.id -> PaymentMethodsAnalytics.PAYMENT_METHOD_AMAZON_PAY
       PaymentMethodId.ASK_FRIEND.id -> PaymentMethodsAnalytics.PAYMENT_METHOD_ASK_FRIEND
       else -> PaymentMethodsAnalytics.PAYMENT_METHOD_SELECTION
     }

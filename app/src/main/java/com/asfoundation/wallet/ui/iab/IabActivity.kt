@@ -315,6 +315,39 @@ class IabActivity : BaseActivity(), IabView, UriNavigator {
       .commit()
   }
 
+  override fun showAmazonPay(
+    amount: BigDecimal,
+    currency: String?,
+    isBds: Boolean,
+    paymentType: PaymentType,
+    bonus: String?,
+    isPreselected: Boolean,
+    iconUrl: String?,
+    gamificationLevel: Int,
+    isSubscription: Boolean,
+    frequency: String?
+  ) {
+    supportFragmentManager.beginTransaction()
+      .replace(
+        R.id.fragment_container,
+        AdyenPaymentFragment.newInstance(
+          paymentType = paymentType,
+          origin = getOrigin(isBds),
+          transactionBuilder = transaction!!,
+          amount = amount,
+          currency = currency,
+          bonus = bonus,
+          isPreSelected = isPreselected,
+          gamificationLevel = gamificationLevel,
+          skuDescription = getSkuDescription(),
+          isSubscription = isSubscription,
+          isSkills = intent.dataString?.contains("&skills") ?: false,
+          frequency = frequency,
+        )
+      )
+      .commit()
+  }
+
   override fun showAppcoinsCreditsPayment(
     appcAmount: BigDecimal,
     isPreselected: Boolean,

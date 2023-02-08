@@ -20,6 +20,7 @@ class PaymentMethodsMapper @Inject constructor(
       "merged_appcoins" -> SelectedPaymentMethod.MERGED_APPC
       "earn_appcoins" -> SelectedPaymentMethod.EARN_APPC
       "onebip" -> SelectedPaymentMethod.CARRIER_BILLING
+      "amazonpay" -> SelectedPaymentMethod.AMAZON_PAY
       "" -> SelectedPaymentMethod.ERROR
       else -> SelectedPaymentMethod.LOCAL_PAYMENTS
     }
@@ -37,6 +38,7 @@ class PaymentMethodsMapper @Inject constructor(
       SelectedPaymentMethod.LOCAL_PAYMENTS -> "local_payments"
       SelectedPaymentMethod.EARN_APPC -> "earn_appcoins"
       SelectedPaymentMethod.CARRIER_BILLING -> "carrier_billing"
+      SelectedPaymentMethod.AMAZON_PAY -> "amazonpay"
       SelectedPaymentMethod.ERROR -> ""
     }
   }

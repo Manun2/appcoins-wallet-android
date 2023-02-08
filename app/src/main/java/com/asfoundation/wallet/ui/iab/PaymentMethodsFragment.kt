@@ -612,6 +612,26 @@ class PaymentMethodsFragment : BasePageViewFragment(), PaymentMethodsView {
     gamificationLevel
   )
 
+  override fun showAmazonPay(
+    gamificationLevel: Int,
+    fiatValue: FiatValue,
+    frequency: String?,
+    isSubscription: Boolean
+  ) {
+    iabView.showAdyenPayment(
+      fiatValue.amount,
+      fiatValue.currency,
+      isBds,
+      PaymentType.AMAZON_PAY,
+      bonusMessageValue,
+      false,
+      null,
+      gamificationLevel,
+      isSubscription,
+      frequency
+    )
+  }
+
   override fun setPurchaseBonus(bonus: BigDecimal, currency: String, @StringRes bonusText: Int) {
     var scaledBonus = bonus.stripTrailingZeros()
       .setScale(CurrencyFormatUtils.FIAT_SCALE, BigDecimal.ROUND_DOWN)
