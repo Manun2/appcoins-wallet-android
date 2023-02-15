@@ -4,10 +4,8 @@ import android.os.Bundle
 import com.adyen.checkout.core.model.ModelObject
 import com.appcoins.wallet.bdsbilling.WalletService
 import com.appcoins.wallet.billing.BillingMessagesMapper
-import com.appcoins.wallet.billing.adyen.AdyenBillingAddress
-import com.appcoins.wallet.billing.adyen.AdyenPaymentRepository
-import com.appcoins.wallet.billing.adyen.PaymentInfoModel
-import com.appcoins.wallet.billing.adyen.PaymentModel
+import com.appcoins.wallet.billing.adyen.*
+import com.appcoins.wallet.billing.adyen.amazon.AmazonPayRepository
 import com.appcoins.wallet.billing.util.Error
 import com.asfoundation.wallet.base.RxSchedulers
 import com.asfoundation.wallet.billing.address.BillingAddressRepository
@@ -24,21 +22,23 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
+import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class AdyenPaymentInteractor @Inject constructor(
-    private val adyenPaymentRepository: AdyenPaymentRepository,
-    private val inAppPurchaseInteractor: InAppPurchaseInteractor,
-    private val billingMessagesMapper: BillingMessagesMapper,
-    private val partnerAddressService: AddressService,
-    private val walletService: WalletService,
-    private val supportInteractor: SupportInteractor,
-    private val walletBlockedInteract: WalletBlockedInteract,
-    private val walletVerificationInteractor: WalletVerificationInteractor,
-    private val billingAddressRepository: BillingAddressRepository,
-    private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase,
-    private val rxSchedulers: RxSchedulers) {
+  private val adyenPaymentRepository: AdyenPaymentRepository,
+  private val amazonPayRepository: AmazonPayRepository,
+  private val inAppPurchaseInteractor: InAppPurchaseInteractor,
+  private val billingMessagesMapper: BillingMessagesMapper,
+  private val partnerAddressService: AddressService,
+  private val walletService: WalletService,
+  private val supportInteractor: SupportInteractor,
+  private val walletBlockedInteract: WalletBlockedInteract,
+  private val walletVerificationInteractor: WalletVerificationInteractor,
+  private val billingAddressRepository: BillingAddressRepository,
+  private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase,
+  private val rxSchedulers: RxSchedulers) {
 
   fun forgetBillingAddress() = billingAddressRepository.forgetBillingAddress()
 
@@ -67,7 +67,8 @@ class AdyenPaymentInteractor @Inject constructor(
                   sku: String?, callbackUrl: String?, transactionType: String,
                   developerWallet: String?,
                   referrerUrl: String?,
-                  billingAddress: AdyenBillingAddress? = null): Single<PaymentModel> {
+                  billingAddress: AdyenBillingAddress? = null,
+                  amazonToken: String? = null): Single<PaymentModel> {
     return Single.zip(walletService.getAndSignCurrentWalletAddress(),
         partnerAddressService.getAttributionEntity(packageName),
         { address, attributionEntity -> Pair(address, attributionEntity) })
@@ -81,9 +82,20 @@ class AdyenPaymentInteractor @Inject constructor(
                 transactionType, developerWallet, attrEntity.oemId, attrEntity.domain,
                 promoCode.code,
                 addressModel.address,
-                addressModel.signedAddress, billingAddress, referrerUrl)
+                addressModel.signedAddress, billingAddress, referrerUrl, amazonToken)
           }
         }
+  }
+
+  fun createAmazonSession(
+    paymentMethodInfo: ModelObject,
+    priceAmount: BigDecimal,
+    priceCurrency: String,
+  ): Single<String> {
+    return walletService.getAndSignCurrentWalletAddress()
+      .flatMap {
+        amazonPayRepository.createAmazonToken(it.address, it.signedAddress, priceAmount, priceCurrency)
+      }
   }
 
   fun makeTopUpPayment(adyenPaymentMethod: ModelObject, shouldStoreMethod: Boolean, hasCvc: Boolean,
@@ -97,7 +109,7 @@ class AdyenPaymentInteractor @Inject constructor(
               supportedShopperInteraction, returnUrl, value, currency, null, paymentType,
               it.address, null, packageName, null, null, null, transactionType, null, null, null,
               null,
-              null, it.signedAddress, billingAddress, null)
+              null, it.signedAddress, billingAddress, null, amazonToken = null)   // TODO amazonToken
         }
   }
 

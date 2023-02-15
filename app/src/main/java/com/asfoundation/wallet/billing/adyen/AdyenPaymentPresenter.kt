@@ -152,16 +152,24 @@ class AdyenPaymentPresenter(
         } else {
           val amount = formatter.formatPaymentCurrency(it.priceAmount, WalletCurrency.FIAT)
           view.showProductPrice(amount, it.priceCurrency)
-          if (paymentType == PaymentType.CARD.name) {
-            priceAmount = it.priceAmount
-            priceCurrency = it.priceCurrency
-            view.hideLoadingAndShowView()
-            sendPaymentMethodDetailsEvent(PaymentMethodsAnalytics.PAYMENT_METHOD_CC)
-            view.finishCardConfiguration(it, false)
-            handleBuyClick(it.priceAmount, it.priceCurrency)
-            paymentAnalytics.stopTimingForTotalEvent(PaymentMethodsAnalytics.PAYMENT_METHOD_CC)
-          } else if (paymentType == PaymentType.PAYPAL.name) {
-            launchPaypal(it.paymentMethod!!, it.priceAmount, it.priceCurrency)
+          when (paymentType) {
+            PaymentType.CARD.name -> {
+              priceAmount = it.priceAmount
+              priceCurrency = it.priceCurrency
+              view.hideLoadingAndShowView()
+              sendPaymentMethodDetailsEvent(PaymentMethodsAnalytics.PAYMENT_METHOD_CC)
+              view.finishCardConfiguration(it, false)
+              handleBuyClick(it.priceAmount, it.priceCurrency)
+              paymentAnalytics.stopTimingForTotalEvent(PaymentMethodsAnalytics.PAYMENT_METHOD_CC)
+            }
+            PaymentType.PAYPAL.name -> {
+              launchPaypal(it.paymentMethod!!, it.priceAmount, it.priceCurrency)
+            }
+            PaymentType.AMAZON_PAY.name -> {
+              // TODO save info for payment conclusion
+              launchAmazonPay(it.paymentMethod!!, it.priceAmount, it.priceCurrency)  //TODO
+            }
+            else -> {}
           }
         }
       }
@@ -196,6 +204,68 @@ class AdyenPaymentPresenter(
         transactionType = transactionBuilder.type,
         developerWallet = transactionBuilder.toAddress(),
         referrerUrl = transactionBuilder.referrerUrl
+      )
+        .subscribeOn(networkScheduler)
+        .observeOn(viewScheduler)
+        .filter { !waitingResult }
+        .doOnSuccess {
+          view.hideLoadingAndShowView()
+          handlePaymentModel(it)
+        }
+        .subscribe({}, {
+          logger.log(TAG, it)
+          view.showGenericError()
+        })
+    )
+  }
+
+  private fun launchAmazonPay(
+    paymentMethodInfo: ModelObject,
+    priceAmount: BigDecimal,
+    priceCurrency: String,
+  ) {
+    disposables.add(
+      adyenPaymentInteractor.createAmazonSession(paymentMethodInfo, priceAmount, priceCurrency)
+        .subscribeOn(networkScheduler)
+        .observeOn(viewScheduler)
+        .filter { !waitingResult }
+        .doOnSuccess { redirectUrl ->
+          //TODO events for webview start
+          navigator.navigateToUriForResult(redirectUrl)
+        }
+        .subscribe({}, {
+          logger.log(TAG, it)
+          view.showGenericError()
+        })
+    )
+  }
+
+  private fun concludeAmazonPay(          //TODO only after token created and autorization
+    paymentMethodInfo: ModelObject,
+    priceAmount: BigDecimal,
+    priceCurrency: String,
+    amazonToken: String
+  ) {
+    disposables.add(
+      adyenPaymentInteractor.makePayment(
+        adyenPaymentMethod = paymentMethodInfo,
+        shouldStoreMethod = false,
+        hasCvc = false,
+        supportedShopperInteraction = emptyList(),
+        returnUrl = returnUrl,
+        value = priceAmount.toString(),
+        currency = priceCurrency,
+        reference = transactionBuilder.orderReference,
+        paymentType = mapPaymentToService(paymentType).transactionType,
+        origin = origin,
+        packageName = transactionBuilder.domain,
+        metadata = transactionBuilder.payload,
+        sku = transactionBuilder.skuId,
+        callbackUrl = transactionBuilder.callbackUrl,
+        transactionType = transactionBuilder.type,
+        developerWallet = transactionBuilder.toAddress(),
+        referrerUrl = transactionBuilder.referrerUrl,
+        amazonToken = amazonToken
       )
         .subscribeOn(networkScheduler)
         .observeOn(viewScheduler)
@@ -670,10 +740,19 @@ class AdyenPaymentPresenter(
     }
 
   private fun mapPaymentToService(paymentType: String): AdyenPaymentRepository.Methods =
-    if (paymentType == PaymentType.CARD.name) {
-      AdyenPaymentRepository.Methods.CREDIT_CARD
-    } else {
-      AdyenPaymentRepository.Methods.PAYPAL
+    when (paymentType) {
+      PaymentType.CARD.name -> {
+        AdyenPaymentRepository.Methods.CREDIT_CARD
+      }
+      PaymentType.PAYPAL.name -> {
+        AdyenPaymentRepository.Methods.PAYPAL
+      }
+      PaymentType.AMAZON_PAY.name -> {
+        AdyenPaymentRepository.Methods.AMAZON_PAY
+      }
+      else -> {
+        AdyenPaymentRepository.Methods.PAYPAL
+      }
     }
 
   private fun mapToAdyenBillingAddress(billingAddressModel: BillingAddressModel?): AdyenBillingAddress? =
@@ -700,16 +779,26 @@ class AdyenPaymentPresenter(
 
   private fun mapPaymentMethodId(purchaseBundleModel: PurchaseBundleModel): PurchaseBundleModel {
     val bundle = purchaseBundleModel.bundle
-    if (paymentType == PaymentType.CARD.name) {
-      bundle.putString(
-        InAppPurchaseInteractor.PRE_SELECTED_PAYMENT_METHOD_KEY,
-        PaymentMethodsView.PaymentMethodId.CREDIT_CARD.id
-      )
-    } else if (paymentType == PaymentType.PAYPAL.name) {
-      bundle.putString(
-        InAppPurchaseInteractor.PRE_SELECTED_PAYMENT_METHOD_KEY,
-        PaymentMethodsView.PaymentMethodId.PAYPAL.id
-      )
+    when (paymentType) {
+      PaymentType.CARD.name -> {
+        bundle.putString(
+          InAppPurchaseInteractor.PRE_SELECTED_PAYMENT_METHOD_KEY,
+          PaymentMethodsView.PaymentMethodId.CREDIT_CARD.id
+        )
+      }
+      PaymentType.PAYPAL.name -> {
+        bundle.putString(
+          InAppPurchaseInteractor.PRE_SELECTED_PAYMENT_METHOD_KEY,
+          PaymentMethodsView.PaymentMethodId.PAYPAL.id
+        )
+      }
+      PaymentType.AMAZON_PAY.name -> {
+        bundle.putString(
+          InAppPurchaseInteractor.PRE_SELECTED_PAYMENT_METHOD_KEY,
+          PaymentMethodsView.PaymentMethodId.AMAZON_PAY.id
+        )
+      }
+      else -> {}
     }
     return PurchaseBundleModel(bundle, purchaseBundleModel.renewal)
   }
@@ -845,6 +934,7 @@ class AdyenPaymentPresenter(
     val paymentMethod = when (paymentType) {
       PaymentType.PAYPAL.name -> PaymentMethodsAnalytics.PAYMENT_METHOD_PP
       PaymentType.CARD.name -> PaymentMethodsAnalytics.PAYMENT_METHOD_CC
+      PaymentType.AMAZON_PAY.name -> PaymentMethodsAnalytics.PAYMENT_METHOD_AMAZON_PAY
       else -> return
     }
     paymentAnalytics.stopTimingForPurchaseEvent(paymentMethod, success, isPreSelected)

@@ -38,7 +38,8 @@ class AdyenPaymentRepository @Inject constructor(private val adyenApi: AdyenApi,
                   userWallet: String?,
                   walletSignature: String,
                   billingAddress: AdyenBillingAddress?,
-                  referrerUrl: String?): Single<PaymentModel> {
+                  referrerUrl: String?,
+                  amazonToken: String?): Single<PaymentModel> {
     val shopperInteraction = if (!hasCvc && supportedShopperInteractions.contains("ContAuth")) {
       "ContAuth"
     } else "Ecommerce"
@@ -49,7 +50,7 @@ class AdyenPaymentRepository @Inject constructor(private val adyenApi: AdyenApi,
             TokenPayment(adyenPaymentMethod, shouldStoreMethod, returnUrl, shopperInteraction,
                 billingAddress, callbackUrl, metadata, paymentType, origin, reference,
                 developerWallet, entityOemId, entityDomain, entityPromoCode, userWallet,
-                referrerUrl, it)
+                referrerUrl, it)   //TODO amazonToken here
           }
           .flatMap { adyenApi.makeTokenPayment(walletAddress, walletSignature, it) }
           .map { adyenResponseMapper.map(it) }
@@ -65,7 +66,9 @@ class AdyenPaymentRepository @Inject constructor(private val adyenApi: AdyenApi,
               transactionType, currency, value, developerWallet, entityOemId, entityDomain,
               entityPromoCode,
               userWallet,
-              referrerUrl))
+              referrerUrl,
+              amazonToken)
+      )
           .map { adyenResponseMapper.map(it) }
           .onErrorReturn {
             logger.log("AdyenPaymentRepository", it)
@@ -161,7 +164,8 @@ class AdyenPaymentRepository @Inject constructor(private val adyenApi: AdyenApi,
                      @SerializedName("entity.domain") val entityDomain: String?,
                      @SerializedName("entity.promo_code") val entityPromoCode: String?,
                      @SerializedName("wallets.user") val user: String?,
-                     @SerializedName("referrer_url") val referrerUrl: String?)
+                     @SerializedName("referrer_url") val referrerUrl: String?,
+                     @SerializedName("amazonToken") val amazonToken: String?)   //TODO lineup integration
 
   data class VerificationPayment(
       @SerializedName("payment.method") val adyenPaymentMethod: ModelObject,
