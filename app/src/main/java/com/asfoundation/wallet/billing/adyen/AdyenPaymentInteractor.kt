@@ -6,6 +6,7 @@ import com.appcoins.wallet.bdsbilling.WalletService
 import com.appcoins.wallet.billing.BillingMessagesMapper
 import com.appcoins.wallet.billing.adyen.*
 import com.appcoins.wallet.billing.adyen.amazon.AmazonPayRepository
+import com.appcoins.wallet.billing.adyen.amazon.AmazonSession
 import com.appcoins.wallet.billing.util.Error
 import com.asfoundation.wallet.base.RxSchedulers
 import com.asfoundation.wallet.billing.address.BillingAddressRepository
@@ -91,10 +92,10 @@ class AdyenPaymentInteractor @Inject constructor(
     paymentMethodInfo: ModelObject,
     priceAmount: BigDecimal,
     priceCurrency: String,
-  ): Single<String> {
+  ): Single<AmazonSession> {
     return walletService.getAndSignCurrentWalletAddress()
       .flatMap {
-        amazonPayRepository.createAmazonToken(it.address, it.signedAddress, priceAmount, priceCurrency)
+        amazonPayRepository.createAmazonToken(it.address, it.signedAddress, priceAmount.toString(), priceCurrency)
       }
   }
 

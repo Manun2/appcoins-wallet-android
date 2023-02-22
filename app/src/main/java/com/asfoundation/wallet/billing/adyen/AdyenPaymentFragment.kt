@@ -225,6 +225,8 @@ class AdyenPaymentFragment : BasePageViewFragment(), AdyenPaymentView {
         data!!.getSerializableExtra(BILLING_ADDRESS_MODEL) as BillingAddressModel
       this.billingAddressModel = billingAddressModel
       billingAddressInput?.onNext(true)
+    } else if(requestCode == AMAZON_PAY_CODE) {
+
     } else {
       showMoreMethods()
     }
@@ -674,6 +676,8 @@ class AdyenPaymentFragment : BasePageViewFragment(), AdyenPaymentView {
     private const val FREQUENCY = "frequency"
     private const val GAMIFICATION_LEVEL = "gamification_level"
     private const val SKU_DESCRIPTION = "sku_description"
+
+    const val AMAZON_PAY_CODE = 52823208
 
     @JvmStatic
     fun newInstance(

@@ -231,7 +231,7 @@ class AdyenPaymentPresenter(
         .filter { !waitingResult }
         .doOnSuccess { redirectUrl ->
           //TODO events for webview start
-          navigator.navigateToUriForResult(redirectUrl)
+          navigator.navigateToUriForResult(redirectUrl.checkoutSessionId)
         }
         .subscribe({}, {
           logger.log(TAG, it)

@@ -16,9 +16,9 @@ class AmazonPayRepository @Inject constructor(
     walletSignature: String,
     value: String,
     currency: String
-  ): Single<String> {
+  ): Single<AmazonSession> {
     return amazonPayApi.createAmazonToken(walletAddress, walletSignature, value, currency)
-      .map { amazonPayMapper.map(it) }  // TODO
+      .map { amazonPayMapper.map(it) }
       .onErrorReturn {
         logger.log("AmazonPayRepository", it.message)
         amazonPayMapper.mapPaymentModelError(it)

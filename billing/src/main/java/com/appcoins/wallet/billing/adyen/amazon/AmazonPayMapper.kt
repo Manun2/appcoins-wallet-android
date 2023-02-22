@@ -1,6 +1,5 @@
 package com.appcoins.wallet.billing.adyen.amazon
 
-import com.appcoins.wallet.billing.adyen.PaymentModel
 import com.appcoins.wallet.billing.common.BillingErrorMapper
 import com.appcoins.wallet.billing.util.Error
 import com.appcoins.wallet.billing.util.getErrorCodeAndMessage
@@ -11,16 +10,16 @@ open class AmazonPayMapper @Inject constructor(
   private val billingErrorMapper: BillingErrorMapper,
 ) {
 
-  open fun map(response: CreateAmazonSessionResponse): String {
-    return
+  open fun map(response: CreateAmazonSessionResponse): AmazonSession {
+    return AmazonSession(response.checkoutSessionId, response.amazonPayRedirectUrl)
   }
 
-  open fun mapPaymentModelError(throwable: Throwable): String {
+  open fun mapPaymentModelError(throwable: Throwable): AmazonSession {
     throwable.printStackTrace()
     val codeAndMessage = throwable.getErrorCodeAndMessage()
-    val errorInfo = billingErrorMapper.mapErrorInfo(codeAndMessage.first, codeAndMessage.second)
+    val errorInfo = billingErrorMapper.mapErrorInfo(codeAndMessage.first, codeAndMessage.second)  // TODO remove if not needed
     val error = Error(true, throwable.isNoNetworkException(), errorInfo)
-    return PaymentModel(error)
+    return AmazonSession(error)
   }
 
 }
