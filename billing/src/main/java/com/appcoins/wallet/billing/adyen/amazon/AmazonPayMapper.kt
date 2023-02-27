@@ -14,6 +14,10 @@ open class AmazonPayMapper @Inject constructor(
     return AmazonSession(response.checkoutSessionId, response.amazonPayRedirectUrl)
   }
 
+  open fun map(response: AmazonPayRedirectResponse): AmazonPayRedirectUrl {
+    return AmazonPayRedirectUrl(response.checkoutSessionId, response.amazonPayRedirectUrl)
+  }
+
   open fun mapPaymentModelError(throwable: Throwable): AmazonSession {
     throwable.printStackTrace()
     val codeAndMessage = throwable.getErrorCodeAndMessage()

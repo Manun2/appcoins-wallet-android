@@ -167,7 +167,8 @@ class AdyenPaymentPresenter(
             }
             PaymentType.AMAZON_PAY.name -> {
               // TODO save info for payment conclusion
-              launchAmazonPay(it.paymentMethod!!, it.priceAmount, it.priceCurrency)  //TODO
+              launchAmazonPay()  //TODO
+              //navigator.navigateToUriForResult("test")   //TODO dummy for testing
             }
             else -> {}
           }
@@ -219,19 +220,15 @@ class AdyenPaymentPresenter(
     )
   }
 
-  private fun launchAmazonPay(
-    paymentMethodInfo: ModelObject,
-    priceAmount: BigDecimal,
-    priceCurrency: String,
-  ) {
+  private fun launchAmazonPay() {
     disposables.add(
-      adyenPaymentInteractor.createAmazonSession(paymentMethodInfo, priceAmount, priceCurrency)
+      adyenPaymentInteractor.createAmazonPayUrl()
         .subscribeOn(networkScheduler)
         .observeOn(viewScheduler)
         .filter { !waitingResult }
-        .doOnSuccess { redirectUrl ->
+        .doOnSuccess { url ->
           //TODO events for webview start
-          navigator.navigateToUriForResult(redirectUrl.checkoutSessionId)
+          navigator.navigateToUriForResult(url)
         }
         .subscribe({}, {
           logger.log(TAG, it)
@@ -239,6 +236,27 @@ class AdyenPaymentPresenter(
         })
     )
   }
+
+//  private fun launchAmazonPay(
+//    paymentMethodInfo: ModelObject,
+//    priceAmount: BigDecimal,
+//    priceCurrency: String,
+//  ) {
+//    disposables.add(
+//      adyenPaymentInteractor.createAmazonSession(paymentMethodInfo, priceAmount, priceCurrency)
+//        .subscribeOn(networkScheduler)
+//        .observeOn(viewScheduler)
+//        .filter { !waitingResult }
+//        .doOnSuccess { redirectUrl ->
+//          //TODO events for webview start
+//          navigator.navigateToUriForResult(redirectUrl.checkoutSessionId)
+//        }
+//        .subscribe({}, {
+//          logger.log(TAG, it)
+//          view.showGenericError()
+//        })
+//    )
+//  }
 
   private fun concludeAmazonPay(          //TODO only after token created and autorization
     paymentMethodInfo: ModelObject,

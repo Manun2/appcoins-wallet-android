@@ -55,6 +55,8 @@ class BillingWebViewFragment : BasePageViewFragment() {
     private const val LOCAL_PAYMENTS_URL = "https://myappcoins.com/t/"
     private var PAYPAL_SUCCESS_SCHEMA = PaypalReturnSchemas.RETURN.schema
     private var PAYPAL_CANCEL_SCHEMA = PaypalReturnSchemas.CANCEL.schema
+    private var AMAZON_LOGGED_IN_SCHEMA = "https://apichain.dev.catappult.io/transaction/inapp"  //TODO change to actual schema
+
     private val EXTERNAL_INTENT_SCHEMA_LIST = listOf(
       "picpay://",
       "shopeeid://",
@@ -141,6 +143,7 @@ class BillingWebViewFragment : BasePageViewFragment() {
           clickUrl.contains(CODAPAY_CANCEL_URL) -> finishWithFail(clickUrl)
           clickUrl.contains(OPEN_SUPPORT) -> finishWithFail(clickUrl)
           clickUrl.contains(PAYPAL_CANCEL_SCHEMA) -> finishWithFail(clickUrl)
+          clickUrl.contains(AMAZON_LOGGED_IN_SCHEMA) -> finishWithSuccess(clickUrl)
           else -> {
             currentUrl = clickUrl
             return false
@@ -164,7 +167,8 @@ class BillingWebViewFragment : BasePageViewFragment() {
     view.webview.settings.javaScriptEnabled = true
     view.webview.settings.domStorageEnabled = true
     view.webview.settings.useWideViewPort = true
-    view.webview.loadUrl(currentUrl)
+//    view.webview.loadUrl(currentUrl)        //TODO uncomment, for testing
+    view.webview.loadUrl("https://api.dev.catappult.io/broker/8.20230101/gateways/adyen_v2/amazonpay/login") //TODO remove, for testing
 
     view?.warning_get_bt?.setOnClickListener {
       dismissGetAppWarning()

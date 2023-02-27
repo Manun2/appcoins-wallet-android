@@ -3,6 +3,7 @@ package com.asfoundation.wallet.di.api.microservices
 import cm.aptoide.skills.api.TopUpApi
 import com.appcoins.wallet.bdsbilling.repository.RemoteRepository
 import com.appcoins.wallet.billing.adyen.AdyenPaymentRepository
+import com.appcoins.wallet.billing.adyen.amazon.AmazonPayRepository
 import com.appcoins.wallet.billing.skills.SkillsPaymentRepository
 import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.backup.repository.BackupRepository
@@ -73,6 +74,14 @@ class BrokerApiModule {
     @BrokerDefaultRetrofit retrofit: Retrofit
   ): PayPalV2Repository.PaypalV2Api {
     return retrofit.create(PayPalV2Repository.PaypalV2Api::class.java)
+  }
+
+  @Singleton
+  @Provides
+  fun providesAmazonPayApi(
+    @BrokerDefaultRetrofit retrofit: Retrofit
+  ): AmazonPayRepository.AmazonPayApi {
+    return retrofit.create(AmazonPayRepository.AmazonPayApi::class.java)
   }
 
   @Singleton

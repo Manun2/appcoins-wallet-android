@@ -7,6 +7,7 @@ import com.appcoins.wallet.billing.BillingMessagesMapper
 import com.appcoins.wallet.billing.adyen.*
 import com.appcoins.wallet.billing.adyen.amazon.AmazonPayRepository
 import com.appcoins.wallet.billing.adyen.amazon.AmazonSession
+import com.appcoins.wallet.billing.adyen.amazon.CreateAmazonSessionResponse
 import com.appcoins.wallet.billing.util.Error
 import com.asfoundation.wallet.base.RxSchedulers
 import com.asfoundation.wallet.billing.address.BillingAddressRepository
@@ -88,14 +89,23 @@ class AdyenPaymentInteractor @Inject constructor(
         }
   }
 
-  fun createAmazonSession(
-    paymentMethodInfo: ModelObject,
-    priceAmount: BigDecimal,
-    priceCurrency: String,
-  ): Single<AmazonSession> {
+//  fun createAmazonSession(
+//    paymentMethodInfo: ModelObject,
+//    priceAmount: BigDecimal,
+//    priceCurrency: String,
+//  ): Single<AmazonSession> {
+//    return walletService.getAndSignCurrentWalletAddress()
+//      .flatMap {
+//        amazonPayRepository.createAmazonToken(it.address, it.signedAddress, priceAmount.toString(), priceCurrency)
+//      }
+////    return Single.just(AmazonSession(CreateAmazonSessionResponse("1234","aaa.com")))  //TODO dummy
+//  }
+
+  val baseAmazonUrl = "https://api.dev.catappult.io/broker/8.20230101/gateways/adyen_v2/amazonpay/login"
+  fun createAmazonPayUrl(): Single<String> {
     return walletService.getAndSignCurrentWalletAddress()
-      .flatMap {
-        amazonPayRepository.createAmazonToken(it.address, it.signedAddress, priceAmount.toString(), priceCurrency)
+      .map {
+        "$baseAmazonUrl?wallet.address=${it.address}&wallet.signature=${it.signedAddress}"
       }
   }
 
