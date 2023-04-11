@@ -4,13 +4,13 @@ import com.appcoins.wallet.core.utils.jvm_common.Logger
 import com.appcoins.wallet.gamification.Gamification
 import com.asfoundation.wallet.entity.Wallet
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.iab.FiatValue
 import com.appcoins.wallet.core.utils.android_common.extensions.sumByBigDecimal
 import com.asfoundation.wallet.wallets.FetchWalletsInteract
 import com.asfoundation.wallet.wallets.WalletCreatorInteract
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
-import com.asfoundation.wallet.wallets.usecases.ObserveWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.ObserveWalletInfoUseCase
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -20,11 +20,11 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class WalletsInteract @Inject constructor(
-  private val observeWalletInfoUseCase: ObserveWalletInfoUseCase,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val observeWalletInfoUseCase: com.appcoins.wallet.legacy.domain.ObserveWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val fetchWalletsInteract: FetchWalletsInteract,
   private val walletCreatorInteract: WalletCreatorInteract,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val preferencesRepository: CommonsPreferencesDataSource,
   private val gamificationRepository: Gamification,
   private val logger: Logger,

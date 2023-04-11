@@ -2,7 +2,7 @@ package com.asfoundation.wallet.ui.settings.entry
 
 import com.asfoundation.wallet.billing.analytics.WalletsAnalytics
 import com.asfoundation.wallet.billing.analytics.WalletsEventSender
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.FingerprintInteractor
 import com.asfoundation.wallet.ui.wallets.WalletsInteract
 import com.asfoundation.wallet.wallets.FindDefaultWalletInteract
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class SettingsInteractor @Inject constructor(
   private val findDefaultWalletInteract: FindDefaultWalletInteract,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val walletsInteract: WalletsInteract,
   private val fingerprintInteractor: FingerprintInteractor,
   private val walletsEventSender: WalletsEventSender,

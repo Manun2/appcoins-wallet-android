@@ -27,7 +27,7 @@ import com.appcoins.wallet.core.network.microservices.api.product.InappBillingAp
 import com.appcoins.wallet.core.network.microservices.api.product.SubscriptionBillingApi
 import com.asfoundation.wallet.analytics.initilizeDataAnalytics
 import com.asfoundation.wallet.main.appsflyer.ApkOriginVerification
-import com.asfoundation.wallet.support.AlarmManagerBroadcastReceiver
+import com.appcoins.wallet.intercom.AlarmManagerBroadcastReceiver
 import com.asfoundation.wallet.ui.iab.AppcoinsOperationsDataSaver
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import com.flurry.android.FlurryAgent
@@ -199,7 +199,7 @@ class App : MultiDexApplication(), BillingDependenciesProvider {
   }
 
   private fun setupSupportNotificationAlarm() {
-    AlarmManagerBroadcastReceiver.scheduleAlarm(this)
+    com.appcoins.wallet.intercom.AlarmManagerBroadcastReceiver.scheduleAlarm(this)
   }
 
   private fun initiateFlurry() {

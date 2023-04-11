@@ -1,8 +1,7 @@
 package com.asfoundation.wallet.ui.iab.payments.common.error
 
 import androidx.fragment.app.Fragment
-import com.asfoundation.wallet.support.SupportInteractor
-import com.asfoundation.wallet.ui.iab.IabActivity
+import com.appcoins.wallet.intercom.SupportInteractor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +30,8 @@ class IabErrorModule {
   fun providesIabErrorPresenter(fragment: Fragment,
                                 data: IabErrorData,
                                 navigator: IabErrorNavigator,
-                                supportInteractor: SupportInteractor): IabErrorPresenter {
+                                supportInteractor: com.appcoins.wallet.intercom.SupportInteractor
+  ): IabErrorPresenter {
     return IabErrorPresenter(fragment as IabErrorView, data, navigator, supportInteractor,
         CompositeDisposable())
   }

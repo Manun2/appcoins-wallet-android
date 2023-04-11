@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 
 class BackupEntryViewModelFactory(
   private val data: BackupEntryData,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val currencyFormatUtils: CurrencyFormatUtils,
   private val rxSchedulers: RxSchedulers,
 ) :

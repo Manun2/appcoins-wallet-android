@@ -15,7 +15,7 @@ import com.asfoundation.wallet.billing.partners.AttributionEntity
 import com.asfoundation.wallet.billing.partners.PartnerAddressService
 import com.asfoundation.wallet.promo_code.repository.PromoCode
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.iab.FiatValue
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import com.asfoundation.wallet.util.FakeSchedulers
@@ -61,7 +61,7 @@ class AdyenPaymentInteractorTest {
   lateinit var walletService: WalletService
 
   @Mock
-  lateinit var supportInteractor: SupportInteractor
+  lateinit var supportInteractor: com.appcoins.wallet.intercom.SupportInteractor
 
   @Mock
   lateinit var walletBlockedInteractor: WalletBlockedInteract

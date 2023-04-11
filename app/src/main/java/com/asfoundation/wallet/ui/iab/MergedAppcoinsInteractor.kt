@@ -3,7 +3,7 @@ package com.asfoundation.wallet.ui.iab
 import com.asf.wallet.R
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.repository.InAppPurchaseService
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.balance.BalanceInteractor
 import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract
 import com.appcoins.wallet.sharedpreferences.FingerprintPreferencesDataSource
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MergedAppcoinsInteractor @Inject constructor(
   private val balanceInteractor: BalanceInteractor,
   private val walletBlockedInteract: WalletBlockedInteract,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val inAppPurchaseInteractor: InAppPurchaseInteractor,
   private val fingerprintPreferences: FingerprintPreferencesDataSource
 ) {

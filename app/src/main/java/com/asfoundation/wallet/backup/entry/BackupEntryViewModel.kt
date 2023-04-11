@@ -4,7 +4,7 @@ import com.appcoins.wallet.ui.arch.*
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.asfoundation.wallet.wallets.domain.WalletBalance
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 
 sealed class BackupEntrySideEffect : SideEffect
 
@@ -15,7 +15,7 @@ data class BackupEntryState(
 
 class BackupEntryViewModel(
   private val data: BackupEntryData,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val currencyFormatUtils: CurrencyFormatUtils,
   private val rxSchedulers: RxSchedulers,
 ) : BaseViewModel<BackupEntryState, BackupEntrySideEffect>(

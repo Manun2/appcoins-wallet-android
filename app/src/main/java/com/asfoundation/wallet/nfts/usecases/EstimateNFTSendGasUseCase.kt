@@ -4,12 +4,12 @@ import com.asfoundation.wallet.change_currency.use_cases.GetSelectedCurrencyUseC
 import com.asfoundation.wallet.nfts.domain.GasInfo
 import com.asfoundation.wallet.nfts.domain.NFTItem
 import com.asfoundation.wallet.nfts.repository.NFTRepository
-import com.asfoundation.wallet.wallets.usecases.GetCurrentWalletUseCase
+import com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
 class EstimateNFTSendGasUseCase @Inject constructor(
-  private val getCurrentWallet: GetCurrentWalletUseCase,
+  private val getCurrentWallet: com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase,
   private val getSelectedCurrencyUseCase: GetSelectedCurrencyUseCase,
   private val NFTRepository: NFTRepository
 ) {

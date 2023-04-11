@@ -11,7 +11,7 @@ import com.asfoundation.wallet.entity.PendingTransaction
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
 import com.asfoundation.wallet.repository.BdsPendingTransactionService
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.gamification.GamificationInteractor
 import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract
 import com.appcoins.wallet.sharedpreferences.FingerprintPreferencesDataSource
@@ -23,7 +23,7 @@ import java.math.BigDecimal
 import javax.inject.Inject
 
 class PaymentMethodsInteractor @Inject constructor(
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val gamificationInteractor: GamificationInteractor,
   private val walletBlockedInteract: WalletBlockedInteract,
   private val inAppPurchaseInteractor: InAppPurchaseInteractor,

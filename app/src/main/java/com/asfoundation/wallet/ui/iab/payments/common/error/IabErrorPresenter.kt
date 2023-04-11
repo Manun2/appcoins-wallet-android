@@ -1,16 +1,16 @@
 package com.asfoundation.wallet.ui.iab.payments.common.error
 
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
 class IabErrorPresenter(
-    private val view: IabErrorView,
-    private val data: IabErrorData,
-    private val navigator: IabErrorNavigator,
-    private val supportInteractor: SupportInteractor,
-    private val disposables: CompositeDisposable) {
+  private val view: IabErrorView,
+  private val data: IabErrorData,
+  private val navigator: IabErrorNavigator,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
+  private val disposables: CompositeDisposable) {
 
   fun present() {
     initializeView()

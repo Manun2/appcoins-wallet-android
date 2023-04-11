@@ -9,7 +9,7 @@ import com.asfoundation.wallet.backup.NotificationNeeded
 import com.asfoundation.wallet.feature_flags.topup.TopUpDefaultValueUseCase
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
 import com.asfoundation.wallet.service.currencies.LocalCurrencyConversionService
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.gamification.GamificationInteractor
 import com.asfoundation.wallet.ui.iab.FiatValue
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
@@ -30,7 +30,7 @@ class TopUpInteractor @Inject constructor(
   private val topUpValuesService: TopUpValuesService,
   private var walletBlockedInteract: WalletBlockedInteract,
   private var inAppPurchaseInteractor: InAppPurchaseInteractor,
-  private var supportInteractor: SupportInteractor,
+  private var supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private var topUpDefaultValueUseCase: TopUpDefaultValueUseCase,
   private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase
 ) {

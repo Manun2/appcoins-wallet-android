@@ -5,7 +5,7 @@ import com.appcoins.wallet.ui.arch.BaseViewModel
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.ui.arch.SideEffect
 import com.appcoins.wallet.ui.arch.ViewState
-import com.asfoundation.wallet.gamification.ObserveUserStatsUseCase
+import com.appcoins.wallet.legacy.domain.ObserveUserStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ object SplashExtenderState : ViewState
 
 @HiltViewModel
 class SplashExtenderViewModel @Inject constructor(
-  private val observeUserStatsUseCase: ObserveUserStatsUseCase,
+  private val observeUserStatsUseCase: com.appcoins.wallet.legacy.domain.ObserveUserStatsUseCase,
   private val rxSchedulers: RxSchedulers
 ) : BaseViewModel<SplashExtenderState, SplashExtenderSideEffect>(SplashExtenderState) {
 

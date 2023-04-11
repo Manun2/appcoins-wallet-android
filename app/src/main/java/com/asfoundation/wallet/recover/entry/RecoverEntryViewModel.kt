@@ -11,8 +11,8 @@ import com.asfoundation.wallet.recover.result.FailedEntryRecover
 import com.asfoundation.wallet.recover.result.RecoverEntryResult
 import com.asfoundation.wallet.recover.result.SuccessfulEntryRecover
 import com.asfoundation.wallet.recover.use_cases.*
-import com.asfoundation.wallet.wallets.usecases.UpdateWalletInfoUseCase
-import com.asfoundation.wallet.wallets.usecases.UpdateWalletNameUseCase
+import com.appcoins.wallet.legacy.domain.UpdateWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -32,10 +32,10 @@ class RecoverEntryViewModel @Inject constructor(
   private val isKeystoreUseCase: IsKeystoreUseCase,
   private val recoverEntryKeystoreUseCase: RecoverEntryKeystoreUseCase,
   private val recoverEntryPrivateKeyUseCase: RecoverEntryPrivateKeyUseCase,
-  private val updateWalletInfoUseCase: UpdateWalletInfoUseCase,
+  private val updateWalletInfoUseCase: com.appcoins.wallet.legacy.domain.UpdateWalletInfoUseCase,
   private val setOnboardingCompletedUseCase: SetOnboardingCompletedUseCase,
   private val updateBackupStateFromRecoverUseCase: UpdateBackupStateFromRecoverUseCase,
-  private val updateWalletNameUseCase: UpdateWalletNameUseCase,
+  private val updateWalletNameUseCase: com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase,
   private val walletsEventSender: WalletsEventSender,
   private val rxSchedulers: RxSchedulers
 ) : BaseViewModel<RecoverEntryState, RecoverEntrySideEffect>(initialState()) {

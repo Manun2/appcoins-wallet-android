@@ -25,14 +25,14 @@ import com.asfoundation.wallet.entity.GlobalBalance
 import com.asfoundation.wallet.home.ui.list.HomeController
 import com.asfoundation.wallet.home.ui.list.HomeListClick
 import com.asfoundation.wallet.home.ui.list.transactions.empty.EmptyTransactionsModel.Companion.CAROUSEL_GAMIFICATION
-import com.asfoundation.wallet.support.SupportNotificationProperties
+import com.appcoins.wallet.intercom.SupportNotificationProperties
 import com.asfoundation.wallet.transactions.Transaction
 import com.asfoundation.wallet.ui.widget.entity.TransactionsModel
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
-import com.asfoundation.wallet.wallet.home.HomeNavigator
-import com.asfoundation.wallet.wallet.home.HomeSideEffect
-import com.asfoundation.wallet.wallet.home.HomeState
-import com.asfoundation.wallet.wallet.home.HomeViewModel
+import com.appcoins.wallet.home.HomeNavigator
+import com.appcoins.wallet.home.HomeSideEffect
+import com.appcoins.wallet.home.HomeState
+import com.appcoins.wallet.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.intercom.android.sdk.Intercom
 import java.math.BigDecimal
@@ -93,7 +93,7 @@ class HomeFragment : BasePageViewFragment(),
     super.onResume()
     val fromSupportNotification =
       requireActivity().intent.getBooleanExtra(
-        SupportNotificationProperties.SUPPORT_NOTIFICATION_CLICK,
+        com.appcoins.wallet.intercom.SupportNotificationProperties.SUPPORT_NOTIFICATION_CLICK,
         false
       )
     if (!fromSupportNotification) {

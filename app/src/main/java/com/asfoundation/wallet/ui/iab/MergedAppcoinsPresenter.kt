@@ -12,7 +12,7 @@ import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.appcoins.wallet.core.utils.android_common.Log
 import com.appcoins.wallet.core.utils.android_common.WalletCurrency
 import com.appcoins.wallet.core.utils.android_common.extensions.isNoNetworkException
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -28,7 +28,7 @@ class MergedAppcoinsPresenter(
   private val networkScheduler: Scheduler,
   private val analytics: BillingAnalytics,
   private val formatter: CurrencyFormatUtils,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val mergedAppcoinsInteractor: MergedAppcoinsInteractor,
   private val gamificationLevel: Int,
   private val navigator: Navigator,

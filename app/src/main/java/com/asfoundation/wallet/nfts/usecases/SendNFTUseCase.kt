@@ -5,14 +5,14 @@ import com.asfoundation.wallet.nfts.domain.NftTransferResult
 import com.asfoundation.wallet.nfts.repository.NFTRepository
 import com.asfoundation.wallet.repository.PasswordStore
 import com.asfoundation.wallet.service.KeyStoreFileManager
-import com.asfoundation.wallet.wallets.usecases.GetCurrentWalletUseCase
+import com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
 import io.reactivex.Single
 import org.web3j.crypto.WalletUtils
 import java.math.BigInteger
 import javax.inject.Inject
 
 class SendNFTUseCase @Inject constructor(
-  private val getCurrentWallet: GetCurrentWalletUseCase,
+  private val getCurrentWallet: com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase,
   private val NFTRepository: NFTRepository,
   private val keyStoreFileManager: KeyStoreFileManager,
   private val passwordStore: PasswordStore

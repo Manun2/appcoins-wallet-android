@@ -7,7 +7,7 @@ import com.appcoins.wallet.core.network.backend.model.GamificationResponse
 import com.appcoins.wallet.core.network.backend.model.GenericResponse
 import com.appcoins.wallet.core.network.backend.model.ReferralResponse
 import com.appcoins.wallet.core.network.backend.model.WalletOrigin
-import com.asfoundation.wallet.home.usecases.FindDefaultWalletUseCase
+import com.appcoins.wallet.legacy.domain.FindDefaultWalletUseCase
 import com.asfoundation.wallet.interact.EmptyNotification
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
 import com.asfoundation.wallet.referrals.CardNotification
@@ -25,7 +25,7 @@ class PromotionsInteractor @Inject constructor(
   private val referralInteractor: ReferralInteractorContract,
   private val gamificationInteractor: GamificationInteractor,
   private val promotionsRepo: PromotionsRepository,
-  private val findWalletUseCase: FindDefaultWalletUseCase,
+  private val findWalletUseCase: com.appcoins.wallet.legacy.domain.FindDefaultWalletUseCase,
   private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase,
   private val userStatsPreferencesRepository: UserStatsLocalData,
 ) {

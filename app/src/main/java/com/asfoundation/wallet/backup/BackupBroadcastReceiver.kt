@@ -7,7 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.asfoundation.wallet.backup.BackupNotificationUtils.NOTIFICATION_SERVICE_ID
-import com.asfoundation.wallet.backup.use_cases.SaveDismissSystemNotificationUseCase
+import com.appcoins.wallet.legacy.domain.SaveDismissSystemNotificationUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class BackupBroadcastReceiver : ComponentActivity() {
 
   @Inject
-  lateinit var saveDismissSystemNotificationUseCase: SaveDismissSystemNotificationUseCase
+  lateinit var saveDismissSystemNotificationUseCase: com.appcoins.wallet.legacy.domain.SaveDismissSystemNotificationUseCase
 
   private lateinit var notificationManager: NotificationManager
 

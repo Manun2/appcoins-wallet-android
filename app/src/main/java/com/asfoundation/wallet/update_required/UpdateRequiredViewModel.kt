@@ -7,7 +7,7 @@ import com.appcoins.wallet.ui.arch.SideEffect
 import com.appcoins.wallet.ui.arch.ViewState
 import com.asfoundation.wallet.ui.wallets.WalletsModel
 import com.asfoundation.wallet.update_required.use_cases.BuildUpdateIntentUseCase
-import com.asfoundation.wallet.wallets.usecases.ObserveWalletsModelUseCase
+import com.appcoins.wallet.legacy.domain.ObserveWalletsModelUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -23,7 +23,7 @@ data class UpdateRequiredState(val walletsModel: Async<WalletsModel> = Async.Uni
 @HiltViewModel
 class UpdateRequiredViewModel @Inject constructor(
   private val buildUpdateIntentUseCase: BuildUpdateIntentUseCase,
-  private val observeWalletsModelUseCase: ObserveWalletsModelUseCase
+  private val observeWalletsModelUseCase: com.appcoins.wallet.legacy.domain.ObserveWalletsModelUseCase
 ) : BaseViewModel<UpdateRequiredState, UpdateRequiredSideEffect>(initialState()) {
 
   companion object {

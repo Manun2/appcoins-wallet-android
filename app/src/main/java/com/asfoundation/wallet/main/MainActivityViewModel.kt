@@ -5,11 +5,11 @@ import com.appcoins.wallet.ui.arch.BaseViewModel
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.ui.arch.SideEffect
 import com.appcoins.wallet.ui.arch.ViewState
-import com.asfoundation.wallet.home.usecases.DisplayConversationListOrChatUseCase
+import com.appcoins.wallet.legacy.domain.DisplayConversationListOrChatUseCase
 import com.asfoundation.wallet.main.use_cases.HasAuthenticationPermissionUseCase
 import com.asfoundation.wallet.main.use_cases.IncreaseLaunchCountUseCase
 import com.asfoundation.wallet.onboarding.use_cases.ShouldShowOnboardingUseCase
-import com.asfoundation.wallet.support.SupportNotificationProperties.SUPPORT_NOTIFICATION_CLICK
+import com.appcoins.wallet.intercom.SupportNotificationProperties.SUPPORT_NOTIFICATION_CLICK
 import com.asfoundation.wallet.update_required.use_cases.GetAutoUpdateModelUseCase
 import com.asfoundation.wallet.update_required.use_cases.HasRequiredHardUpdateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ object MainActivityState : ViewState
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
   private val increaseLaunchCount: IncreaseLaunchCountUseCase,
-  private val displayConversationListOrChatUseCase: DisplayConversationListOrChatUseCase,
+  private val displayConversationListOrChatUseCase: com.appcoins.wallet.legacy.domain.DisplayConversationListOrChatUseCase,
   private val getAutoUpdateModelUseCase: GetAutoUpdateModelUseCase,
   private val hasRequiredHardUpdateUseCase: HasRequiredHardUpdateUseCase,
   private val hasAuthenticationPermissionUseCase: HasAuthenticationPermissionUseCase,

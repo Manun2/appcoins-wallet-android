@@ -4,19 +4,19 @@ import com.appcoins.wallet.gamification.repository.Levels
 import com.appcoins.wallet.gamification.repository.PromotionsRepository
 import com.appcoins.wallet.gamification.repository.UserStats
 import com.appcoins.wallet.core.network.backend.model.VipReferralResponse
-import com.asfoundation.wallet.gamification.ObserveLevelsUseCase
+import com.appcoins.wallet.legacy.domain.ObserveLevelsUseCase
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
 import com.asfoundation.wallet.promotions.model.PromotionsMapper
 import com.asfoundation.wallet.promotions.model.PromotionsModel
 import com.asfoundation.wallet.promotions.model.Voucher
 import com.asfoundation.wallet.promotions.model.VoucherListModel
-import com.asfoundation.wallet.wallets.usecases.GetCurrentWalletUseCase
+import com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
 import io.reactivex.Observable
 import javax.inject.Inject
 
 class GetPromotionsUseCase @Inject constructor(
-  private val getCurrentWallet: GetCurrentWalletUseCase,
-  private val observeLevels: ObserveLevelsUseCase,
+  private val getCurrentWallet: com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase,
+  private val observeLevels: com.appcoins.wallet.legacy.domain.ObserveLevelsUseCase,
   private val promotionsMapper: PromotionsMapper,
   private val promotionsRepository: PromotionsRepository,
   private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase,

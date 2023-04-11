@@ -17,7 +17,7 @@ import com.asfoundation.wallet.onboarding_new_payment.OnboardingPaymentEvents
 import com.asfoundation.wallet.onboarding_new_payment.OnboardingPaymentEvents.Companion.BACK_TO_THE_GAME
 import com.asfoundation.wallet.onboarding_new_payment.OnboardingPaymentEvents.Companion.EXPLORE_WALLET
 import com.asfoundation.wallet.onboarding_new_payment.mapToService
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Single
@@ -45,7 +45,7 @@ class OnboardingPaymentResultViewModel @Inject constructor(
   private val adyenPaymentInteractor: AdyenPaymentInteractor,
   private val events: OnboardingPaymentEvents,
   private val setOnboardingCompletedUseCase: SetOnboardingCompletedUseCase,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val rxSchedulers: RxSchedulers,
   savedStateHandle: SavedStateHandle
 ) :

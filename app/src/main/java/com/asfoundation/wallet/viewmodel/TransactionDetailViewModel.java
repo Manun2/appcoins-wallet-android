@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.appcoins.wallet.core.utils.properties.HostProperties;
-import com.asf.wallet.BuildConfig;
 import com.asfoundation.wallet.entity.NetworkInfo;
 import com.asfoundation.wallet.entity.TransactionsDetailsModel;
 import com.asfoundation.wallet.home.usecases.DisplayChatUseCase;
@@ -21,11 +20,9 @@ import com.asfoundation.wallet.subscriptions.SubscriptionActivity;
 import com.asfoundation.wallet.transactions.Operation;
 import com.asfoundation.wallet.transactions.Transaction;
 import com.asfoundation.wallet.ui.iab.FiatValue;
-import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import javax.inject.Inject;
 
 public class TransactionDetailViewModel extends BaseViewModel {
 

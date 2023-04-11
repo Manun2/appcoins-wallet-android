@@ -27,7 +27,7 @@ import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.asfoundation.wallet.util.Period
 import com.appcoins.wallet.core.utils.android_common.WalletCurrency
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import com.jakewharton.rxbinding2.view.RxView
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
@@ -125,7 +125,7 @@ class MergedAppcoinsFragment : BasePageViewFragment(), MergedAppcoinsView {
   lateinit var logger: Logger
 
   @Inject
-  lateinit var getWalletInfoUseCase: GetWalletInfoUseCase
+  lateinit var getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 
   @Inject
   lateinit var paymentMethodsMapper: PaymentMethodsMapper

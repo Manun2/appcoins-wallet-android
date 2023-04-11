@@ -2,7 +2,7 @@ package com.asfoundation.wallet.recover.result
 
 import com.asfoundation.wallet.entity.WalletKeyStore
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import io.reactivex.Single
 
 sealed class RecoverEntryResult
@@ -25,7 +25,7 @@ sealed class FailedEntryRecover : RecoverEntryResult() {
 }
 
 class RecoverEntryResultMapper(
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val currencyFormatUtils: CurrencyFormatUtils,
   private val walletKeyStore: WalletKeyStore
 ) {

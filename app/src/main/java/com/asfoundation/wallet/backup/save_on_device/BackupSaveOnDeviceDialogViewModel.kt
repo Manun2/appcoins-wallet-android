@@ -6,9 +6,9 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.SavedStateHandle
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.ui.arch.*
-import com.asfoundation.wallet.backup.use_cases.BackupSuccessLogUseCase
-import com.asfoundation.wallet.backup.use_cases.SaveBackupFileUseCase
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.BackupSuccessLogUseCase
+import com.appcoins.wallet.legacy.domain.SaveBackupFileUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,9 +27,9 @@ data class BackupSaveOnDeviceDialogState(
 @HiltViewModel
 class BackupSaveOnDeviceDialogViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
-  private val saveBackupFileUseCase: SaveBackupFileUseCase,
-  private val backupSuccessLogUseCase: BackupSuccessLogUseCase,
-  walletInfoUseCase: GetWalletInfoUseCase,
+  private val saveBackupFileUseCase: com.appcoins.wallet.legacy.domain.SaveBackupFileUseCase,
+  private val backupSuccessLogUseCase: com.appcoins.wallet.legacy.domain.BackupSuccessLogUseCase,
+  walletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   rxSchedulers: RxSchedulers
 ) :
   BaseViewModel<BackupSaveOnDeviceDialogState, BackupSaveOnDeviceDialogSideEffect>(

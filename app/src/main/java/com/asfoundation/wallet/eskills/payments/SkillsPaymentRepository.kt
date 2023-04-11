@@ -14,7 +14,7 @@ import com.asfoundation.wallet.ui.iab.AppcoinsRewardsBuyInteract
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.appcoins.wallet.core.utils.android_common.WalletCurrency
 import com.asfoundation.wallet.verification.ui.credit_card.VerificationCreditCardActivity
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import io.reactivex.Single
 import it.czerwinski.android.hilt.annotations.BoundTo
 import java.math.BigDecimal
@@ -26,7 +26,7 @@ class SkillsPaymentRepository @Inject constructor(
   private val currencyFormatUtils: CurrencyFormatUtils,
   private val appCoinsCreditsPayment: AppCoinsCreditsPayment,
   private val schedulers: RxSchedulers,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val appcoinsRewardsBuyInteract: AppcoinsRewardsBuyInteract,
 ) : ExternalSkillsPaymentProvider {
   override fun getBalance(): Single<BigDecimal> {

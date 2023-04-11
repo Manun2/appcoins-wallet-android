@@ -4,7 +4,7 @@ import com.asfoundation.wallet.entity.Wallet
 import com.asfoundation.wallet.interact.rx.operator.Operators
 import com.asfoundation.wallet.repository.PasswordStore
 import com.asfoundation.wallet.repository.WalletRepositoryType
-import com.asfoundation.wallet.wallets.usecases.UpdateWalletNameUseCase
+import com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class WalletCreatorInteract @Inject constructor(
   private val walletRepository: WalletRepositoryType,
   private val passwordStore: PasswordStore,
-  private val updateWalletNameUseCase: UpdateWalletNameUseCase,
+  private val updateWalletNameUseCase: com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase,
 ) {
 
   fun create(name: String? = null): Single<Wallet> = passwordStore.generatePassword()

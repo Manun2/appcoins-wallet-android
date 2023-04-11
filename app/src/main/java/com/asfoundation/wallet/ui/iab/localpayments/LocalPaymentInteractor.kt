@@ -11,7 +11,7 @@ import com.appcoins.wallet.core.network.microservices.model.Transaction.Status.*
 import com.asfoundation.wallet.billing.adyen.PurchaseBundleModel
 import com.asfoundation.wallet.billing.partners.AddressService
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.iab.FiatValue
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import com.asfoundation.wallet.verification.ui.credit_card.WalletVerificationInteractor
@@ -26,7 +26,7 @@ class LocalPaymentInteractor @Inject constructor(private val walletService: Wall
                                                  private val partnerAddressService: AddressService,
                                                  private val inAppPurchaseInteractor: InAppPurchaseInteractor,
                                                  private val billingMessagesMapper: BillingMessagesMapper,
-                                                 private val supportInteractor: SupportInteractor,
+                                                 private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
                                                  private val walletBlockedInteract: WalletBlockedInteract,
                                                  private val walletVerificationInteractor: WalletVerificationInteractor,
                                                  private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase,

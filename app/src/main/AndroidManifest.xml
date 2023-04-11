@@ -48,7 +48,7 @@
         android:resource="@drawable/ic_appcoins_notification_icon" />
 
     <receiver
-        android:name="com.asfoundation.wallet.support.AlarmManagerBroadcastReceiver"
+        android:name="com.appcoins.wallet.intercom.AlarmManagerBroadcastReceiver"
         android:enabled="true"
         android:exported="false" />
 
@@ -61,7 +61,7 @@
         android:exported="false" />
 
     <receiver
-        android:name="com.asfoundation.wallet.support.BootCompletedBroadcastReceiver"
+        android:name="com.appcoins.wallet.intercom.BootCompletedBroadcastReceiver"
         android:enabled="true"
         android:exported="false">
       <intent-filter>
@@ -73,7 +73,7 @@
         android:taskAffinity=".invisible"
         android:excludeFromRecents="true"
         android:launchMode="singleTask"
-        android:name="com.asfoundation.wallet.support.SupportNotificationBroadcastReceiver"
+        android:name="com.appcoins.wallet.intercom.SupportNotificationBroadcastReceiver"
         android:enabled="true"
         android:exported="false" />
 
@@ -289,7 +289,7 @@
     </activity>
 
     <service
-        android:name="com.asfoundation.wallet.support.SupportMessagingService"
+        android:name="com.appcoins.wallet.intercom.SupportMessagingService"
         android:enabled="true"
         android:exported="false">
       <intent-filter>

@@ -1,13 +1,13 @@
 package com.asfoundation.wallet.backup
 
 //import com.asfoundation.wallet.backup.repository.preferences.BackupSystemNotificationPreferences
-//import com.asfoundation.wallet.home.usecases.FetchTransactionsUseCase
+//import com.appcoins.wallet.legacy.domain.FetchTransactionsUseCase
 //import com.asfoundation.wallet.repository.BackupRestorePreferencesRepository
 //import com.asfoundation.wallet.repository.PreferencesRepositoryType
 //import com.asfoundation.wallet.ui.balance.BalanceInteractor
 //import com.asfoundation.wallet.ui.gamification.GamificationInteractor
 //import com.asfoundation.wallet.wallets.FindDefaultWalletInteract
-//import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+//import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 //import io.reactivex.Completable
 //import io.reactivex.observers.TestObserver
 //import org.junit.Assert

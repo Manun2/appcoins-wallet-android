@@ -5,7 +5,7 @@ import com.appcoins.wallet.ui.arch.Async
 import com.appcoins.wallet.ui.arch.BaseViewModel
 import com.appcoins.wallet.ui.arch.SideEffect
 import com.appcoins.wallet.ui.arch.ViewState
-import com.asfoundation.wallet.wallets.usecases.UpdateWalletNameUseCase
+import com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -22,7 +22,7 @@ data class NameDialogState(
 @HiltViewModel
 class NameDialogViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
-  private val updateWalletNameUseCase: UpdateWalletNameUseCase,
+  private val updateWalletNameUseCase: com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase,
 ) :
   BaseViewModel<NameDialogState, NameDialogSideEffect>(initialState(savedStateHandle)) {
 

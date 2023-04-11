@@ -13,7 +13,7 @@ import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.asfoundation.wallet.entity.Wallet
 import com.asfoundation.wallet.main.PendingIntentNavigator
 import com.asfoundation.wallet.promotions.usecases.GetVipReferralUseCase
-import com.asfoundation.wallet.wallets.usecases.GetCurrentWalletUseCase
+import com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -24,7 +24,7 @@ class GetVipReferralWorker @AssistedInject constructor(
   @Assisted private val context: Context,
   @Assisted params: WorkerParameters,
   private val getVipReferralUseCase: GetVipReferralUseCase,
-  private val getCurrentWallet: GetCurrentWalletUseCase,
+  private val getCurrentWallet: com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase,
   private val pendingIntentNavigator: PendingIntentNavigator,
   private val notificationManager: NotificationManager,
   private val rxSchedulers: RxSchedulers

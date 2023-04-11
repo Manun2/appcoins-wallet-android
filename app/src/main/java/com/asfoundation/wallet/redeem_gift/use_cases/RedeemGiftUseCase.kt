@@ -3,12 +3,12 @@ package com.asfoundation.wallet.redeem_gift.use_cases
 import com.asfoundation.wallet.ewt.EwtAuthenticatorService
 import com.asfoundation.wallet.redeem_gift.repository.RedeemCode
 import com.asfoundation.wallet.redeem_gift.repository.RedeemGiftRepository
-import com.asfoundation.wallet.wallets.usecases.GetCurrentWalletUseCase
+import com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
 class RedeemGiftUseCase @Inject constructor(
-  private val getCurrentWallet: GetCurrentWalletUseCase,
+  private val getCurrentWallet: com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase,
   private val redeemGiftRepository: RedeemGiftRepository,
   private val ewtObtainer: EwtAuthenticatorService,
 ) {

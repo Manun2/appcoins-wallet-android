@@ -3,9 +3,9 @@ package com.asfoundation.wallet.viewmodel
 import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.asfoundation.wallet.home.usecases.DisplayChatUseCase
-import com.asfoundation.wallet.home.usecases.FindDefaultWalletUseCase
-import com.asfoundation.wallet.home.usecases.FindNetworkInfoUseCase
+import com.appcoins.wallet.legacy.domain.DisplayChatUseCase
+import com.appcoins.wallet.legacy.domain.FindDefaultWalletUseCase
+import com.appcoins.wallet.legacy.domain.FindNetworkInfoUseCase
 import com.asfoundation.wallet.router.ExternalBrowserRouter
 import com.asfoundation.wallet.router.TransactionDetailRouter
 import com.asfoundation.wallet.service.currencies.LocalCurrencyConversionService
@@ -21,10 +21,10 @@ class TransactionDetailModule {
 
   @Provides
   fun provideTransactionDetailViewModelFactory(
-    findDefaultWalletUseCase: FindDefaultWalletUseCase,
-    findNetworkInfoUseCase: FindNetworkInfoUseCase,
+    findDefaultWalletUseCase: com.appcoins.wallet.legacy.domain.FindDefaultWalletUseCase,
+    findNetworkInfoUseCase: com.appcoins.wallet.legacy.domain.FindNetworkInfoUseCase,
     externalBrowserRouter: ExternalBrowserRouter,
-    displayChatUseCase: DisplayChatUseCase,
+    displayChatUseCase: com.appcoins.wallet.legacy.domain.DisplayChatUseCase,
     transactionDetailRouter: TransactionDetailRouter,
     localCurrencyConversionService: LocalCurrencyConversionService
   ): TransactionDetailViewModelFactory {
@@ -37,11 +37,11 @@ class TransactionDetailModule {
 }
 
 class TransactionDetailViewModelFactory(
-  private val findDefaultWalletUseCase: FindDefaultWalletUseCase,
-  private val findNetworkInfoUseCase: FindNetworkInfoUseCase,
+  private val findDefaultWalletUseCase: com.appcoins.wallet.legacy.domain.FindDefaultWalletUseCase,
+  private val findNetworkInfoUseCase: com.appcoins.wallet.legacy.domain.FindNetworkInfoUseCase,
   private val externalBrowserRouter: ExternalBrowserRouter,
   private val compositeDisposable: CompositeDisposable,
-  private val displayChatUseCase: DisplayChatUseCase,
+  private val displayChatUseCase: com.appcoins.wallet.legacy.domain.DisplayChatUseCase,
   private val transactionDetailRouter: TransactionDetailRouter,
   private val localCurrencyConversionService: LocalCurrencyConversionService
 ) : ViewModelProvider.Factory {

@@ -3,13 +3,13 @@ package com.asfoundation.wallet.ui.iab
 import com.appcoins.wallet.gamification.Gamification
 import com.asfoundation.wallet.backup.NotificationNeeded
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.wallet_blocked.WalletBlockedInteract
 import io.reactivex.Single
 import javax.inject.Inject
 
 class IabInteract @Inject constructor(private val inAppPurchaseInteractor: InAppPurchaseInteractor,
-                                      private val supportInteractor: SupportInteractor,
+                                      private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
                                       private val gamificationRepository: Gamification,
                                       private val walletBlockedInteract: WalletBlockedInteract,
                                       private val getCurrentPromoCodeUseCase: GetCurrentPromoCodeUseCase) {

@@ -6,14 +6,14 @@ import com.asfoundation.wallet.recover.result.RecoverEntryResultMapper
 import com.asfoundation.wallet.repository.PasswordStore
 import com.asfoundation.wallet.repository.WalletRepositoryType
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
 class RecoverEntryPrivateKeyUseCase @Inject constructor(
   private val walletRepository: WalletRepositoryType,
   private val passwordStore: PasswordStore,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val currencyFormatUtils: CurrencyFormatUtils
 ) {
 

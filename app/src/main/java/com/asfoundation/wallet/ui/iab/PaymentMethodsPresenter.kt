@@ -17,7 +17,7 @@ import com.asfoundation.wallet.ui.iab.PaymentMethodsView.SelectedPaymentMethod.*
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.appcoins.wallet.core.utils.android_common.WalletCurrency
 import com.appcoins.wallet.core.utils.android_common.extensions.isNoNetworkException
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -38,7 +38,7 @@ class PaymentMethodsPresenter(
   private val transaction: TransactionBuilder,
   private val paymentMethodsMapper: PaymentMethodsMapper,
   private val formatter: CurrencyFormatUtils,
-  private val getWalletInfoUseCase: GetWalletInfoUseCase,
+  private val getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
   private val logger: Logger,
   private val interactor: PaymentMethodsInteractor,
   private val paymentMethodsData: PaymentMethodsData

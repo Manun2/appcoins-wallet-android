@@ -12,7 +12,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.asf.wallet.R
-import com.asfoundation.wallet.billing.analytics.PageViewAnalytics
+import com.appcoins.wallet.core.analytics.analytics.PageViewAnalytics
 import com.asfoundation.wallet.billing.analytics.WalletsAnalytics
 import com.asfoundation.wallet.billing.analytics.WalletsEventSender
 import com.asfoundation.wallet.change_currency.ChangeFiatCurrencyActivity

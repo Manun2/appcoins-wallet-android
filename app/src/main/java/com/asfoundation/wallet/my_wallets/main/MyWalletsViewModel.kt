@@ -4,12 +4,12 @@ import com.appcoins.wallet.ui.arch.Async
 import com.appcoins.wallet.ui.arch.BaseViewModel
 import com.appcoins.wallet.ui.arch.SideEffect
 import com.appcoins.wallet.ui.arch.ViewState
-import com.asfoundation.wallet.home.usecases.ObserveDefaultWalletUseCase
+import com.appcoins.wallet.legacy.domain.ObserveDefaultWalletUseCase
 import com.asfoundation.wallet.ui.balance.BalanceInteractor
 import com.asfoundation.wallet.ui.balance.BalanceVerificationModel
 import com.asfoundation.wallet.ui.wallets.WalletDetailsInteractor
 import com.asfoundation.wallet.wallets.domain.WalletInfo
-import com.asfoundation.wallet.wallets.usecases.ObserveWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.ObserveWalletInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -25,8 +25,8 @@ data class MyWalletsState(
 class MyWalletsViewModel @Inject constructor(
   private val balanceInteractor: BalanceInteractor,
   private val walletDetailsInteractor: WalletDetailsInteractor,
-  private val observeWalletInfoUseCase: ObserveWalletInfoUseCase,
-  private val observeDefaultWalletUseCase: ObserveDefaultWalletUseCase
+  private val observeWalletInfoUseCase: com.appcoins.wallet.legacy.domain.ObserveWalletInfoUseCase,
+  private val observeDefaultWalletUseCase: com.appcoins.wallet.legacy.domain.ObserveDefaultWalletUseCase
 ) : BaseViewModel<MyWalletsState, MyWalletsSideEffect>(initialState()) {
 
   companion object {

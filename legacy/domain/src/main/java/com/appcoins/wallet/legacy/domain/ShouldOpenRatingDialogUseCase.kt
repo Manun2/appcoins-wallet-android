@@ -1,0 +1,23 @@
+package com.appcoins.wallet.legacy.domain
+
+import com.asfoundation.wallet.rating.RatingRepository
+import io.reactivex.Single
+import javax.inject.Inject
+
+class ShouldOpenRatingDialogUseCase @Inject constructor(
+    private val ratingRepository: RatingRepository,
+    private val getUserLevelUseCase: GetUserLevelUseCase
+) {
+
+  operator fun invoke(): Single<Boolean> {
+    val remindMeLaterDate = ratingRepository.getRemindMeLaterDate()
+    if (remindMeLaterDate > -1L && remindMeLaterDate <= System.currentTimeMillis()) {
+      return Single.just(true)
+    }
+    if (!ratingRepository.hasSeenDialog()) {
+      return getUserLevelUseCase()
+          .map { level -> level >= 6 || ratingRepository.hasEnoughSuccessfulTransactions() }
+    }
+    return Single.just(false)
+  }
+}

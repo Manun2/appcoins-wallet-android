@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import com.asfoundation.wallet.backup.entry.BackupEntryFragment.Companion.WALLET_ADDRESS_KEY
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ class BackupEntryModule {
 
   @Provides
   fun providesBackupEntryViewModelFactory(
-    getWalletInfoUseCase: GetWalletInfoUseCase,
+    getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase,
     currencyFormatUtils: CurrencyFormatUtils,
     data: BackupEntryData,
     rxSchedulers: RxSchedulers,

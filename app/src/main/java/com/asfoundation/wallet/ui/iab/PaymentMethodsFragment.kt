@@ -24,7 +24,7 @@ import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.asfoundation.wallet.util.Period
 import com.appcoins.wallet.core.utils.android_common.WalletCurrency
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
-import com.asfoundation.wallet.wallets.usecases.GetWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxrelay2.PublishRelay
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,7 +98,7 @@ class PaymentMethodsFragment : BasePageViewFragment(), PaymentMethodsView {
   lateinit var formatter: CurrencyFormatUtils
 
   @Inject
-  lateinit var getWalletInfoUseCase: GetWalletInfoUseCase
+  lateinit var getWalletInfoUseCase: com.appcoins.wallet.legacy.domain.GetWalletInfoUseCase
 
   @Inject
   lateinit var logger: Logger

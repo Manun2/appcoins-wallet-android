@@ -15,8 +15,8 @@ import com.asfoundation.wallet.ui.wallets.WalletsModel
 import com.asfoundation.wallet.update_required.use_cases.BuildUpdateIntentUseCase
 import com.asfoundation.wallet.update_required.wallets_list.WalletSelectionAdapter
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
-import com.asfoundation.wallet.wallets.usecases.GetCurrentWalletUseCase
-import com.asfoundation.wallet.wallets.usecases.GetWalletsModelUseCase
+import com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
+import com.appcoins.wallet.legacy.domain.GetWalletsModelUseCase
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.RxView
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +37,10 @@ class IabUpdateRequiredFragment : BasePageViewFragment(), IabUpdateRequiredView 
   lateinit var buildUpdateIntentUseCase: BuildUpdateIntentUseCase
 
   @Inject
-  lateinit var getCurrentWalletUseCase: GetCurrentWalletUseCase
+  lateinit var getCurrentWalletUseCase: com.appcoins.wallet.legacy.domain.GetCurrentWalletUseCase
 
   @Inject
-  lateinit var getWalletsModelUseCase: GetWalletsModelUseCase
+  lateinit var getWalletsModelUseCase: com.appcoins.wallet.legacy.domain.GetWalletsModelUseCase
 
   @Inject
   lateinit var rxSchedulers: RxSchedulers

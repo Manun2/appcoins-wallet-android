@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.asf.wallet.R;
 import com.asfoundation.wallet.App;
-import com.asfoundation.wallet.billing.analytics.PageViewAnalytics;
+import com.appcoins.wallet.core.analytics.analytics.PageViewAnalytics;
 import com.appcoins.wallet.core.utils.android_common.KeyboardUtils;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     activityResultListeners = new ArrayList<>();
-    pageViewAnalytics = new PageViewAnalytics(((App) getApplication()).analyticsManager());
+    pageViewAnalytics = new PageViewAnalytics();
     super.onCreate(savedInstanceState);
     Window window = getWindow();
 

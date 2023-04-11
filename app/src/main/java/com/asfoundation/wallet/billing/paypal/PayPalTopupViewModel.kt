@@ -10,7 +10,7 @@ import com.asf.wallet.R
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.core.network.microservices.model.PaypalTransaction
 import com.asfoundation.wallet.billing.paypal.usecases.*
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.topup.TopUpAnalytics
 import com.appcoins.wallet.core.utils.android_common.toSingleEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ class PayPalTopupViewModel @Inject constructor(
   private val waitForSuccessPaypalUseCase: WaitForSuccessPaypalUseCase,
   private val cancelPaypalTokenUseCase: CancelPaypalTokenUseCase,
   private val billingMessagesMapper: BillingMessagesMapper,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val topUpAnalytics: TopUpAnalytics,
   rxSchedulers: RxSchedulers
 ) : ViewModel() {

@@ -13,7 +13,7 @@ import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.asfoundation.wallet.billing.address.BillingAddressRepository
 import com.asfoundation.wallet.billing.partners.AddressService
 import com.asfoundation.wallet.promo_code.use_cases.GetCurrentPromoCodeUseCase
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.iab.FiatValue
 import com.asfoundation.wallet.ui.iab.InAppPurchaseInteractor
 import com.asfoundation.wallet.verification.ui.credit_card.WalletVerificationInteractor
@@ -33,7 +33,7 @@ class AdyenPaymentInteractor @Inject constructor(
   private val billingMessagesMapper: BillingMessagesMapper,
   private val partnerAddressService: AddressService,
   private val walletService: WalletService,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val walletBlockedInteract: WalletBlockedInteract,
   private val walletVerificationInteractor: WalletVerificationInteractor,
   private val billingAddressRepository: BillingAddressRepository,

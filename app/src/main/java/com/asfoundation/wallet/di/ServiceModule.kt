@@ -9,7 +9,7 @@ import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.interact.DefaultTokenProvider
 import com.asfoundation.wallet.interact.SendTransactionInteract
 import com.asfoundation.wallet.repository.*
-import com.asfoundation.wallet.wallets.usecases.HasEnoughBalanceUseCase
+import com.appcoins.wallet.legacy.domain.HasEnoughBalanceUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -94,7 +94,7 @@ class ServiceModule {
     @Named("APPROVE_SERVICE_BDS") approveService: ApproveService,
     allowanceService: AllowanceService,
     @Named("BUY_SERVICE_BDS") buyService: BuyService,
-    hasEnoughBalanceUseCase: HasEnoughBalanceUseCase,
+    hasEnoughBalanceUseCase: com.appcoins.wallet.legacy.domain.HasEnoughBalanceUseCase,
     paymentErrorMapper: PaymentErrorMapper,
     defaultTokenProvider: DefaultTokenProvider
   ): InAppPurchaseService {
@@ -114,7 +114,7 @@ class ServiceModule {
   fun provideInAppPurchaseServiceAsf(
     @Named("APPROVE_SERVICE_ON_CHAIN") approveService: ApproveService,
     allowanceService: AllowanceService, @Named("BUY_SERVICE_ON_CHAIN") buyService: BuyService,
-    hasEnoughBalanceUseCase: HasEnoughBalanceUseCase,
+    hasEnoughBalanceUseCase: com.appcoins.wallet.legacy.domain.HasEnoughBalanceUseCase,
     paymentErrorMapper: PaymentErrorMapper,
     defaultTokenProvider: DefaultTokenProvider
   ): InAppPurchaseService {

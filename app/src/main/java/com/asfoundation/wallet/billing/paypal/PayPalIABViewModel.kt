@@ -12,7 +12,7 @@ import com.asfoundation.wallet.billing.analytics.BillingAnalytics
 import com.appcoins.wallet.core.network.microservices.model.PaypalTransaction
 import com.asfoundation.wallet.billing.paypal.usecases.*
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.ui.iab.PaymentMethodsAnalytics
 import com.appcoins.wallet.core.utils.android_common.toSingleEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +30,7 @@ class PayPalIABViewModel @Inject constructor(
   private val createSuccessBundleUseCase: CreateSuccessBundleUseCase,
   private val cancelPaypalTokenUseCase: CancelPaypalTokenUseCase,
   private val adyenPaymentInteractor: AdyenPaymentInteractor,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   rxSchedulers: RxSchedulers,
   private val analytics: BillingAnalytics,
   private val paymentAnalytics: PaymentMethodsAnalytics

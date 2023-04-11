@@ -1,0 +1,19 @@
+package com.appcoins.wallet.legacy.domain
+
+import com.asfoundation.wallet.repository.TransactionRepositoryType
+import com.asfoundation.wallet.transactions.Transaction
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+
+class FetchTransactionsUseCase @Inject constructor(
+    private val transactionRepository: TransactionRepositoryType) {
+
+  operator fun invoke(wallet: String): Observable<List<Transaction>> {
+    return transactionRepository.fetchTransaction(wallet)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doAfterTerminate { transactionRepository.stop() }
+  }
+}

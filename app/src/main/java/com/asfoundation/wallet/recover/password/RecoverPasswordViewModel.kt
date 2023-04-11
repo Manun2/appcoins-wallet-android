@@ -11,8 +11,8 @@ import com.asfoundation.wallet.onboarding.use_cases.SetOnboardingCompletedUseCas
 import com.asfoundation.wallet.recover.password.RecoverPasswordFragment.Companion.KEYSTORE_KEY
 import com.asfoundation.wallet.recover.result.*
 import com.asfoundation.wallet.recover.use_cases.*
-import com.asfoundation.wallet.wallets.usecases.UpdateWalletInfoUseCase
-import com.asfoundation.wallet.wallets.usecases.UpdateWalletNameUseCase
+import com.appcoins.wallet.legacy.domain.UpdateWalletInfoUseCase
+import com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -28,12 +28,12 @@ data class RecoverPasswordState(
 @HiltViewModel
 class RecoverPasswordViewModel @Inject constructor(
   private val setDefaultWalletUseCase: SetDefaultWalletUseCase,
-  private val updateWalletInfoUseCase: UpdateWalletInfoUseCase,
+  private val updateWalletInfoUseCase: com.appcoins.wallet.legacy.domain.UpdateWalletInfoUseCase,
   private val walletsEventSender: WalletsEventSender,
   private val recoverPasswordKeystoreUseCase: RecoverPasswordKeystoreUseCase,
   private val setOnboardingCompletedUseCase: SetOnboardingCompletedUseCase,
   private val updateBackupStateFromRecoverUseCase: UpdateBackupStateFromRecoverUseCase,
-  private val updateWalletNameUseCase: UpdateWalletNameUseCase,
+  private val updateWalletNameUseCase: com.appcoins.wallet.legacy.domain.UpdateWalletNameUseCase,
   private val savedStateHandle: SavedStateHandle,
 ) :
   com.appcoins.wallet.ui.arch.BaseViewModel<RecoverPasswordState, RecoverPasswordSideEffect>(initialState()) {

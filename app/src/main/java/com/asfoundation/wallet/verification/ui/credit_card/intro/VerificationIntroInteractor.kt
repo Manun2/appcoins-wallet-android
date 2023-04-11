@@ -7,7 +7,7 @@ import com.appcoins.wallet.billing.adyen.PaymentInfoModel
 import com.appcoins.wallet.core.network.microservices.model.VerificationInfoResponse
 import com.appcoins.wallet.billing.adyen.VerificationPaymentModel
 import com.asfoundation.wallet.billing.adyen.AdyenPaymentInteractor
-import com.asfoundation.wallet.support.SupportInteractor
+import com.appcoins.wallet.intercom.SupportInteractor
 import com.asfoundation.wallet.verification.repository.BrokerVerificationRepository
 import com.asfoundation.wallet.verification.ui.credit_card.WalletVerificationInteractor
 import io.reactivex.Completable
@@ -18,7 +18,7 @@ class VerificationIntroInteractor @Inject constructor(
   private val brokerVerificationRepository: BrokerVerificationRepository,
   private val adyenPaymentInteractor: AdyenPaymentInteractor,
   private val walletService: WalletService,
-  private val supportInteractor: SupportInteractor,
+  private val supportInteractor: com.appcoins.wallet.intercom.SupportInteractor,
   private val walletVerificationInteractor: WalletVerificationInteractor
 ) {
 
