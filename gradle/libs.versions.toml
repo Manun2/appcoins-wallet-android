@@ -87,6 +87,8 @@ zxing_android_version = "3.6.0"
 zxing_version = "3.4.0"
 jacoco_version = "0.8.8"
 mockk_version = "1.13.3"
+vk_pay_version = "0.109-24422"
+vk_pay_checkout_version = "0.107.1-24416"
 
 [libraries]
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx_navigation_version" }
@@ -165,6 +167,10 @@ rx-rxbinding = { module = "com.jakewharton.rxbinding2:rxbinding", version.ref = 
 rx-rxlifecyle = { module = "com.trello:rxlifecycle", version.ref = "rxlifecycle_version" }
 rx-rxlifecyle-components = { module = "com.trello:rxlifecycle-components", version.ref = "rxlifecycle_version" }
 
+vk-pay-oauth =  { module = "com.vk:oauth-vk", version.ref = "vk_pay_version" }
+vk-sdk-pub =  { module = "com.vk:vksdk-pub", version.ref = "vk_pay_version" }
+vk-checkout =  { module = "com.vk:vkpay-checkout", version.ref = "vk_pay_checkout_version" }
+
 adyen-card = { module = "com.adyen.checkout:card", version.ref = "adyen_version" }
 adyen-redirect = { module = "com.adyen.checkout:redirect", version.ref = "adyen_version" }
 adyen-3ds2 = { module = "com.adyen.checkout:3ds2", version.ref = "adyen_version" }
@@ -238,6 +244,7 @@ hilt-implementation = ["hilt-android", "hilt-interface-extensions"]
 hilt-kapt = ["hilt-compiler", "hilt-interface-extensions-processor"]
 rx = ["rx-rxjava", "rx-rxandroid", "rx-rxbinding"]
 result = ["kotlin-result-coroutines", "kotlin-result"]
+vk = ["vk-pay-oauth", "vk-sdk-pub", "vk-checkout"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle_plugin_version" }

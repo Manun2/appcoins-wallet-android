@@ -74,6 +74,8 @@ dependencies {
 
   implementation(libs.bundles.network)
 
+  implementation(libs.bundles.vk)
+
   implementation(libs.bundles.rx)
   implementation(libs.rx.rxlifecyle)
   implementation(libs.rx.rxlifecyle.components)
@@ -125,4 +127,4 @@ dependencies {
   testImplementation(libs.test.junit.vintage.engine)
   testImplementation(libs.test.turbine)
   testImplementation(libs.kotlin.coroutines.test)
-}
+  }

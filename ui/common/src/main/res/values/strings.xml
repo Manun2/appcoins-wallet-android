@@ -1357,8 +1357,18 @@
   <string name="manage_wallet_change_wallet_name_title">Change wallet name</string>
   <string name="manage_wallet_set_a_name_button">Set a name for your wallet</string>
   <string name="manage_wallet_my_wallet_address_title">My Wallet Address</string>
-  
 
 
+  <!-- Your application ID from platform.vk.com !-->
+  <integer name="com_vk_sdk_AppId">213123</integer>
+
+  <!-- Your protected key from platform.vk.com !-->
+  <string name="vk_client_secret" translatable="false">simeugyg123</string>
+
+  <!-- VK (OAuth) for external services: Use template vk<com_vk_sdk_AppId>://vk.com -->
+  <string name="vk_external_oauth_redirect_url" translatable="false">12e341</string>
+
+  <!-- AccountType for system AccountManager. Template: <packageName>.account.vk -->
+  <string name="vk_account_manager_id" translatable="false">com.vk.superapp.platform.account.vk</string>
 
 </resources>
