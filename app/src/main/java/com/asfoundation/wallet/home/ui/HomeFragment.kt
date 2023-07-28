@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,7 @@ import com.asf.wallet.R
 import com.asf.wallet.databinding.FragmentHomeBinding
 import com.appcoins.wallet.ui.arch.SingleStateFragment
 import com.appcoins.wallet.ui.common.convertDpToPx
+import com.asf.wallet.BuildConfig
 import com.asfoundation.wallet.entity.GlobalBalance
 import com.asfoundation.wallet.home.ui.list.HomeController
 import com.asfoundation.wallet.home.ui.list.HomeListClick
@@ -29,6 +31,16 @@ import com.asfoundation.wallet.support.SupportNotificationProperties
 import com.asfoundation.wallet.transactions.Transaction
 import com.asfoundation.wallet.ui.widget.entity.TransactionsModel
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
+import com.vk.auth.main.VkClientUiInfo
+import com.vk.superapp.SuperappKit
+import com.vk.superapp.SuperappKitConfig
+import com.vk.superapp.core.SuperappConfig
+import com.vk.superapp.vkpay.checkout.VkCheckoutResult
+import com.vk.superapp.vkpay.checkout.VkCheckoutResultDisposable
+import com.vk.superapp.vkpay.checkout.VkPayCheckout
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkMerchantInfo
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkTransactionInfo
+import com.vk.superapp.vkpay.checkout.config.VkPayCheckoutConfigBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.intercom.android.sdk.Intercom
 import java.math.BigDecimal
@@ -78,6 +90,7 @@ class HomeFragment : BasePageViewFragment(),
     views.toolbar.actionButtonSettings.setOnClickListener { viewModel.onSettingsClick() }
     viewModel.collectStateAndEvents(lifecycle, viewLifecycleOwner.lifecycleScope)
     askNotificationsPermission()
+    initSuperAppKit()
   }
 
   override fun onPause() {
@@ -262,4 +275,87 @@ class HomeFragment : BasePageViewFragment(),
       pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
     }
   }
+
+  private fun initSuperAppKit() {
+
+    val appName = "wallet_android_dev"
+
+    // Укажите этот параметр и appId в файле ресурсов!
+
+    val clientSecret = requireContext().getString(R.string.vk_client_secret)
+
+    // Укажите иконку, которая будет отображаться в компонентах пользовательского интерфейса
+
+    val icon = AppCompatResources.getDrawable(requireContext(), R.mipmap.ic_launcher)!!
+
+    val appInfo = SuperappConfig.AppInfo(
+      appName,
+      "51715794",
+      BuildConfig.VERSION_NAME
+    )
+
+    val config = activity?.let {
+      SuperappKitConfig.Builder(it.application)
+        // настройка VK ID
+        .setAuthModelData(clientSecret)
+        .setAuthUiManagerData(VkClientUiInfo(icon, appName))
+        .setLegalInfoLinks(
+          serviceUserAgreement = "https://id.vk.com/terms",
+          servicePrivacyPolicy = "https://id.vk.com/privacy"
+        )
+        .setApplicationInfo(appInfo)
+
+        // Получение Access token напрямую (без silentTokenExchanger)
+        .setUseCodeFlow(true)
+
+        .build()
+    }
+
+    // Инициализация SuperAppKit
+    if (!SuperappKit.isInitialized()) {
+      config?.let { SuperappKit.init(it) }
+    }
+  }
+
+  fun checkoutVkPay() {
+
+    //Try Checkout pay integration
+    val transaction = VkTransactionInfo(
+      12,
+      "duygcuywg323", VkTransactionInfo.Currency.RUB
+    )
+
+    data class VkTransactionInfo(
+      val amount: Int,
+      val orderId: String,
+      val currency: Currency
+    ) {
+
+    }
+
+    val observeCheckoutResults:
+        VkCheckoutResultDisposable =
+      VkPayCheckout.observeCheckoutResult { result
+        ->
+        handleCheckoutResult(result)
+      }
+
+    val merchantInfo = VkMerchantInfo(12,"","","")
+    val config = VkPayCheckoutConfigBuilder(merchantInfo).build()
+
+    VkPayCheckout.startCheckout(requireFragmentManager(), transaction, config)
+
+  }
+
+  fun handleCheckoutResult(result: VkCheckoutResult) {
+    result.orderId
+  }
+
+
+}
+
+//TODO: Remove in integration
+enum class Currency(val sign: String) {
+  RUB("\u20BD"), EUR("\u20AC"),
+  USD("\u0024")
 }
