@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,12 @@ import com.asfoundation.wallet.viewmodel.BasePageViewFragment
 import com.asfoundation.wallet.wallets.domain.WalletInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.vk.superapp.vkpay.checkout.VkCheckoutResult
+import com.vk.superapp.vkpay.checkout.VkCheckoutResultDisposable
+import com.vk.superapp.vkpay.checkout.VkPayCheckout
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkMerchantInfo
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkTransactionInfo
+import com.vk.superapp.vkpay.checkout.config.VkPayCheckoutConfigBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 import java.util.*
@@ -81,7 +88,32 @@ class MyWalletsFragment : BasePageViewFragment(),
 
   private fun setListeners() {
     views.toolbar.actionButtonMore.setOnClickListener { navigateToMore() }
-    views.toolbar.actionButtonNfts.setOnClickListener { navigator.navigateToNfts() }
+    views.toolbar.actionButtonNfts.setOnClickListener { checkoutVkPay() }
+  }
+
+  var observeCheckoutResults: VkCheckoutResultDisposable =
+  VkPayCheckout.observeCheckoutResult { result
+    -> handleCheckoutResult(result) }
+
+  fun checkoutVkPay() {
+
+
+    //Try Checkout pay integration
+    val transaction = VkTransactionInfo(
+      12,
+      "duygcuywg323", VkTransactionInfo.Currency.RUB
+    )
+    val merchantInfo = VkMerchantInfo(578024)
+    val config = VkPayCheckoutConfigBuilder(merchantInfo).build()
+
+    observeCheckoutResults = VkPayCheckout.observeCheckoutResult { handleCheckoutResult(it) }
+
+    VkPayCheckout.startCheckout(requireFragmentManager(), transaction, config)
+  }
+
+  fun handleCheckoutResult(vkCheckoutResult: VkCheckoutResult) {
+
+    Log.d("VK TEST", "checkoutVkPay result: " + vkCheckoutResult.orderId)
   }
 
   override fun onStateChanged(state: MyWalletsState) {
@@ -391,4 +423,10 @@ class MyWalletsFragment : BasePageViewFragment(),
     .setType("text/plain")
     .setChooserTitle(resources.getString(R.string.share_via))
     .startChooser()
+}
+
+//TODO: Remove in integration
+enum class Currency(val sign: String) {
+  RUB("\u20BD"), EUR("\u20AC"),
+  USD("\u0024")
 }

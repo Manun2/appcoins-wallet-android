@@ -316,46 +316,4 @@ class HomeFragment : BasePageViewFragment(),
       config?.let { SuperappKit.init(it) }
     }
   }
-
-  fun checkoutVkPay() {
-
-    //Try Checkout pay integration
-    val transaction = VkTransactionInfo(
-      12,
-      "duygcuywg323", VkTransactionInfo.Currency.RUB
-    )
-
-    data class VkTransactionInfo(
-      val amount: Int,
-      val orderId: String,
-      val currency: Currency
-    ) {
-
-    }
-
-    val observeCheckoutResults:
-        VkCheckoutResultDisposable =
-      VkPayCheckout.observeCheckoutResult { result
-        ->
-        handleCheckoutResult(result)
-      }
-
-    val merchantInfo = VkMerchantInfo(12,"","","")
-    val config = VkPayCheckoutConfigBuilder(merchantInfo).build()
-
-    VkPayCheckout.startCheckout(requireFragmentManager(), transaction, config)
-
-  }
-
-  fun handleCheckoutResult(result: VkCheckoutResult) {
-    result.orderId
-  }
-
-
-}
-
-//TODO: Remove in integration
-enum class Currency(val sign: String) {
-  RUB("\u20BD"), EUR("\u20AC"),
-  USD("\u0024")
 }
