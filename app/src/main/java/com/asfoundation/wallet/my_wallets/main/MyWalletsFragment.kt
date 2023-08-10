@@ -104,7 +104,8 @@ class MyWalletsFragment : BasePageViewFragment(),
       "duygcuywg323", VkTransactionInfo.Currency.RUB
     )
     val merchantInfo = VkMerchantInfo(578024)
-    val config = VkPayCheckoutConfigBuilder(merchantInfo).build()
+    val config = VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(51715794).setEnvironment().build()
+
 
     observeCheckoutResults = VkPayCheckout.observeCheckoutResult { handleCheckoutResult(it) }
 
