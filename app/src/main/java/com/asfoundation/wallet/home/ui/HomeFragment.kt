@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,11 @@ import com.asfoundation.wallet.support.SupportNotificationProperties
 import com.asfoundation.wallet.transactions.Transaction
 import com.asfoundation.wallet.ui.widget.entity.TransactionsModel
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
+import com.vk.auth.api.models.AuthResult
+import com.vk.auth.main.VkClientAuthCallback
+import com.vk.auth.main.VkClientAuthLib
 import com.vk.auth.main.VkClientUiInfo
+import com.vk.auth.main.VkSilentTokenExchanger
 import com.vk.superapp.SuperappKit
 import com.vk.superapp.SuperappKitConfig
 import com.vk.superapp.core.SuperappConfig
@@ -64,6 +69,12 @@ class HomeFragment : BasePageViewFragment(),
   private lateinit var homeController: HomeController
   private lateinit var tooltip: View
   private lateinit var popup: PopupWindow
+
+  private val authCallback = object : VkClientAuthCallback {
+    override fun onAuth(authResult: AuthResult) {
+      Log.d("vk auth", "onAuth: VK AUTH COMPLETE")
+    }
+  }
 
   private val pushNotificationPermissionLauncher =
     registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
@@ -315,5 +326,7 @@ class HomeFragment : BasePageViewFragment(),
     if (!SuperappKit.isInitialized()) {
       config?.let { SuperappKit.init(it) }
     }
+
+    VkClientAuthLib.addAuthCallback(authCallback)
   }
 }
