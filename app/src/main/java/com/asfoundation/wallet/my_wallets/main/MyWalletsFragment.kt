@@ -32,6 +32,9 @@ import com.asfoundation.wallet.viewmodel.BasePageViewFragment
 import com.asfoundation.wallet.wallets.domain.WalletInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.vk.auth.api.models.AuthResult
+import com.vk.auth.main.VkClientAuthCallback
+import com.vk.auth.main.VkClientAuthLib
 import com.vk.superapp.vkpay.checkout.VkCheckoutResult
 import com.vk.superapp.vkpay.checkout.VkCheckoutResultDisposable
 import com.vk.superapp.vkpay.checkout.VkPayCheckout
@@ -61,6 +64,12 @@ class MyWalletsFragment : BasePageViewFragment(),
   private var binding: FragmentMyWalletsBinding? = null
   private val views get() = binding!!
 
+  private val authCallback = object : VkClientAuthCallback {
+    override fun onAuth(authResult: AuthResult) {
+      Log.d("vk auth", "onAuth: VK AUTH COMPLETE token " + authResult.accessToken)
+    }
+  }
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -73,6 +82,7 @@ class MyWalletsFragment : BasePageViewFragment(),
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setListeners()
+    VkClientAuthLib.addAuthCallback(authCallback)
     viewModel.collectStateAndEvents(lifecycle, viewLifecycleOwner.lifecycleScope)
   }
 

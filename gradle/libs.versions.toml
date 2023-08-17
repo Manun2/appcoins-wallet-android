@@ -87,7 +87,7 @@ zxing_android_version = "3.6.0"
 zxing_version = "3.4.0"
 jacoco_version = "0.8.8"
 mockk_version = "1.13.3"
-vk_pay_version = "0.109-24422"
+vk_pay_version = "0.110-24426"
 vk_pay_checkout_version = "0.107.1-24416"
 
 [libraries]

@@ -32,7 +32,9 @@ import com.asfoundation.wallet.support.SupportNotificationProperties
 import com.asfoundation.wallet.transactions.Transaction
 import com.asfoundation.wallet.ui.widget.entity.TransactionsModel
 import com.asfoundation.wallet.viewmodel.BasePageViewFragment
+import com.vk.api.sdk.VK
 import com.vk.auth.api.models.AuthResult
+import com.vk.auth.internal.AuthLibBridge.silentTokenExchanger
 import com.vk.auth.main.VkClientAuthCallback
 import com.vk.auth.main.VkClientAuthLib
 import com.vk.auth.main.VkClientUiInfo
@@ -72,7 +74,7 @@ class HomeFragment : BasePageViewFragment(),
 
   private val authCallback = object : VkClientAuthCallback {
     override fun onAuth(authResult: AuthResult) {
-      Log.d("vk auth", "onAuth: VK AUTH COMPLETE")
+      Log.d("vk auth", "onAuth: VK AUTH COMPLETE token " + authResult.accessToken)
     }
   }
 
@@ -288,6 +290,7 @@ class HomeFragment : BasePageViewFragment(),
   }
 
   private fun initSuperAppKit() {
+    VkClientAuthLib.addAuthCallback(authCallback)
 
     val appName = "wallet_android_dev"
 
@@ -301,13 +304,12 @@ class HomeFragment : BasePageViewFragment(),
 
     val appInfo = SuperappConfig.AppInfo(
       appName,
-      "51715794",
+      VK.getAppId(requireContext()).toString(),
       BuildConfig.VERSION_NAME
     )
 
     val config = activity?.let {
       SuperappKitConfig.Builder(it.application)
-        // настройка VK ID
         .setAuthModelData(clientSecret)
         .setAuthUiManagerData(VkClientUiInfo(icon, appName))
         .setLegalInfoLinks(
@@ -318,7 +320,6 @@ class HomeFragment : BasePageViewFragment(),
 
         // Получение Access token напрямую (без silentTokenExchanger)
         .setUseCodeFlow(true)
-
         .build()
     }
 
@@ -326,7 +327,5 @@ class HomeFragment : BasePageViewFragment(),
     if (!SuperappKit.isInitialized()) {
       config?.let { SuperappKit.init(it) }
     }
-
-    VkClientAuthLib.addAuthCallback(authCallback)
   }
 }
