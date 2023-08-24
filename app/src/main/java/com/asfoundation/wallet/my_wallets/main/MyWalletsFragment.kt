@@ -107,13 +107,13 @@ class MyWalletsFragment : BasePageViewFragment(),
 
   fun checkoutVkPay() {
 
-
     //Try Checkout pay integration
     val transaction = VkTransactionInfo(
-      12,
+      120,
       "duygcuywg323", VkTransactionInfo.Currency.RUB
     )
-    val merchantInfo = VkMerchantInfo(578024)
+
+    val merchantInfo = VkMerchantInfo(578024, "b21d26d1c7c5dcad5d5b5b6df5e1b3793e89de97ae2c6726d0413972f3db8baa", "wallet Address", "wallet APPC")
     val config = VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(51715794).build()
 
 

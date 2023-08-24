@@ -14,10 +14,6 @@ android {
     applicationId = "com.appcoins.wallet"
     versionCode = 266
     versionName = "2.13.1"
-      buildConfigField(
-        "String", "VkExternalAuthRedirectScheme", project.property("VK_EXTERNAL_AUTH_REDIRECT_SCHEME").toString())
-    buildConfigField(
-      "String", "VkExternalAuthRedirectHost", project.property("VK_EXTERNAL_AUTH_REDIRECT_HOST").toString())
     }
 }
 
