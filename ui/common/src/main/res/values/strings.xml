@@ -58,7 +58,7 @@
   <string name="permissions_active_wallet_short">Current active wallet</string>
   <string name="error_import">Error importing keystore</string>
   <string name="message_this_is_your_address">My public Ethereum wallet address</string>
-  <string name="backup_warning_text">Since only you control your money, you\'ll need to save a backup of your keystore in case this app is deleted.\n\nYour wallet is never saved to cloud storage or standard device backups.</string>
+  <string name="backup_warning_text">Since only you control your money, you\'ll need to save a back up of your keystore in case this app is deleted.\n\nYour wallet is never saved to cloud storage or standard device backups.</string>
   <string name="backup_wallet_tooltip">Keep a copy of your wallet to keep it safe.</string>
   <string name="message_no_backup">No backup, no Ethereum</string>
   <string name="error_deleting_account">Error deleting wallet</string>
@@ -800,6 +800,7 @@
   <string name="backup_popup_title">Back up your wallet now!</string>
   <string name="backup_popup_purchase_body">Keep your funds safe at all times.</string>
   <string name="backup_popup_gamification_body">Keep your bonus level safe at all times.</string>
+  <string name="backup_error_body">We couldn\'t create your backup file. Try again later.</string>
 
 
   <!--Wallets Management-->
