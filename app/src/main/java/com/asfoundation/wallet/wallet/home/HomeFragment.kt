@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,6 +58,20 @@ import com.asfoundation.wallet.transactions.cardInfoByType
 import com.asfoundation.wallet.ui.bottom_navigation.Destinations
 import com.asfoundation.wallet.wallet.home.HomeViewModel.UiState
 import com.asfoundation.wallet.wallet.home.HomeViewModel.UiState.Success
+import com.vk.api.sdk.VK
+import com.vk.auth.api.models.AuthResult
+import com.vk.auth.main.VkClientAuthCallback
+import com.vk.auth.main.VkClientAuthLib
+import com.vk.auth.main.VkClientUiInfo
+import com.vk.superapp.SuperappKit
+import com.vk.superapp.SuperappKitConfig
+import com.vk.superapp.core.SuperappConfig
+import com.vk.superapp.vkpay.checkout.VkCheckoutResult
+import com.vk.superapp.vkpay.checkout.VkCheckoutResultDisposable
+import com.vk.superapp.vkpay.checkout.VkPayCheckout
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkMerchantInfo
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkTransactionInfo
+import com.vk.superapp.vkpay.checkout.config.VkPayCheckoutConfigBuilder
 import com.wallet.appcoins.core.legacy_base.BasePageViewFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.intercom.android.sdk.Intercom
@@ -96,6 +111,7 @@ class HomeFragment : BasePageViewFragment(), SingleStateFragment<HomeState, Home
     super.onViewCreated(view, savedInstanceState)
     viewModel.collectStateAndEvents(lifecycle, viewLifecycleOwner.lifecycleScope)
     askNotificationsPermission()
+    initSuperAppKit()
   }
 
   override fun onResume() {
@@ -416,5 +432,44 @@ class HomeFragment : BasePageViewFragment(), SingleStateFragment<HomeState, Home
     return navHostFragment.navController
   }
 
+  //VK INTEGRATION
+  //VK ID -
+  private fun initSuperAppKit() {
 
+    val appName = "wallet_android_dev"
+
+    // Укажите этот параметр и appId в файле ресурсов!
+
+    val clientSecret = requireContext().getString(R.string.vk_client_secret)
+
+    // Укажите иконку, которая будет отображаться в компонентах пользовательского интерфейса
+
+    val icon = AppCompatResources.getDrawable(requireContext(), R.mipmap.ic_launcher)!!
+
+    val appInfo = SuperappConfig.AppInfo(
+      appName,
+      VK.getAppId(requireContext()).toString(),
+      "1.232"
+    )
+
+    val config = activity?.let {
+      SuperappKitConfig.Builder(it.application)
+        .setAuthModelData(clientSecret)
+        .setAuthUiManagerData(VkClientUiInfo(icon, appName))
+        .setLegalInfoLinks(
+          serviceUserAgreement = "https://id.vk.com/terms",
+          servicePrivacyPolicy = "https://id.vk.com/privacy"
+        )
+        .setApplicationInfo(appInfo)
+
+        // Получение Access token напрямую (без silentTokenExchanger)
+        .setUseCodeFlow(true)
+        .build()
+    }
+
+    // Инициализация SuperAppKit
+    if (!SuperappKit.isInitialized()) {
+      config?.let { SuperappKit.init(it) }
+    }
+  }
 }

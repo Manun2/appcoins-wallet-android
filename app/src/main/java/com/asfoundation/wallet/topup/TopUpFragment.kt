@@ -3,6 +3,7 @@ package com.asfoundation.wallet.topup
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,15 @@ import com.asfoundation.wallet.billing.paypal.usecases.RemovePaypalBillingAgreem
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jakewharton.rxrelay2.PublishRelay
+import com.vk.auth.api.models.AuthResult
+import com.vk.auth.main.VkClientAuthCallback
+import com.vk.auth.main.VkClientAuthLib
+import com.vk.superapp.vkpay.checkout.VkCheckoutResult
+import com.vk.superapp.vkpay.checkout.VkCheckoutResultDisposable
+import com.vk.superapp.vkpay.checkout.VkPayCheckout
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkMerchantInfo
+import com.vk.superapp.vkpay.checkout.api.dto.model.VkTransactionInfo
+import com.vk.superapp.vkpay.checkout.config.VkPayCheckoutConfigBuilder
 import com.wallet.appcoins.core.legacy_base.BasePageViewFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
@@ -184,6 +194,49 @@ class TopUpFragment : BasePageViewFragment(), TopUpFragmentView {
       adapter = topUpAdapter
     }
     view.viewTreeObserver.addOnGlobalLayoutListener(listener)
+
+    //VK
+    VkClientAuthLib.addAuthCallback(authCallback)
+  }
+
+
+  var observeCheckoutResults: VkCheckoutResultDisposable =
+    VkPayCheckout.observeCheckoutResult { result
+      -> handleCheckoutResult(result) }
+
+  fun checkoutVkPay() {
+
+    //Try Checkout pay integration
+    val transaction = VkTransactionInfo(
+      120,
+      "duygcuywg323", VkTransactionInfo.Currency.RUB
+    )
+
+    val merchantInfo = VkMerchantInfo(578024, "b21d26d1c7c5dcad5d5b5b6df5e1b3793e89de97ae2c6726d0413972f3db8baa", "wallet Address", "wallet APPC")
+    val config = VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(51715794).build()
+
+
+    observeCheckoutResults = VkPayCheckout.observeCheckoutResult { handleCheckoutResult(it) }
+
+    VkPayCheckout.startCheckout(requireFragmentManager(), transaction, config)
+  }
+
+  fun handleCheckoutResult(vkCheckoutResult: VkCheckoutResult) {
+
+    Log.d("VK TEST", "checkoutVkPay result: " + vkCheckoutResult.orderId)
+  }
+
+  private val authCallback = object : VkClientAuthCallback {
+    override fun onAuth(authResult: AuthResult) {
+      checkoutVkPay()
+      Log.d("vk auth", "onAuth: VK AUTH COMPLETE token " + authResult.accessToken)
+    }
+  }
+
+  //TODO: Remove after integration correctly
+  enum class Currency(val sign: String) {
+    RUB("\u20BD"), EUR("\u20AC"),
+    USD("\u0024")
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
