@@ -1397,4 +1397,6 @@
   <!-- AccountType for system AccountManager. Template: <packageName>.account.vk -->
   <string name="vk_account_manager_id" translatable="false">com.asf.wallet.account.vk</string>
 
+  <string name="vk_pay_checkout_onboarding_offer_title">offer</string>
+
 </resources>
