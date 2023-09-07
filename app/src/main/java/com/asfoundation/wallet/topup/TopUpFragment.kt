@@ -194,6 +194,10 @@ class TopUpFragment : BasePageViewFragment(), TopUpFragmentView {
       adapter = topUpAdapter
     }
     view.viewTreeObserver.addOnGlobalLayoutListener(listener)
+    binding.bonusLayout.root.setOnClickListener {
+      binding.fastLoginButton?.performClick()
+    }
+
 
     //VK
     VkClientAuthLib.addAuthCallback(authCallback)
