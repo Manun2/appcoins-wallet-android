@@ -195,7 +195,8 @@ class TopUpFragment : BasePageViewFragment(), TopUpFragmentView {
     }
     view.viewTreeObserver.addOnGlobalLayoutListener(listener)
     binding.bonusLayout.root.setOnClickListener {
-      binding.fastLoginButton?.performClick()
+      //binding.fastLoginButton?.performClick()
+      checkoutVkPay()
     }
 
 
