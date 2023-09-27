@@ -213,11 +213,11 @@ class TopUpFragment : BasePageViewFragment(), TopUpFragmentView {
 
     //Try Checkout pay integration
     val transaction = VkTransactionInfo(
-      120,
-      "duygcuywg323", VkTransactionInfo.Currency.RUB
+      144,
+      "123254", VkTransactionInfo.Currency.RUB
     )
 
-    val merchantInfo = VkMerchantInfo(578024, "b21d26d1c7c5dcad5d5b5b6df5e1b3793e89de97ae2c6726d0413972f3db8baa", "wallet Address", "wallet APPC")
+    val merchantInfo = VkMerchantInfo(578024, "764f92e569e3f25e520b63ab7ac8f58863364446948207cc22b7bb06dd7c88db21dc015efc9d34a5d0c79c383025d3e4700a648227bea191eb5a32a8ef10696e7220802646b5e66cf30077865e533b79d59ab0ff1d78676f49bfafb0a90758d83f00207973a4b66c797a3d2677be1c04d0d2b5537bfa03ecebee575f8c84041680f265680c8e94550a430a25f80c3422c12034b972b15fb0054142ec0ba6b71313322732ade582e381d3a68defcff92dc1c6f63a23a3f6db04fba51b642321e3499035105cb9672a1f163ad27ecd76ec05981f9860000849b2950d0cf393b9f764f81aa72356aa197bbecfbf82b971a788c64eba92eb7c681b3a76f24a91a92c", "578024", "wallet APPC")
     val config = VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(51715794).build()
 
 

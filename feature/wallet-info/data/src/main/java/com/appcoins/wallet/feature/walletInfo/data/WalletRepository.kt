@@ -108,15 +108,19 @@ class WalletRepository @Inject constructor(
   override fun observeDefaultWallet(): Observable<Wallet> {
     return Observable.create(
         ObservableOnSubscribe { emitter: ObservableEmitter<String> ->
-          val listener =
-              SharedPreferences.OnSharedPreferenceChangeListener { _, key: String ->
+          val listener = null
+             /* SharedPreferences.OnSharedPreferenceChangeListener { _, key: String ->
                 if (key == CURRENT_ACCOUNT_ADDRESS_KEY) {
                   emitWalletAddress(emitter)
                 }
-              }
-          emitter.setCancellable { commonsPreferencesDataSource.removeChangeListener(listener) }
+              }*/
+          emitter.setCancellable { listener?.let {
+            commonsPreferencesDataSource.removeChangeListener(
+              it
+            )
+          } }
           emitWalletAddress(emitter)
-          commonsPreferencesDataSource.addChangeListener(listener)
+          listener?.let { commonsPreferencesDataSource.addChangeListener(it) }
         } as ObservableOnSubscribe<String>)
         .flatMapSingle { address -> findWallet(address) }
   }
