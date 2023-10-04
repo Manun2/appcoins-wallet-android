@@ -42,12 +42,15 @@ import com.jakewharton.rxrelay2.PublishRelay
 import com.vk.auth.api.models.AuthResult
 import com.vk.auth.main.VkClientAuthCallback
 import com.vk.auth.main.VkClientAuthLib
+import com.vk.dto.common.id.UserId
 import com.vk.superapp.vkpay.checkout.VkCheckoutResult
 import com.vk.superapp.vkpay.checkout.VkCheckoutResultDisposable
 import com.vk.superapp.vkpay.checkout.VkPayCheckout
 import com.vk.superapp.vkpay.checkout.api.dto.model.VkMerchantInfo
 import com.vk.superapp.vkpay.checkout.api.dto.model.VkTransactionInfo
+import com.vk.superapp.vkpay.checkout.config.VkPayCheckoutConfig
 import com.vk.superapp.vkpay.checkout.config.VkPayCheckoutConfigBuilder
+import com.vk.superapp.vkpay.checkout.data.VkCheckoutUserInfo
 import com.wallet.appcoins.core.legacy_base.BasePageViewFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
@@ -216,12 +219,22 @@ class TopUpFragment : BasePageViewFragment(), TopUpFragmentView {
       144,
       "b3625443345651", VkTransactionInfo.Currency.RUB
     )
+    //This Val need to implement only in Developer Mode
+    val sandbox = VkPayCheckoutConfig.Environment.Sandbox(
+      userInfo = VkCheckoutUserInfo(UserId(12345), "+1234566790"),
+      useApi = false,
+      mockNotCreatedVkPay = true,
+      useTestMerchant = true,
+      domain = VkPayCheckoutConfig.Domain.TEST
+    )
+
 
     val merchantInfo = VkMerchantInfo(578024, "c77a9242bde2990ea347b74289e48d53ef5e64228126c49f0c47bfa43e95f17ae54917bf27ec3892bd4b3388309abac9624bf1a8457d07f23c71ced597a5dd25b352f6d898b22b1043dd8efa19fe671758b73ecf54a815e656cbabc268dbe539e8328a0170ba9462ccab64111a3a2f1c31f6d6886b85fa01ea316861fe0e6c95d527b3be0c43c14aa2da125e7d1dae946d6afe7536d9e7cef307149dcc2ff0ecf615333d15e67f81e7334b7b9cf955ab5057223bad312091091f87ecc7f03362cd5072560056785f3f1be3d88609ef86432bc5e41938ddf35bb72a838a9e9a891edc86a400a8b25f128b6f9224d662d1da4279e6e7f04054eedb65985857ac4b", "apt27584612343", "wallet APPC")
-    val config = VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(51715794).build()
+    val config = VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(51715794).setEnvironment(sandbox).build()
 
 
     observeCheckoutResults = VkPayCheckout.observeCheckoutResult { handleCheckoutResult(it) }
+
 
     VkPayCheckout.startCheckout(requireFragmentManager(), transaction, config)
   }
@@ -229,6 +242,7 @@ class TopUpFragment : BasePageViewFragment(), TopUpFragmentView {
   fun handleCheckoutResult(vkCheckoutResult: VkCheckoutResult) {
 
     Log.d("VK TEST", "checkoutVkPay result: " + vkCheckoutResult.orderId)
+    //orderID test - b3625443345651
   }
 
   private val authCallback = object : VkClientAuthCallback {
