@@ -5,9 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import com.appcoins.wallet.core.utils.jvm_common.Logger
 import com.asf.wallet.R
-import com.asfoundation.wallet.billing.analytics.BillingAnalytics
+import com.appcoins.wallet.core.analytics.analytics.legacy.BillingAnalytics
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.entity.Wallet
+import com.appcoins.wallet.feature.walletInfo.data.wallet.domain.Wallet
 import com.asfoundation.wallet.promotions.usecases.StartVipReferralPollingUseCase
 import com.asfoundation.wallet.ui.AuthenticationPromptActivity
 import com.asfoundation.wallet.ui.iab.IabInteract.Companion.PRE_SELECTED_PAYMENT_METHOD_KEY
@@ -209,9 +209,9 @@ class IabPresenter(
               BillingWebViewFragment.CARRIER_BILLING_ONE_BIP_SCHEMA
             ) == true
           ) {
-            sendCarrierBillingConfirmationEvent("cancel")
+            sendCarrierBillingConfirmationEvent(BillingAnalytics.ACTION_CANCEL)
           } else {
-            sendPayPalConfirmationEvent("cancel")
+            sendPayPalConfirmationEvent(BillingAnalytics.ACTION_CANCEL)
           }
         }
         if (data?.dataString?.contains(BillingWebViewFragment.OPEN_SUPPORT) == true) {
@@ -223,7 +223,7 @@ class IabPresenter(
       WebViewActivity.SUCCESS -> {
         if (data?.scheme?.contains("adyencheckout") == true) {
           sendPaypalUrlEvent(data)
-          sendPayPalConfirmationEvent("buy")
+          sendPayPalConfirmationEvent(BillingAnalytics.ACTION_BUY)
         }
         view.webViewResultCode = data?.let { getQueryParameter(it, "resultCode") }
         view.successWebViewResult(data!!.data)
@@ -231,7 +231,7 @@ class IabPresenter(
       WebViewActivity.USER_CANCEL -> {
         if (data?.scheme?.contains("adyencheckout") == true) {
           sendPaypalUrlEvent(data)
-          sendPayPalConfirmationEvent("cancel")
+          sendPayPalConfirmationEvent(BillingAnalytics.ACTION_CANCEL)
         }
         view.showPaymentMethodsView()
       }

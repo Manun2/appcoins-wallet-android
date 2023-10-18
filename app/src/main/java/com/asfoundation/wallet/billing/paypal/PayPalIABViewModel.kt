@@ -8,11 +8,11 @@ import com.appcoins.wallet.billing.adyen.PaymentModel
 import com.asf.wallet.R
 import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.asfoundation.wallet.billing.adyen.AdyenPaymentInteractor
-import com.asfoundation.wallet.billing.analytics.BillingAnalytics
+import com.appcoins.wallet.core.analytics.analytics.legacy.BillingAnalytics
 import com.appcoins.wallet.core.network.microservices.model.PaypalTransaction
 import com.asfoundation.wallet.billing.paypal.usecases.*
 import com.asfoundation.wallet.entity.TransactionBuilder
-import com.asfoundation.wallet.support.SupportInteractor
+import com.wallet.appcoins.feature.support.data.SupportInteractor
 import com.asfoundation.wallet.ui.iab.PaymentMethodsAnalytics
 import com.appcoins.wallet.core.utils.android_common.toSingleEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,17 +23,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PayPalIABViewModel @Inject constructor(
-  private val createPaypalTransactionUseCase: CreatePaypalTransactionUseCase,
-  private val createPaypalTokenUseCase: CreatePaypalTokenUseCase,
-  private val createPaypalAgreementUseCase: CreatePaypalAgreementUseCase,
-  private val waitForSuccessPaypalUseCase: WaitForSuccessPaypalUseCase,
-  private val createSuccessBundleUseCase: CreateSuccessBundleUseCase,
-  private val cancelPaypalTokenUseCase: CancelPaypalTokenUseCase,
-  private val adyenPaymentInteractor: AdyenPaymentInteractor,
-  private val supportInteractor: SupportInteractor,
-  rxSchedulers: RxSchedulers,
-  private val analytics: BillingAnalytics,
-  private val paymentAnalytics: PaymentMethodsAnalytics
+    private val createPaypalTransactionUseCase: CreatePaypalTransactionUseCase,
+    private val createPaypalTokenUseCase: CreatePaypalTokenUseCase,
+    private val createPaypalAgreementUseCase: CreatePaypalAgreementUseCase,
+    private val waitForSuccessPaypalUseCase: WaitForSuccessPaypalUseCase,
+    private val createSuccessBundleUseCase: CreateSuccessBundleUseCase,
+    private val cancelPaypalTokenUseCase: CancelPaypalTokenUseCase,
+    private val adyenPaymentInteractor: AdyenPaymentInteractor,
+    private val supportInteractor: SupportInteractor,
+    rxSchedulers: RxSchedulers,
+    private val analytics: BillingAnalytics,
+    private val paymentAnalytics: PaymentMethodsAnalytics
 ) : ViewModel() {
 
   sealed class State {
@@ -53,6 +53,20 @@ class PayPalIABViewModel @Inject constructor(
 
   val networkScheduler = rxSchedulers.io
   val viewScheduler = rxSchedulers.main
+
+  fun startPayment(
+    createTokenIfNeeded: Boolean = true, amount: BigDecimal, currency: String,
+    transactionBuilder: TransactionBuilder, origin: String?
+  ) {
+    sendPaymentConfirmationEvent(transactionBuilder)
+    attemptTransaction(
+      createTokenIfNeeded = createTokenIfNeeded,
+      amount = amount,
+      currency = currency,
+      transactionBuilder = transactionBuilder,
+      origin = origin
+    )
+  }
 
   fun attemptTransaction(
     createTokenIfNeeded: Boolean = true, amount: BigDecimal, currency: String,
@@ -241,10 +255,26 @@ class PayPalIABViewModel @Inject constructor(
       .subscribeOn(viewScheduler)
       .observeOn(viewScheduler)
       .doOnError {
-        // TODO event
         _state.postValue(State.Error(R.string.unknown_error))
       }
       .subscribe()
+  }
+
+  private fun sendPaymentConfirmationEvent(transactionBuilder: TransactionBuilder) {
+    compositeDisposable.add(Single.just(transactionBuilder)
+      .subscribeOn(networkScheduler)
+      .observeOn(viewScheduler)
+      .subscribe { it ->
+        analytics.sendPaymentConfirmationEvent(
+          it.domain,
+          it.skuId,
+          it.amount().toString(),
+          BillingAnalytics.PAYMENT_METHOD_PAYPALV2,
+          it.type,
+          BillingAnalytics.ACTION_BUY
+        )
+      }
+    )
   }
 
   private fun sendPaymentEvent(transactionBuilder: TransactionBuilder) {

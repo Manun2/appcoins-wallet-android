@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.appcoins.wallet.billing.BillingMessagesMapper
 import com.appcoins.wallet.billing.adyen.PaymentModel
-import com.asf.wallet.R
-import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.core.network.microservices.model.PaypalTransaction
-import com.asfoundation.wallet.billing.paypal.usecases.*
-import com.asfoundation.wallet.support.SupportInteractor
-import com.asfoundation.wallet.topup.TopUpAnalytics
+import com.appcoins.wallet.core.utils.android_common.RxSchedulers
 import com.appcoins.wallet.core.utils.android_common.toSingleEvent
+import com.asf.wallet.R
+import com.asfoundation.wallet.billing.paypal.usecases.*
+import com.asfoundation.wallet.topup.TopUpAnalytics
+import com.asfoundation.wallet.ui.iab.PaymentMethodsAnalytics
+import com.wallet.appcoins.feature.support.data.SupportInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -47,6 +48,23 @@ class PayPalTopupViewModel @Inject constructor(
 
   val networkScheduler = rxSchedulers.io
   val viewScheduler = rxSchedulers.main
+
+  fun startPayment(
+    createTokenIfNeeded: Boolean = true,
+    amount: String,
+    currency: String,
+  ) {
+    topUpAnalytics.sendConfirmationEvent(
+      amount.toDouble(),
+      "top_up",
+      PaymentMethodsAnalytics.PAYMENT_METHOD_PP_V2
+    )
+    attemptTransaction(
+      createTokenIfNeeded = createTokenIfNeeded,
+      amount = amount,
+      currency = currency,
+    )
+  }
 
   fun attemptTransaction(
     createTokenIfNeeded: Boolean = true, amount: String, currency: String

@@ -1,6 +1,6 @@
 package com.asfoundation.wallet.billing.address
 
-import com.asfoundation.wallet.billing.analytics.BillingAnalytics
+import com.appcoins.wallet.core.analytics.analytics.legacy.BillingAnalytics
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
@@ -37,7 +37,7 @@ class BillingAddressPresenter(
               if (data.shouldStoreCard) {
                 billingAddressRepository.saveBillingAddress(billingModel)
               }
-              sendActionEventAnalytics(if (data.isDonation) "donate" else "buy")
+              sendActionEventAnalytics(if (data.isDonation) "donate" else BillingAnalytics.ACTION_BUY)
               navigator.finishWithSuccess(billingModel)
             }
             .subscribe({}, { it.printStackTrace() })
@@ -49,7 +49,7 @@ class BillingAddressPresenter(
         view.backClicks()
             .subscribeOn(viewScheduler)
             .doOnNext {
-              sendActionEventAnalytics("back")
+              sendActionEventAnalytics(BillingAnalytics.ACTION_BACK)
               navigator.finishWithCancel()
             }
             .subscribe()

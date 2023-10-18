@@ -13,17 +13,16 @@ import com.appcoins.wallet.billing.adyen.AdyenResponseMapper.Companion.THREEDS2F
 import com.appcoins.wallet.billing.adyen.PaymentModel
 import com.appcoins.wallet.billing.adyen.PaymentModel.Status.*
 import com.appcoins.wallet.billing.util.Error
+import com.appcoins.wallet.core.analytics.analytics.legacy.BillingAnalytics
 import com.appcoins.wallet.core.utils.jvm_common.Logger
 import com.asf.wallet.R
 import com.asfoundation.wallet.billing.address.BillingAddressModel
 import com.asfoundation.wallet.billing.adyen.AdyenErrorCodeMapper.Companion.CVC_DECLINED
 import com.asfoundation.wallet.billing.adyen.AdyenErrorCodeMapper.Companion.FRAUD
-import com.asfoundation.wallet.billing.analytics.BillingAnalytics
 import com.asfoundation.wallet.entity.TransactionBuilder
 import com.asfoundation.wallet.service.ServicesErrorCodeMapper
 import com.appcoins.wallet.core.utils.android_common.CurrencyFormatUtils
 import com.appcoins.wallet.core.utils.android_common.WalletCurrency
-import com.asfoundation.wallet.billing.gameshub.GamesHubBroadcastService
 import com.asfoundation.wallet.ui.iab.*
 import com.google.gson.JsonObject
 import io.reactivex.Completable
@@ -562,7 +561,7 @@ class AdyenPaymentPresenter(
         transaction.amount().toString(),
         mapPaymentToService(paymentType).transactionType,
         transaction.type,
-        "cancel"
+        BillingAnalytics.ACTION_CANCEL
       )
       view.close(adyenPaymentInteractor.mapCancellation())
     } else {
@@ -572,7 +571,7 @@ class AdyenPaymentPresenter(
         transaction.amount().toString(),
         mapPaymentToService(paymentType).transactionType,
         transaction.type,
-        "back"
+        BillingAnalytics.ACTION_BACK
       )
       view.showMoreMethods()
     }
@@ -765,7 +764,7 @@ class AdyenPaymentPresenter(
       transactionBuilder.amount().toString(),
       mapPaymentToService(paymentType).transactionType,
       transactionBuilder.type,
-      "buy"
+      BillingAnalytics.ACTION_BUY
     )
   } else {
     analytics.sendPaymentConfirmationEvent(
@@ -774,7 +773,7 @@ class AdyenPaymentPresenter(
       transactionBuilder.amount().toString(),
       mapPaymentToService(paymentType).transactionType,
       transactionBuilder.type,
-      "buy"
+      BillingAnalytics.ACTION_BUY
     )
   }
 
@@ -869,10 +868,14 @@ class AdyenPaymentPresenter(
       error.errorInfo?.errorType == ErrorType.ALREADY_PROCESSED -> view.showAlreadyProcessedError()
       error.errorInfo?.errorType == ErrorType.PAYMENT_ERROR -> view.showPaymentError()
       error.errorInfo?.errorType == ErrorType.INVALID_COUNTRY_CODE -> view.showSpecificError(R.string.unknown_error)
-      error.errorInfo?.errorType == ErrorType.PAYMENT_NOT_SUPPORTED_ON_COUNTRY -> view.showSpecificError(R.string.purchase_error_payment_rejected)
+      error.errorInfo?.errorType == ErrorType.PAYMENT_NOT_SUPPORTED_ON_COUNTRY -> view.showSpecificError(
+        R.string.purchase_error_payment_rejected
+      )
       error.errorInfo?.errorType == ErrorType.CURRENCY_NOT_SUPPORTED -> view.showSpecificError(R.string.purchase_card_error_general_1)
       error.errorInfo?.errorType == ErrorType.CVC_LENGTH -> view.showCvvError()
-      error.errorInfo?.errorType == ErrorType.TRANSACTION_AMOUNT_EXCEEDED -> view.showSpecificError(R.string.purchase_card_error_no_funds)
+      error.errorInfo?.errorType == ErrorType.TRANSACTION_AMOUNT_EXCEEDED -> view.showSpecificError(
+        R.string.purchase_card_error_no_funds
+      )
       error.errorInfo?.httpCode != null -> {
         val resId = servicesErrorCodeMapper.mapError(error.errorInfo?.errorType)
         if (error.errorInfo?.httpCode == HTTP_FRAUD_CODE) handleFraudFlow(resId, emptyList())
