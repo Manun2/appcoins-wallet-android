@@ -5,7 +5,7 @@ plugins { `kotlin-dsl` }
 group = "com.appcoins.wallet.convention"
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+  kotlinOptions.jvmTarget = JavaVersion.VERSION_19.toString()
 }
 
 dependencies {
