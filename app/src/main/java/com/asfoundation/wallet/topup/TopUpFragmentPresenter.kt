@@ -54,7 +54,6 @@ class TopUpFragmentPresenter(
     }
     handlePaypalBillingAgreement()
     setupUi()
-    handleChangeCurrencyClick()
     handleNextClick()
     handleRetryClick()
     handleManualAmountChange(appPackage)
@@ -140,18 +139,6 @@ class TopUpFragmentPresenter(
   private fun handleError(throwable: Throwable) {
     throwable.printStackTrace()
     if (throwable.isNoNetworkException()) view.showNoNetworkError()
-  }
-
-  private fun handleChangeCurrencyClick() {
-    disposables.add(view.getChangeCurrencyClick()
-      .doOnNext {
-        view.toggleSwitchCurrencyOn()
-        view.rotateChangeCurrencyButton()
-        view.switchCurrencyData()
-        view.toggleSwitchCurrencyOff()
-      }
-      .subscribe({}, { it.printStackTrace() })
-    )
   }
 
   private fun handleNextClick() {
@@ -405,7 +392,6 @@ class TopUpFragmentPresenter(
   private fun handleValuesClicks() {
     disposables.add(view.getValuesClicks()
       .throttleFirst(50, TimeUnit.MILLISECONDS)
-      .doOnNext { view.disableSwapCurrencyButton() }
       .doOnNext {
         if (view.getSelectedCurrency() == TopUpData.FIAT_CURRENCY) {
           view.changeMainValueText(it.amount.toString())
@@ -414,7 +400,7 @@ class TopUpFragmentPresenter(
         }
       }
       .debounce(300, TimeUnit.MILLISECONDS, viewScheduler)
-      .doOnNext { view.enableSwapCurrencyButton() }
+      .doOnNext { }
       .subscribe({}, { it.printStackTrace() })
     )
   }
@@ -465,27 +451,33 @@ class TopUpFragmentPresenter(
 
   private fun navigateToPayment(topUpData: TopUpData, gamificationLevel: Int) {
     val paymentMethod = topUpData.paymentMethod!!
-    if (paymentMethod.paymentType == PaymentType.CARD
-      || paymentMethod.paymentType == PaymentType.PAYPAL
-      || paymentMethod.paymentType == PaymentType.GIROPAY
-    ) {
-      activity?.navigateToAdyenPayment(
-        paymentType = paymentMethod.paymentType,
-        data = mapTopUpPaymentData(topUpData, gamificationLevel)
-      )
-    } else if (paymentMethod.paymentType == PaymentType.LOCAL_PAYMENTS) {
-      activity?.navigateToLocalPayment(
-        paymentId = paymentMethod.paymentId,
-        icon = paymentMethod.icon,
-        label = paymentMethod.label,
-        async = paymentMethod.async,
-        topUpData = mapTopUpPaymentData(topUpData, gamificationLevel)
-      )
-    } else if (paymentMethod.paymentType == PaymentType.PAYPALV2) {
-      activity?.navigateToPaypalV2(
-        paymentType = paymentMethod.paymentType,
-        data = mapTopUpPaymentData(topUpData, gamificationLevel)
-      )
+    when (paymentMethod.paymentType) {
+      PaymentType.CARD, PaymentType.PAYPAL, PaymentType.GIROPAY -> {
+        activity?.navigateToAdyenPayment(
+          paymentType = paymentMethod.paymentType,
+          data = mapTopUpPaymentData(topUpData, gamificationLevel)
+        )
+      }
+      PaymentType.LOCAL_PAYMENTS -> {
+        activity?.navigateToLocalPayment(
+          paymentId = paymentMethod.paymentId,
+          icon = paymentMethod.icon,
+          label = paymentMethod.label,
+          async = paymentMethod.async,
+          topUpData = mapTopUpPaymentData(topUpData, gamificationLevel)
+        )
+      }
+      PaymentType.PAYPALV2 -> {
+        activity?.navigateToPaypalV2(
+          paymentType = paymentMethod.paymentType,
+          data = mapTopUpPaymentData(topUpData, gamificationLevel)
+        )
+      }
+      PaymentType.VKPAY -> {
+        activity?.navigateToVkPayPayment(mapTopUpPaymentData(topUpData, gamificationLevel))
+      }
+
+      else -> {}
     }
   }
 

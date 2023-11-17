@@ -90,6 +90,7 @@ class AdyenTopUpPresenter(
     handleAdyen3DSErrors()
     handlePaymentDetails()
     handleVerificationClick()
+    handleOtherPaymentMethodsClick()
   }
 
   private fun handleViewState() {
@@ -221,7 +222,7 @@ class AdyenTopUpPresenter(
       .observeOn(networkScheduler)
       .flatMapSingle {
         val billingAddressModel = view.retrieveBillingAddressData()
-        val shouldStore = billingAddressModel?.remember ?: it.shouldStoreCard
+        val shouldStore = billingAddressModel?.remember ?: view.shouldStoreCard()
         topUpAnalytics.sendConfirmationEvent(appcValue.toDouble(), "top_up", paymentType)
         adyenPaymentInteractor.makeTopUpPayment(
           adyenPaymentMethod = it.cardPaymentMethod,
@@ -249,6 +250,19 @@ class AdyenTopUpPresenter(
         view.showSpecificError(R.string.unknown_error)
         logger.log(TAG, it)
       })
+    )
+  }
+
+  private fun handleOtherPaymentMethodsClick() {
+    disposables.add(view.otherMethodsClicked()
+      .observeOn(viewScheduler)
+      .doOnNext { view.cancelPayment() }
+      .subscribe(
+        {},
+        {
+          handleSpecificError(R.string.unknown_error, it)
+        }
+      )
     )
   }
 

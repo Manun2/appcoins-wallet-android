@@ -137,6 +137,13 @@
   <string name="intro_welcome_body_2">สามารถใช้โบนัสในแอพหรือเกมส์ใดก็ได้</string>
   <string name="intro_already_have_wallet_button">ฉันมีวอลเล็ตแล้ว</string>
   <string name="intro_get_started_button">เปิดกระเป๋าสตางค์</string>
+  <!-- New Intro -->
+  <string name="new_intro_1_header">เครื่องมือของคุณสำหรับการซื้อในแอป</string>
+  <string name="new_intro_1_body">ซื้อสินค้าในแอพและเกมที่คุณชื่นชอบด้วย AppCoins Wallet</string>
+  <string name="new_intro_2_header">โบนัสสูงสุด %s%% ในการซื้อทั้งหมด</string>
+  <string name="new_intro_2_body">รับเงินพิเศษทุกครั้งที่คุณทำการซื้อในเกมที่รองรับ AppCoins</string>
+  <string name="new_intro_3_header">วิธีการชำระเงินที่คุณชื่นชอบอยู่ที่นี่แล้ว!</string>
+  <string name="new_intro_3_body">วิธีการชำระเงินที่ใช้ได้</string>
   <!-- Intro from game -->
   <string name="launching_wallet_body">เปิดกระเป๋าเงิน&#8230;</string>
   <string name="select_method_title">เลือกวิธีการชำระเงิน</string>
@@ -147,6 +154,9 @@
   <string name="bonus_received_body">คุณได้รับโบนัส%sในวอลเล็ตของคุณ</string>
   <string name="back_to_the_game_button">กลับสู่เกมส์</string>
   <string name="other_payment_methos_title">วิธีการชำระเงินเพิ่มเติม:</string>
+  <!-- Intro from web payment -->
+  <string name="intro_from_web_payment_already_have_title">You already have</string>
+  <string name="intro_from_web_payment_to_spend_body">to spend on your favorite games.</string>
   <!-- Menus -->
   <!-- Labels -->
   <string name="label_from">จาก</string>
@@ -250,6 +260,7 @@
   <string name="transaction_status_pending">ค้างอยู่</string>
   <string name="transaction_status_failed">ล้มเหลว</string>
   <string name="transaction_status_reverted">เปลี่ยนกลับ</string>
+  <string name="transcation_type_sandbox">Sandbox</string>
   <string name="transaction_type_challenge_reward">รางวัลชาเลนจ์</string>
   <string name="transaction_type_challenge_reward_rejected">ปฏิเสธรางวัลชาเลนจ์</string>
   <string name="transaction_type_challenge_reward_reverted">ส่งคืนรางวัลชาเลนจ์</string>
@@ -269,6 +280,7 @@
   <string name="transaction_type_reverted_topup_body">การเติมเงินที่คุณทำใน %s ถูกเปลี่ยนกลับ ติดต่อฝ่ายสนับสนุนสำหรับข้อมูลเพิ่มเติม</string>
   <string name="transaction_type_reverted_purchase_title">การขอคืนเงิน</string>
   <string name="transaction_type_reverted_purchase_body">การซื้อที่คุณทำใน %s ถูกเปลี่ยนกลับแล้ว ติดต่อฝ่ายสนับสนุนสำหรับข้อมูลเพิ่มเติม</string>
+  <string name="transaction_bonus_reverted_body">โบนัสนี้ถูกคืนแล้ว สำหรับข้อมูลเพิ่มเติมติดต่อฝ่ายสนับสนุน</string>
   <string name="transaction_reverted_view_original_header">ธุรกรรมต้นฉบับ</string>
   <string name="transaction_onchain_completed_title">กำลังทำธุรกรรม!</string>
   <string name="transaction_onchain_completed_body">คุณสามารถติดตามได้ใน Etherscan</string>
@@ -285,6 +297,7 @@
   <string name="transaction_details_label">รายละเอียด</string>
   <string name="transaction_to_label">ถึง</string>
   <string name="transaction_invoice_label">ใบแจ้งหนี้</string>
+  <string name="iab_payment_method_vkpay_title">บัตรเครดิต/เดบิต (VK Pay)</string>
   <string name="dialog_credit_card_remember">จดจำบัตร</string>
   <string name="notification_payment_refused">การชำระเงินถูกปฏิเสธ</string>
   <string name="dialog_credit_card_number">หมายเลขบัตร</string>
@@ -426,7 +439,7 @@
   <string name="topup_maximum_value">การเติมเงินสูงสุดคือ %s</string>
   <string name="topup_no_method_available_title">ไม่มีวิธีการชำระเงิน!</string>
   <string name="topup_no_method_available_body">ไม่มีวิธีการชำระเงินที่สามารถเติมเงินในประเทศของคุณได้ในขณะนี้ คอยติดตาม!</string>
-  <string name="topup_bonus_amount_body">Receive %s bonus with this top-up</string>
+  <string name="topup_bonus_amount_body">รับโบนัส %s ด้วยการเติมเงินนี้</string>
   <!--Balance-->
   <string name="balance_title">ยอดคงเหลือ</string>
   <string name="balance_total_body">ยอดดุลรวมใน %s</string>
@@ -501,6 +514,8 @@
   <string name="log_out_button">ลงชื่อออก</string>
   <string name="download_button">ดาวน์โหลด</string>
   <string name="done">เสร็จสิ้น!</string>
+  <string name="see_more_button">ดูเพิ่มเติม</string>
+  <string name="monetary_amount_with_symbol">%1$s%2$s</string>
   <!--Onboarding-->
   <string name="terms_and_conditions_tickbox">ฉันตกลงใน %1$s และ %2$sของกระเป่าสตางค์ AppCoins</string>
   <string name="terms_and_conditions_error">โปรดยอมรับข้อตกลงและเงื่อนไขเพื่อดำเนินการต่อ</string>
@@ -559,6 +574,7 @@
   <string name="unferified_tag">กระเป๋าเงินที่ไม่ได้รับการยืนยัน</string>
   <string name="verification_wallets_verify_button">ยืนยัน</string>
   <!--Purchase Flow-->
+  <string name="purchase_total_header">รวม %1$s %2$s</string>
   <string name="purchase_error_incomplete_transaction_body">มันดูเหมือนว่าการซื้อนี้กำลังดำเนินการแล้ว โปรดรอสักครู่จนกระทั่งธุรกรรมเสร็จสิ้นหรือติดต่อทีมสนับสนุน</string>
   <string name="purchase_more_payment_methods_button">วิธีการชำระเงินอื่น</string>
   <string name="purchase_more_payment_methods_lower_case_button">วิธีการชำระเงินเพิ่มเติม</string>
@@ -625,6 +641,12 @@
   <string name="purchase_paypal_additional_fees_disclaimer_body">อาจมีค่าใช้จ่ายเพิ่มเติม.</string>
   <string name="purchase_error_paypal">เกิดปัญหากับการชำระเงิน PayPal ของคุณ โปรดลองอีกครั้งหรือใช้วิธีการชำระเงินอื่น</string>
   <string name="purchase_success_bonus_received_title">%s โบนัสที่ได้รับ</string>
+  <string name="purchase_making_purchase_title">กำลังทำการซื้อ&#8230;</string>
+  <string name="purchase_fee_title">ค่าธรรมเนียม %1$s%2$s</string>
+  <string name="purchase_fee_unsupported_currency_known_disclaimer">This payment method doesn\'t support your currency, so it\'ll charge a processing fee. This fee is included in the Total you can see in the top area.</string>
+  <string name="purchase_fee_supported_currency_known_disclaimer">This payment method charges a processing fee for this purchase. This fee is included in the Total you can see in the top area.</string>
+  <string name="purchase_fee_unsupported_currency_unknown_disclaimer">This payment method doesn\'t support your currency, so it may charge a processing fee.</string>
+  <string name="purchase_fee_supported_currency_unknown_disclaimer">This payment method charges a processing fee for this purchase.</string>
   <!--Billing address in purchase flow-->
   <string name="purchase_address_title">ที่อยู่เรียกเก็บเงิน</string>
   <string name="purchase_address_address_field">ที่อยู่</string>
@@ -902,6 +924,7 @@
   <string name="gamif_placeholder_unknown">ดาวเคราะห์ที่ไม่รู้จัก</string>
   <string name="gamif_distance_unkown">ไม่ทราบที่ตั้ง</string>
   <string name="gamif_placeholder_new_planet">ดาวเคราะห์ใหม่</string>
+  <string name="gamif_header">รีวอร์ด</string>
   <!--Carrier Billing-->
   <string name="carrier_billing_payment_method_title">การชำระสินค้า</string>
   <string name="carrier_billing_fees_disclaimer">อาจมีค่าใช้จ่ายเพิ่มเติม</string>
@@ -974,7 +997,7 @@
   <string name="perks_empty_state_first_purchase_body">ดำเนินการซื้อครั้งแรกของคุณในแอพที่รองรับ AppCoins เพื่อปลดล็อกโปรโมชั่นที่เรามีให้คุณ!</string>
   <string name="perks_empty_body">ในขณะนี้ไม่มีโปรโมชั่น</string>
   <!--Fingerprint Authentication-->
-  <string name="fingerprint_settings">ล็อกลายนิ้วมือ</string>
+  <string name="fingerprint_settings">Biometrick Lock</string>
   <string name="fingerprint_failed_title">การรับรองความถูกต้องล้มเหลว!</string>
   <string name="fingerprint_failed_body">โปรดลองอีกครั้งใน %s วินาที</string>
   <string name="fingerprint_authentication_required_title">จำเป็นต้องรับรองความถูกต้อง!</string>
@@ -1023,8 +1046,6 @@
   <string name="card_verification_no_attempts_title">อ๊ะ คุณใส่รหัสผิดหลายครั้งเกินไปดังนั้น %1$s จะได้รับเงินคืนไปยังบัตรของคุณ</string>
   <string name="card_verification_no_attempts_body">โปรดเริ่มการตรวจสอบอีกครั้ง</string>
   <string name="wallet_verify_header">ตรวจสอบวิธีการชำระเงินอย่างน้อยหนึ่งวิธี</string>
-  <string name="verify_card_title">ตรวจสอบบัตร</string>
-  <string name="verify_card_button">ตรวจสอบบัตรธนาคาร</string>
   <string name="verify_paypal_button">ตรวจสอบบัญชี Paypal</string>
   <string name="card_verification_body_new">%s จะถูกหักจากบัตรของคุณและคืนเงินทันที ตรวจสอบใบแจ้งยอดบัตรของคุณสำหรับรหัสการตรวจสอบและใส่ที่นี่</string>
   <string name="card_verification_disclaimer_body">โปรดทราบว่ารหัสยืนยันอาจปรากฏในการแจ้งเตือนการคืนเงิน</string>
@@ -1106,7 +1127,7 @@
   <string name="appcoins_info_market_cap_title">มูลค่าตลาด</string>
   <string name="appcoins_info_volume_title">ปริมาณ (24h)</string>
   <!-- Gift Card -->
-  <string name="gift_card_title">แลกรหัสบัตรของขวัญของคุณ</string>
+  <string name="gift_card_title">แลกรหัสบัตรของขวัญของคุณ.</string>
   <string name="gift_card_field">รหัสการ์ดที่นี่...</string>
   <string name="gift_card_done_title">แลกรหัส!</string>
   <string name="gift_card_done_body">ตรวจสอบรายการธุรกรรมของคุณ</string>
@@ -1153,7 +1174,7 @@
   <string name="vip_program_promotions_list_title">โปรโมชั่นพิเศษสำหรับคุณ</string>
   <string name="vip_program_promo_code_tag">เปลี่ยน</string>
   <string name="vip_program_referral_page_title">โปรแกรมการแนะนำ VIP</string>
-  <string name="vip_program_referral_page_body">แบ่งปันรหัสโปรโมชั่นนี้กับชุมชนและเพื่อนของคุณเพื่อให้ทุกคนได้รับเงินขณะเล่น สำหรับการซื้อในแอปทุกครั้งที่ทำ ทั้ง <b>คุณและเพื่อนของคุณจะได้รับ %s%% โบนัส</b> เพิ่มเติมจากโปรโมชั่นอื่นๆ ที่ใช้งานอยู่และตลอดทั้งเดือน!</string>
+  <string name="vip_program_referral_page_body">Share this promo code with your community and friends for everyone to earn while playing. For every in-app purchase they make, both <b>you and your friends will receive %1$s%% bonus</b> on top of other active promotions. <b>Valid until %2$s</b>!</string>
   <string name="vip_program_referral_page_share_title">แบ่งปันโค๊ดกับเพื่อนของคุณ</string>
   <string name="vip_program_referral_page_earned_body">%1$s%2$sที่ได้จาก%3$sกา่รแนะนำ</string>
   <string name="vip_program_gamification_title">โบนัสของฉันอยู่ในระดับใด</string>
@@ -1188,7 +1209,7 @@
   <string name="intro_transactions_header">ธุรกรรม</string>
   <string name="intro_backup_card_title">อย่าสูญเสียเงินของคุณ!</string>
   <string name="intro_backup_card_body">สำรองวอลเล็ตของคุณและเก็บอย่างปลอดภัย</string>
-  <string name="rewards_spend_to_next_level_body">ใช้จ่ายมากขึ้น %1$s%2$s เพื่อไปถึงระดับถัดไป!</string>
+  <string name="rewards_spend_to_next_level_body">ใช้จ่าย %1$s%2$s เพื่อก้าวไปสู่ระดับต่อไป!</string>
   <string name="rewards_current_bonus_title">%s%% โบนัสในการซื้อทุกครั้ง</string>
   <string name="rewards_eskills_card_title">e-Skills</string>
   <string name="rewards_eskills_card_body">ถอนรายได้ e-Skills ของคุณ</string>
@@ -1200,7 +1221,7 @@
   <string name="home_appcoins_compatible_games_title">เกมส์ที่เข้ากันได้กับ AppCoins</string>
   <!-- Rewards Home -->
   <string name="rewards_make_first_purchase_body">ทำการสั่งซื้อครั้งแรกของคุณในเกมที่รองรับ AppCoins และปลดล็อกโบนัสในทุกการซื้อ</string>
-  <string name="rewards_bonus_every_purchase_title">เพลิดเพลินกับโบนัส %s%% ในการซื้อทุกครั้ง</string>
+  <string name="rewards_bonus_every_purchase_title">โบนัส %s%% ในทุกการซื้อ</string>
   <!-- Refactor Manage Wallet -->
   <string name="manage_wallet_wallet_changed_title">เปลี่ยนวอลเล็ต</string>
   <string name="manage_wallet_change_active_wallet_title">คุณต้องการเลือกกระเป๋าเงินใบนี้หรือไม่?</string>
@@ -1210,12 +1231,13 @@
   <string name="manage_wallet_verify_title">ตรวจสอบวิธีการชำระเงิน</string>
   <string name="manage_wallet_verify_body">หลีกเลี่ยงการปิดกันโดยการยืนยันวิธีการชำระเงิน</string>
   <!-- Refactor Verify Payment Method -->
-  <string name="verify_payment_method_title">ตรวจสอบวิธีการชำระเงิน</string>
+  <string name="verify_card_title">Verify a Payment Method</string>
   <string name="verify_card_body">หลีกเลี่ยงการปิดกันโดยการยืนยันวิธีการชำระเงิน</string>
   <string name="verify_card_one_more_step_title">ตรวจสอบความถูกต้องอีกหนึ่งขั้นตอน</string>
   <string name="verify_card_one_more_step_body">ใส่รหัสที่ปรากฏในรายละเอียดธุรกรรม</string>
   <string name="verify_card_one_more_step_button">ใส่รหัส</string>
   <string name="verify_card_verified">วิธีการชำระเงินที่ได้รับการยืนยัน!</string>
+  <string name="verify_card_button">Verify credit/debit card</string>
   <string name="verify_card_view_title">ตรวจสอบบัตร</string>
   <string name="verify_card_view_disclaimer">เราจะเรียกเก็บเงิน %s จากบัตรของคุณและเราจะคืนเงินให้ เมื่อคุณยืนยันรหัส</string>
   <string name="verify_card_view_title_2">ใส่รายละเอียดบัตรธนาคารของคุณ</string>
@@ -1233,4 +1255,8 @@
   <string name="challenge_reward_card_body">ผ่านชาเลนจ์เพื่อรับเครดิต AppCoins</string>
   <!-- First purchase -->
   <string name="bonus_granted_body">รับ%sใน AppCoins Credits ในวอลเล็ตของคุณ</string>
+  <!-- platform.vk.com !-->
+  <!-- Your protected key from platform.vk.com !-->
+  <!-- VK (OAuth) for external services: Use template vk<com_vk_sdk_AppId>://vk.com -->
+  <!-- AccountType for system AccountManager. Template: <packageName>.account.vk -->
 </resources>

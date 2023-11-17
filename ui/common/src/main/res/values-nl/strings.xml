@@ -137,6 +137,13 @@
   <string name="intro_welcome_body_2">Bonussen kunnen in elke app of game worden gebruikt.</string>
   <string name="intro_already_have_wallet_button">Ik heb al een wallet</string>
   <string name="intro_get_started_button">Wallet openen</string>
+  <!-- New Intro -->
+  <string name="new_intro_1_header">Jouw tool voor in-app aankopen</string>
+  <string name="new_intro_1_body">Doe aankopen in je favoriete apps en games met de AppCoins Wallet.</string>
+  <string name="new_intro_2_header">Tot %s%% bonus bij alle aankopen</string>
+  <string name="new_intro_2_body">Krijg extra tegoed voor elke aankoop in een spel dat AppCoins ondersteunt.</string>
+  <string name="new_intro_3_header">Je favoriete betaalmethoden zijn beschikbaar!</string>
+  <string name="new_intro_3_body">Beschikbare betaalmethoden</string>
   <!-- Intro from game -->
   <string name="launching_wallet_body">Wallet openen&#8230;</string>
   <string name="select_method_title">Kies een betaalmethode</string>
@@ -147,6 +154,9 @@
   <string name="bonus_received_body">Er is een bonus van %s aan je wallet toegevoegd.</string>
   <string name="back_to_the_game_button">Terug naar de game</string>
   <string name="other_payment_methos_title">Andere betaalmethoden:</string>
+  <!-- Intro from web payment -->
+  <string name="intro_from_web_payment_already_have_title">You already have</string>
+  <string name="intro_from_web_payment_to_spend_body">to spend on your favorite games.</string>
   <!-- Menus -->
   <!-- Labels -->
   <string name="label_from">Van</string>
@@ -250,6 +260,7 @@
   <string name="transaction_status_pending">In de wachtrij</string>
   <string name="transaction_status_failed">Niet gelukt</string>
   <string name="transaction_status_reverted">Teruggedraaid</string>
+  <string name="transcation_type_sandbox">Sandbox</string>
   <string name="transaction_type_challenge_reward">Beloning voor uitdaging</string>
   <string name="transaction_type_challenge_reward_rejected">Afgewezen beloning voor uitdaging</string>
   <string name="transaction_type_challenge_reward_reverted">Teruggedraaide beloning voor uitdaging</string>
@@ -269,6 +280,7 @@
   <string name="transaction_type_reverted_topup_body">De opwaardering die je hebt uitgevoerd op %s is teruggedraaid. Neem voor meer informatie contact op met de klantenservice.</string>
   <string name="transaction_type_reverted_purchase_title">Terugbetaalde aankoop</string>
   <string name="transaction_type_reverted_purchase_body">De aankoop die je hebt uitgevoerd op %s is teruggedraaid. Neem voor meer informatie contact op met de klantenservice.</string>
+  <string name="transaction_bonus_reverted_body">Deze bonus is teruggedraaid. Neem contact op met de klantenservice voor meer informatie.</string>
   <string name="transaction_reverted_view_original_header">Oorspronkelijke transactie</string>
   <string name="transaction_onchain_completed_title">Transactie is in behandeling!</string>
   <string name="transaction_onchain_completed_body">Je kunt de transactie op Etherscan volgen.</string>
@@ -285,6 +297,7 @@
   <string name="transaction_details_label">Details</string>
   <string name="transaction_to_label">Naar</string>
   <string name="transaction_invoice_label">Factuur</string>
+  <string name="iab_payment_method_vkpay_title">Creditcard/betaalkaart (VK Pay)</string>
   <string name="dialog_credit_card_remember">Kaart onthouden</string>
   <string name="notification_payment_refused">Betaling geweigerd</string>
   <string name="dialog_credit_card_number">Kaartnummer</string>
@@ -426,7 +439,7 @@
   <string name="topup_maximum_value">Maximale waarde voor opwaarderen is %s</string>
   <string name="topup_no_method_available_title">Geen betaalmethode!</string>
   <string name="topup_no_method_available_body">Er zijn momenteel geen betaalmethoden beschikbaar om in jouw land op te waarderen. Blijf ons volgen!</string>
-  <string name="topup_bonus_amount_body">Receive %s bonus with this top-up</string>
+  <string name="topup_bonus_amount_body">Krijg %s bonus voor deze opwaardering</string>
   <!--Balance-->
   <string name="balance_title">Saldo</string>
   <string name="balance_total_body">Totale saldo in %s</string>
@@ -501,6 +514,8 @@
   <string name="log_out_button">Uitloggen</string>
   <string name="download_button">Downloaden</string>
   <string name="done">Gelukt!</string>
+  <string name="see_more_button">Meer bekijken</string>
+  <string name="monetary_amount_with_symbol">%1$s%2$s</string>
   <!--Onboarding-->
   <string name="terms_and_conditions_tickbox">Ik ga akkoord met de %1$s en het %2$s van AppCoins Wallet.</string>
   <string name="terms_and_conditions_error">Accepteer onze algemene voorwaarden en ons privacybeleid om door te gaan</string>
@@ -559,6 +574,7 @@
   <string name="unferified_tag">Ongeverifieerde wallet</string>
   <string name="verification_wallets_verify_button">Verifiëren</string>
   <!--Purchase Flow-->
+  <string name="purchase_total_header">Totaal %1$s %2$s</string>
   <string name="purchase_error_incomplete_transaction_body">Het lijkt erop dat deze aankoop al wordt verwerkt. Wacht totdat de transactie is voltooid of neem contact op met ons ondersteuningsteam.</string>
   <string name="purchase_more_payment_methods_button">ANDERE BETALINGSMETHODEN</string>
   <string name="purchase_more_payment_methods_lower_case_button">Andere betaalmethoden</string>
@@ -625,6 +641,12 @@
   <string name="purchase_paypal_additional_fees_disclaimer_body">Er kunnen extra kosten van toepassing zijn.</string>
   <string name="purchase_error_paypal">Er is een probleem opgetreden met je PayPal-betaling. Probeer het opnieuw of gebruik een andere betaalmethode.</string>
   <string name="purchase_success_bonus_received_title">%s bonus ontvangen.</string>
+  <string name="purchase_making_purchase_title">Aankoop verwerken&#8230;</string>
+  <string name="purchase_fee_title">Kosten van %1$s%2$s</string>
+  <string name="purchase_fee_unsupported_currency_known_disclaimer">This payment method doesn\'t support your currency, so it\'ll charge a processing fee. This fee is included in the Total you can see in the top area.</string>
+  <string name="purchase_fee_supported_currency_known_disclaimer">This payment method charges a processing fee for this purchase. This fee is included in the Total you can see in the top area.</string>
+  <string name="purchase_fee_unsupported_currency_unknown_disclaimer">This payment method doesn\'t support your currency, so it may charge a processing fee.</string>
+  <string name="purchase_fee_supported_currency_unknown_disclaimer">This payment method charges a processing fee for this purchase.</string>
   <!--Billing address in purchase flow-->
   <string name="purchase_address_title">Factuuradres</string>
   <string name="purchase_address_address_field">Adres</string>
@@ -901,6 +923,7 @@
   <string name="gamif_placeholder_unknown">een onbekende planeet</string>
   <string name="gamif_distance_unkown">Onbekende locatie</string>
   <string name="gamif_placeholder_new_planet">een nieuwe planeet</string>
+  <string name="gamif_header">Beloningen</string>
   <!--Carrier Billing-->
   <string name="carrier_billing_payment_method_title">Facturering via provider</string>
   <string name="carrier_billing_fees_disclaimer">Er kunnen extra kosten van toepassing zijn</string>
@@ -979,7 +1002,7 @@
   <string name="perks_empty_state_first_purchase_body">Doe je eerste aankoop in een app die AppCoins ondersteunt om de acties die we voor je hebben te ontgrendelen!</string>
   <string name="perks_empty_body">Er zijn momenteel geen acties beschikbaar.</string>
   <!--Fingerprint Authentication-->
-  <string name="fingerprint_settings">Vergrendeling met vingerafdruk</string>
+  <string name="fingerprint_settings">Biometrick Lock</string>
   <string name="fingerprint_failed_title">Authenticatie is mislukt!</string>
   <string name="fingerprint_failed_body">Probeer het over %s seconden opnieuw.</string>
   <string name="fingerprint_authentication_required_title">Authenticatie is vereist!</string>
@@ -1030,8 +1053,6 @@
   <string name="card_verification_no_attempts_title">Oeps. Je hebt te vaak een verkeerde code ingevoerd. Daarom wordt er %1$s op je kaart teruggestort.</string>
   <string name="card_verification_no_attempts_body">Start het verificatieproces opnieuw.</string>
   <string name="wallet_verify_header">Verifieer minimaal één betaalmethode</string>
-  <string name="verify_card_title">Kaart verifiëren</string>
-  <string name="verify_card_button">Bankpas verifiëren</string>
   <string name="verify_paypal_button">PayPal-account verifiëren</string>
   <string name="card_verification_body_new">Er wordt %s van je kaart afgeschreven en meteen terugbetaald. Controleer de verificatiecode op het afschrift van je kaart en voer deze hier in.</string>
   <string name="card_verification_disclaimer_body">Houd er rekening mee dat de bevestigingscode in de melding van de terugbetaling kan worden getoond.</string>
@@ -1113,7 +1134,7 @@
   <string name="appcoins_info_market_cap_title">Marktkapitalisatie</string>
   <string name="appcoins_info_volume_title">Volume (24 uur)</string>
   <!-- Gift Card -->
-  <string name="gift_card_title">Wissel je cadeaukaartcode in</string>
+  <string name="gift_card_title">Wissel je cadeaukaartcode in.</string>
   <string name="gift_card_field">Voer hier je kaartcode in...</string>
   <string name="gift_card_done_title">Code is ingewisseld!</string>
   <string name="gift_card_done_body">Controleer je lijst met transacties.</string>
@@ -1160,11 +1181,11 @@
   <string name="vip_program_promotions_list_title">Speciale acties voor jou</string>
   <string name="vip_program_promo_code_tag">Actiecode</string>
   <string name="vip_program_referral_page_title">VIP-verwijzingsprogramma</string>
-  <string name="vip_program_referral_page_body">Deel deze actiecode met je community en vrienden zodat iedereen geld kan verdienen tijdens het spelen. Voor elke in-app aankoop die ze doen, ontvangen <b>jij en je vrienden %s%% bonus</b> gedurende de hele maand bovenop andere lopende acties!</string>
+  <string name="vip_program_referral_page_body">Share this promo code with your community and friends for everyone to earn while playing. For every in-app purchase they make, both <b>you and your friends will receive %1$s%% bonus</b> on top of other active promotions. <b>Valid until %2$s</b>!</string>
   <string name="vip_program_referral_page_share_title">Deel deze code met je vrienden</string>
   <string name="vip_program_referral_page_earned_body">%1$s%2$s verdiend met %3$s verwijzingen</string>
   <string name="vip_program_gamification_title">Wat is mijn bonusniveau?</string>
-  <string name="vip_program_gamification_amount_purchases_bonus">Bonus ontvangen door jouw aankopen.</string>
+  <string name="vip_program_gamification_amount_purchases_bonus">Bonus ontvangen voor je aankopen</string>
   <string name="vip_program_gamification_amoung_referral_bonus">Bonus ontvangen door verwijzingen</string>
   <string name="vip_program_max_bonus_title">Geniet van je %s%% bonus bij elke aankoop</string>
   <string name="vip_program_max_bonus_body">Je hebt de grens van het zonnestelsel bereikt.</string>
@@ -1199,7 +1220,7 @@
   <string name="intro_transactions_header">Transacties</string>
   <string name="intro_backup_card_title">Verlies je saldo niet!</string>
   <string name="intro_backup_card_body">Maak een back-up van je wallet om deze altijd veilig te bewaren.</string>
-  <string name="rewards_spend_to_next_level_body">Besteed meer %1$s%2$s om het volgende niveau te bereiken!</string>
+  <string name="rewards_spend_to_next_level_body">Besteed %1$s%2$s om het volgende niveau te bereiken!</string>
   <string name="rewards_current_bonus_title">%s%% bonus bij elke aankoop</string>
   <string name="rewards_eskills_card_title">e-Skills</string>
   <string name="rewards_eskills_card_body">Neem je verdiensten met e-Skills op.</string>
@@ -1211,7 +1232,7 @@
   <string name="home_appcoins_compatible_games_title">Games die compatibel met AppCoins zijn</string>
   <!-- Rewards Home -->
   <string name="rewards_make_first_purchase_body">Doe je eerste aankoop in een game die AppCoins ondersteunt en krijg een bonus bij elke aankoop.</string>
-  <string name="rewards_bonus_every_purchase_title">Geniet van een bonus van %s%% bij elke aankoop</string>
+  <string name="rewards_bonus_every_purchase_title">%s%% bonus bij elke aankoop</string>
   <!-- Refactor Manage Wallet -->
   <string name="manage_wallet_wallet_changed_title">Wallet gewijzigd</string>
   <string name="manage_wallet_change_active_wallet_title">Wil je deze wallet selecteren?</string>
@@ -1221,12 +1242,13 @@
   <string name="manage_wallet_verify_title">Verifieer een betaalmethode</string>
   <string name="manage_wallet_verify_body">Voorkom blokkades door een betaalmethode te verifiëren.</string>
   <!-- Refactor Verify Payment Method -->
-  <string name="verify_payment_method_title">Verifieer een betaalmethode</string>
+  <string name="verify_card_title">Verify a Payment Method</string>
   <string name="verify_card_body">Voorkom blokkades door een betaalmethode te verifiëren.</string>
   <string name="verify_card_one_more_step_title">Nog één stap om te verifiëren</string>
   <string name="verify_card_one_more_step_body">Voer de code in die in de transactiegegevens wordt getoond</string>
   <string name="verify_card_one_more_step_button">Code invoeren</string>
   <string name="verify_card_verified">Betaalmethode geverifieerd!</string>
+  <string name="verify_card_button">Verify credit/debit card</string>
   <string name="verify_card_view_title">Kaart verifiëren</string>
   <string name="verify_card_view_disclaimer">We zullen via je kaart %s in rekening brengen. Dit bedrag wordt teruggestort als je de code hebt bevestigd.</string>
   <string name="verify_card_view_title_2">Voer je bankpasgegevens in</string>
@@ -1244,4 +1266,8 @@
   <string name="challenge_reward_card_body">Voltooi een uitdaging om AppCoins Credits te krijgen.</string>
   <!-- First purchase -->
   <string name="bonus_granted_body">Geniet van %s in AppCoins Credits in je wallet</string>
+  <!-- platform.vk.com !-->
+  <!-- Your protected key from platform.vk.com !-->
+  <!-- VK (OAuth) for external services: Use template vk<com_vk_sdk_AppId>://vk.com -->
+  <!-- AccountType for system AccountManager. Template: <packageName>.account.vk -->
 </resources>

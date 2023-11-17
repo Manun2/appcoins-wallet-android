@@ -101,8 +101,9 @@ class OnboardingPaymentMethodsNavigator @Inject constructor(
     )
   }
 
-  fun navigateToLocalPayment(transactionBuilder: TransactionBuilder, paymentId: String, amount: String,
-                             currency: String
+  fun navigateToLocalPayment(
+    transactionBuilder: TransactionBuilder, paymentId: String, amount: String,
+    currency: String
   ) {
     navigate(
       fragment.findNavController(),
@@ -118,4 +119,19 @@ class OnboardingPaymentMethodsNavigator @Inject constructor(
   fun navigateToCarrierBilling() = Unit
 
   fun navigateToShareLinkPayment() = Unit
+
+  fun navigateToVkPayPayment(
+    transactionBuilder: TransactionBuilder,
+    amount: String,
+    currency: String
+  ) {
+    navigate(
+      fragment.findNavController(),
+      OnboardingPaymentMethodsFragmentDirections.actionNavigateToOnboardingVkPayment(
+        transactionBuilder,
+        amount,
+        currency
+      )
+    )
+  }
 }

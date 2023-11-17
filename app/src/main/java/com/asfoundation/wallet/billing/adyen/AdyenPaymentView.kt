@@ -18,6 +18,8 @@ interface AdyenPaymentView {
 
   fun showLoading()
 
+  fun showLoadingMakingPayment()
+
   fun errorDismisses(): Observable<Any>
 
   fun buyButtonClicked(): Observable<Any>
@@ -99,4 +101,6 @@ interface AdyenPaymentView {
   fun setup3DSComponent()
 
   fun showBillingAddress(value: BigDecimal, currency: String)
+
+  fun shouldStoreCard(): Boolean
 }

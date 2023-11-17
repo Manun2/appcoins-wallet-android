@@ -53,6 +53,8 @@ interface AdyenTopUpView {
 
   fun topUpButtonClicked(): Observable<Any>
 
+  fun otherMethodsClicked(): Observable<Any>
+
   fun billingAddressInput(): Observable<Boolean>
 
   fun retrievePaymentData(): Observable<AdyenCardWrapper>
@@ -88,4 +90,6 @@ interface AdyenTopUpView {
   fun setup3DSComponent()
 
   fun navigateToBillingAddress(fiatAmount: String, fiatCurrency: String)
+
+  fun shouldStoreCard(): Boolean
 }

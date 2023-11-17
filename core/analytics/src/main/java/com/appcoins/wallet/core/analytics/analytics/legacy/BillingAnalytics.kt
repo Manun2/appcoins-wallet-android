@@ -13,7 +13,7 @@ class BillingAnalytics @Inject constructor(
   private val analytics: AnalyticsManager,
   @ApplicationContext private val context: Context,
   private val partnerAddressService: PartnerAddressService
-  ) : EventSender {
+) : EventSender {
   override fun sendPurchaseDetailsEvent(
     packageName: String,
     skuDetails: String?,
@@ -334,6 +334,7 @@ class BillingAnalytics @Inject constructor(
     const val PAYMENT_METHOD_REWARDS = "REWARDS"
     const val PAYMENT_METHOD_PAYPAL = "PAYPAL"
     const val PAYMENT_METHOD_PAYPALV2 = "PAYPAL_V2"
+    const val PAYMENT_METHOD_VK_PAY = "VK_PAY"
     const val PAYMENT_METHOD_CARRIER = "CARRIER"
     const val WALLET_PRESELECTED_PAYMENT_METHOD = "wallet_preselected_payment_method"
     const val WALLET_PAYMENT_METHOD = "wallet_payment_method"
@@ -365,6 +366,9 @@ class BillingAnalytics @Inject constructor(
     private const val EVENT_URL = "url"
     private const val EVENT_ONBOARDING_PAYMENT = "onboarding_payment"
     private const val MAX_CHARACTERS = 100
+    const val ACTION_BUY = "buy"
+    const val ACTION_CANCEL = "cancel"
+    const val ACTION_BACK = "back"
   }
 
 }

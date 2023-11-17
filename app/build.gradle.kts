@@ -12,8 +12,8 @@ android {
   namespace = "com.asf.wallet"
   defaultConfig {
     applicationId = "com.appcoins.wallet"
-    versionCode = 280
-    versionName = "3.3.2"
+    versionCode = 283
+    versionName = "3.4.0"
   }
 }
 
@@ -53,6 +53,7 @@ dependencies {
   implementation(project(":feature:backup:ui"))
   implementation(project(":feature:promo-code:data"))
   implementation(project(":home"))
+  implementation(project(":feature:vk-pay"))
 
   implementation(libs.kotlin.coroutines)
   implementation(libs.kotlin.coroutines.rx2)
@@ -93,6 +94,8 @@ dependencies {
   implementation(libs.google.play.services)
   implementation(libs.google.zxing)
   implementation(libs.zxing.android)
+
+  implementation(libs.bundles.vk)
 
   implementation(libs.bundles.adyen) {
     exclude(group = "io.michaelrocks", module = "paranoid-core")
