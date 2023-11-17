@@ -863,6 +863,21 @@ class PaymentMethodsPresenter(
       interactor.getPaymentMethods(transaction, fiatValue.amount.toString(), fiatValue.currency)
         .map { interactor.mergeAppcoins(it) }
         .map { interactor.swapDisabledPositions(it) }
+        .map {     //TODO comment this map
+          val newPaymentMethodsList = mutableListOf<PaymentMethod>()
+          newPaymentMethodsList.addAll(it)
+          newPaymentMethodsList.add(
+            PaymentMethod(
+              id = "vk_pay",
+              label = "VK Pay TEST",
+              iconUrl = "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/364_Vk_logo-512.png",
+              async = false,
+              fee = null,
+            )
+          )
+
+          newPaymentMethodsList
+        }
     } else {
       Single.just(listOf(PaymentMethod.APPC))
     }

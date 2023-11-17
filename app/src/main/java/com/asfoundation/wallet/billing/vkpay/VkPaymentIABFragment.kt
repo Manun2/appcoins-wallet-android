@@ -62,6 +62,7 @@ class VkPaymentIABFragment : BasePageViewFragment(),
 
   private val authVkCallback = object : VkClientAuthCallback {
     override fun onAuth(authResult: AuthResult) {
+      System.out.println("${authResult.personalData?.email} ${authResult.personalData?.phone}")
       vkDataPreferencesDataSource.saveAuthVk(authResult.accessToken)
       viewModel.hasVkUserAuthenticated = true
     }
