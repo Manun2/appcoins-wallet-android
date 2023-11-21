@@ -2,6 +2,7 @@ package com.appcoins.wallet.feature.vkpay
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.FragmentManager
 import com.vk.auth.main.VkClientUiInfo
@@ -55,6 +56,7 @@ class VkPayManager @Inject constructor() {
     }
 
     if (!SuperappKit.isInitialized()) {
+      Log.i("VK Test","superappkit not initialized. initializing")
       config?.let { SuperappKit.init(it) }
     }
   }
@@ -92,6 +94,7 @@ class VkPayManager @Inject constructor() {
       VkPayCheckoutConfigBuilder(merchantInfo).setParentAppId(vkSdkAppId)
         .build()
     }
+    Log.i("VK Test","Starting VK Pay checkout")
     VkPayCheckout.startCheckout(fragmentManager, transaction, config)
 
   }

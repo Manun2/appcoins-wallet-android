@@ -1,6 +1,7 @@
 package com.asfoundation.wallet.billing.vkpay
 
 import android.text.format.DateUtils
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import com.appcoins.wallet.core.analytics.analytics.legacy.BillingAnalytics
 import com.appcoins.wallet.core.arch.BaseViewModel
@@ -77,6 +78,7 @@ class VkPaymentIABViewModel @Inject constructor(
     getCurrentWalletUseCase().doOnSuccess {
       walletAddress = it.address
     }.scopedSubscribe()
+    Log.i("VK Test","createVkPayTransaction")
     createVkPayTransactionUseCase(
       price = price,
       reference = transactionBuilder.orderReference,
@@ -91,9 +93,12 @@ class VkPaymentIABViewModel @Inject constructor(
     ).asAsyncToState {
       copy(vkTransaction = it)
     }.doOnSuccess {
+      Log.i("VK Test","transaction response: ${it.amount} ${it.uid} ${it.status} ${it.hash} ${it.errorCode} ${it.errorMessage}")
       transactionVkData.value = it
       sendSideEffect { VkPaymentIABSideEffect.PaymentLinkSuccess }
-    }.scopedSubscribe()
+    }
+      .doOnError { Log.i("VK Test","on error create transaction: ${it.message} ${it.stackTrace}") }
+      .scopedSubscribe()
   }
 
   fun startTransactionStatusTimer() {
@@ -110,6 +115,7 @@ class VkPaymentIABViewModel @Inject constructor(
       // Set up a CoroutineJob that will automatically cancel after 180 seconds
       jobTransactionStatus = scope.launch {
         delay(JOB_TIMEOUT_MS)
+        Log.i("VK Test","on error timeout")
         sendSideEffect { VkPaymentIABSideEffect.ShowError(R.string.unknown_error) }
         timerTransactionStatus.cancel()
       }
@@ -190,6 +196,7 @@ class VkPaymentIABViewModel @Inject constructor(
           Transaction.Status.CANCELED,
           Transaction.Status.FRAUD -> {
             stopTransactionStatusTimer()
+            Log.i("VK Test","on error fraud")
             sendSideEffect {
               VkPaymentIABSideEffect.ShowError(
                 R.string.purchase_error_wallet_block_code_403

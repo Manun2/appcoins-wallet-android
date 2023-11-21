@@ -64,13 +64,14 @@ class VkPaymentIABFragment : BasePageViewFragment(),
 
   private val authVkCallback = object : VkClientAuthCallback {
     override fun onAuth(authResult: AuthResult) {
-      System.out.println("${authResult.personalData?.email} ${authResult.personalData?.phone}")
+      Log.i("VK Test","email: ${authResult.personalData?.email}   phone: ${authResult.personalData?.phone}")
       vkDataPreferencesDataSource.saveAuthVk(authResult.accessToken)
       viewModel.hasVkUserAuthenticated = true
     }
 
     override fun onCancel() {
       super.onCancel()
+      Log.i("VK Test","on error 1")
       showError()
     }
   }
@@ -94,6 +95,7 @@ class VkPaymentIABFragment : BasePageViewFragment(),
     inflater: LayoutInflater, @Nullable container: ViewGroup?,
     @Nullable savedInstanceState: Bundle?
   ): View {
+    Log.i("VK Test","start")
     //Build Vk Pay SuperApp Kit
     vkPayManager.initSuperAppKit(
       BuildConfig.VK_APP_NAME,
@@ -130,6 +132,7 @@ class VkPaymentIABFragment : BasePageViewFragment(),
       )
       viewModel.sendPaymentStartEvent(requireArguments().getParcelable(TRANSACTION_DATA_KEY))
     } else {
+      Log.i("VK Test","on error 2")
       showError()
     }
   }
@@ -165,15 +168,18 @@ class VkPaymentIABFragment : BasePageViewFragment(),
       }
 
       else -> {
+        Log.i("VK Test","on error 3 handle checkout")
         showError()
       }
     }
   }
 
   private fun startVkCheckoutPay() {
+    Log.i("VK Test","starting checkout")
     val hash = viewModel.transactionVkData.value?.hash
     val uidTransaction = viewModel.transactionVkData.value?.uid
     val amount = viewModel.transactionVkData.value?.amount
+    Log.i("VK Test","checkout values: $hash  $uidTransaction  $amount")
     if (hash != null && uidTransaction != null && amount != null) {
       vkPayManager.checkoutVkPay(
         hash,
@@ -186,6 +192,7 @@ class VkPaymentIABFragment : BasePageViewFragment(),
       )
       viewModel.hasVkPayAlreadyOpened = true
     } else {
+      Log.i("VK Test","on error 4")
       showError()
     }
     VkPayCheckout.observeCheckoutResult { result -> handleCheckoutResult(result) }
@@ -195,6 +202,7 @@ class VkPaymentIABFragment : BasePageViewFragment(),
   override fun onStateChanged(state: VkPaymentIABState) {
     when (state.vkTransaction) {
       is Async.Fail -> {
+        Log.i("VK Test","on error 5")
         showError()
       }
 
@@ -228,6 +236,7 @@ class VkPaymentIABFragment : BasePageViewFragment(),
   override fun onSideEffect(sideEffect: VkPaymentIABSideEffect) {
     when (sideEffect) {
       is VkPaymentIABSideEffect.ShowError -> {
+        Log.i("VK Test","on error 6")
         showError()
       }
 
@@ -238,10 +247,13 @@ class VkPaymentIABFragment : BasePageViewFragment(),
 
       VkPaymentIABSideEffect.PaymentLinkSuccess -> {
         if (SuperappKit.isInitialized()) {
+          Log.i("VK Test","superappkit was initialized")
           viewModel.transactionUid = viewModel.state.vkTransaction.value?.uid
           if (vkDataPreferencesDataSource.getAuthVk().isNullOrEmpty()) {
+            Log.i("VK Test","does NOT have access_token already")
             binding.vkFastLoginButton.performClick()
           } else {
+            Log.i("VK Test","has access_token already")
             startVkCheckoutPay()
           }
         }
